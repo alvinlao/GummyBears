@@ -1,0 +1,69 @@
+;------------------------------------------------
+;	Alvin Lao
+;------------------------------------------------
+$NOLIST
+
+MISO   EQU  P0.0 
+MOSI   EQU  P0.1 
+SCLK   EQU  P0.2
+CE_ADC EQU  P0.3
+
+FREQ   EQU 33333333
+BAUD   EQU 115200
+T2LOAD EQU 65536-(FREQ/(32*BAUD))
+
+CSEG
+
+INIT_SPI:
+	setb CE_ADC			  ; Set CS output to 1 (Pause ADC)
+    orl P0MOD, #00000110b ; Set SCLK, MOSI as outputs
+    anl P0MOD, #11111110b ; Set MISO as input
+    clr SCLK              ; For mode (0,0) SCLK is zero
+	ret
+
+; R0 - Byte to write
+; R1 - Return byte (ADC)	
+DO_SPI_G:
+	push acc
+    mov R1, #0            ; Received byte stored in R1
+    mov R2, #8            ; Loop counter (8-bits)
+DO_SPI_G_LOOP:
+    mov a, R0             ; Byte to write is in R0
+    rlc a                 ; Carry flag has bit to write
+    mov R0, a
+    mov MOSI, c
+    setb SCLK             ; Transmit
+    mov c, MISO           ; Read received bit
+    mov a, R1             ; Save received bit in R1
+    rlc a
+    mov R1, a
+    clr SCLK
+    djnz R2, DO_SPI_G_LOOP
+    pop acc
+    ret
+    
+; B - Channel to read passed (0, 1, 2, 3)
+Read_ADC_Channel:
+	clr CE_ADC
+	mov R0, #00000001B ; Start bit:1
+	lcall DO_SPI_G
+	
+	mov a, b
+	swap a
+	anl a, #0F0H
+	setb acc.7 ; Single mode (bit 7).
+	
+	mov R0, a ;  Select channel
+	lcall DO_SPI_G
+	mov a, R1
+	anl a, #03H
+	mov R7, a			; R7 contains bits 8 and 9
+	
+	mov R0, #55H ; It doesn't matter what we transmit...
+	lcall DO_SPI_G
+	mov a, R1
+	mov R6, a			; R6 contains bits 0 to 7
+	setb CE_ADC
+	ret
+	
+$LIST
