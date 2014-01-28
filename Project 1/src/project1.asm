@@ -3,11 +3,11 @@
 ;------------------------------------------------
 ;	GROUP: 		A5
 ;------------------------------------------------
-;	MEMBERS:	Alvin Lao			32510117
+;	MEMBERS:	Alvin Lao			
 ;				David Henderson		
 ;				Zhenzheng Xia		
-;				Bibek Kaur			15093123
-;				Jappy Sran			68226042
+;				Bibek Kaur			
+;				Jappy Sran			
 ;				Haowei Yu
 ;------------------------------------------------
 
