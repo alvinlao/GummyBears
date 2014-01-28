@@ -87,7 +87,7 @@ mainLoop:
 	lcall hex2bcd
 	lcall displayBCD_helper		; Display the temp on 7 seg
 	
-;	lcall logTemperature 		; void logTemperature(temp [R0])
+	;lcall logTemperature 		; void logTemperature(temp [R0])
 
 	lcall Wait_helper
 	sjmp mainLoop

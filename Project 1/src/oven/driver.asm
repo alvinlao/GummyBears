@@ -281,10 +281,22 @@ setup_driver:
 ; INPUT:
 ; 	R0 - Contains the desired temperature in celsius (0 - 255)
 ;------------------------------------------------
-setTemp_oven:
+setTemp_driver:
 	ret
 	
-	
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void setRamp_driver( ramp rate [R0] )
+; Sets the desired ramp rate
+;------------------------------------------------
+; INPUT:
+; 	R0 - Contains the desired ramp rate (*C/s)
+;------------------------------------------------
+setramp_driver:
+	ret
+
 ;------------------------------------------------
 ; - Private function
 ;------------------------------------------------
