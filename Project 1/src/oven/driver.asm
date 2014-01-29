@@ -276,27 +276,27 @@ setup_driver:
 ; + Public function
 ;------------------------------------------------
 ; void setTemp_driver( temperature [R0] )
-; Sets the oven temperature to the desired value
+; Set the oven target temperature
 ;------------------------------------------------
 ; INPUT:
 ; 	R0 - Contains the desired temperature in celsius (0 - 255)
 ;------------------------------------------------
-setTemp_driver:
+setTemp_driver;
 	ret
 	
-
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
-; void setRamp_driver( ramp rate [R0] )
-; Sets the desired ramp rate
+; void maintainTemp_driver( currentTemp [R0], targetTemp [R1] )
+; Tell the driver to maintain target temperature
 ;------------------------------------------------
 ; INPUT:
-; 	R0 - Contains the desired ramp rate (*C/s)
+; 	R0 - Contains the current oven temperature (*C)
+; 	R1 - Contains the desired temperature (*C)
 ;------------------------------------------------
-setramp_driver:
+maintainTemp_driver:
 	ret
-
+	
 ;------------------------------------------------
 ; - Private function
 ;------------------------------------------------
