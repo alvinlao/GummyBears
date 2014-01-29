@@ -73,7 +73,7 @@ $include(finish.asm)			;Final exit instructions
 ;-------------------------------------
 ; Oven
 ;-------------------------------------
-;$include(oven/driver.asm)		;Oven driver
+;$include(oven/driver.asm)			;Oven driver
 ;$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------
@@ -98,7 +98,7 @@ myprogram:
 	
 	lcall setup_spi				; ADC SPI (Input)
     lcall setup_serial 			; Serial (Output)
-    	
+    lcall setup_lcd				;
 mainLoop:
 	lcall getOvenTemp_sensor	; R0 <= oven temperature
 	mov LEDRA, R0
