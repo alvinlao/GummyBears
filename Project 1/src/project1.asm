@@ -26,7 +26,7 @@ DSEG at 30H
 
 	;LCD.asm
 	line1_LCD:		DS 16
-	line2_LCD:		DS 16
+	line2_LCD:		DS 16		; (!) These two must be right after each other
 		
 	;VARIABLES
 	currentTemp:		DS 1
@@ -34,13 +34,13 @@ DSEG at 30H
 	runTime:			DS 2
 
 	;Setup.asm
-	soakRate: 	DS 1
- 	soakTemp: 	DS 1
- 	soakTime:	DS 1
- 	reflowRate:	DS 1
- 	reflowTemp:	DS 1
- 	reflowTime:	DS 1
- 	coolRate:	DS 1
+	soakRate: 			DS 1
+ 	soakTemp: 			DS 1
+ 	soakTime:			DS 1
+ 	reflowRate:			DS 1
+ 	reflowTemp:			DS 1
+ 	reflowTime:			DS 1
+ 	coolRate:			DS 1
 	
 	;MATH16.asm	
 	output:				DS 1

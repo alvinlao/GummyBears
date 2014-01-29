@@ -29,6 +29,24 @@ L1: djnz R0, L1 ; 3 machine cycles-> 3*30ns*250=22.5us
 	djnz R2, L3 ; 5.625ms*90=0.5s (approximately)
 	ret
 
+	
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------    
+; Wait 40 microseconds
+;------------------------------------------------
+Wait40us_helper:
+	mov R0, #149
+X1_helper: 
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	djnz R0, X1_helper ; 9 machine cycles-> 9*30ns*149=40us
+    ret
+	
 
 ;------------------------------------------------
 ; + Public function

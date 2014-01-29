@@ -2,42 +2,58 @@
 ; constants.asm
 ;------------------------------------------------
 ; Constants
+;	Define code and global constants here
 ;------------------------------------------------
 
 ;------------------------------------------------
-;spi.asm
+; spi.asm
 ;------------------------------------------------
-MISO   EQU  P0.0 
-MOSI   EQU  P0.1 
-SCLK   EQU  P0.2
-CE_ADC EQU  P0.3
 
-FREQ   EQU 33333333
-BAUD   EQU 115200
-T2LOAD EQU 65536-(FREQ/(32*BAUD))
+
+
+CSEG
+;------------------------------------------------
+; setup.asm
+;------------------------------------------------
+MAXSOAKRATE:			DB 5		;*C/s
+MINSOAKRATE:			DB 1		;*C/s
+MAXSOAKTEMP:			DB 200		;*C
+MINSOAKTEMP:			DB 100		;*C
+MAXSOAKTIME:			DB 120		;seconds
+MINSOAKTIME:			DB 80		;seconds
+MAXREFLOWRATE:			DB 5		;*C/s
+MINREFLOWRATE:			DB 1		;*C/s
+MAXREFLOWTEMP:			DB	300		;*C
+MINREFLOWTEMP:			DB 200		;*C
+MAXREFLOWTIME:			DB 90		;seconds
+MINREFLOWTIME:			DB 30		;seconds
+MAXCOOLRATE:			DB 10		;*C/s
+MINCOOLRATE:			DB 5		;*C/s
+
+DEFAULT1_SOAKRATE:		DB 3
+DEFAULT1_SOAKTEMP:		DB 150
+DEFAULT1_SOAKTIME:		DB 1
+DEFAULT1_REFLOWRATE:	DB 1
+DEFAULT1_REFLOWTEMP:	DB 1
+DEFAULT1_REFLOWTIME:	DB 1
+DEFAULT1_COOLRATE:		DB 1
 
 ;------------------------------------------------
-;setup.asm
+; LCD.asm
 ;------------------------------------------------
-MAXSOAKRATE		EQU 5		;*C/s
-MINSOAKRATE		EQU 1		;*C/s
-MAXSOAKTEMP		EQU 200		;*C
-MINSOAKTEMP		EQU 100		;*C
-MAXSOAKTIME		EQU 120		;seconds
-MINSOAKTIME		EQU 80		;seconds
-MAXREFLOWRATE	EQU 5		;*C/s
-MINREFLOWRATE	EQU 1		;*C/s
-MAXREFLOWTEMP	EQU	300		;*C
-MINREFLOWTEMP	EQU 200		;*C
-MAXREFLOWTIME	EQU 90		;seconds
-MINREFLOWTIME	EQU 30		;seconds
-MAXCOOLRATE		EQU 10		;*C/s
-MINCOOLRATE		EQU 5		;*C/s
+SETREFLOWRATE_LCD:		DB 'Set Reflow Rate ', '                '
+SETREFLOWTIME_LCD:		DB 'Set Reflow Time ', '                '
+SETREFLOWTEMP_LCD:		DB 'Set Reflow      ', 'Temperature     '
+SETSOAKRATE_LCD:		DB 'Set Soak Rate   ', '                '
+SETCOOLRATE_LCD:		DB 'Set Cool Rate   ', '                '
+SETSOAKTIME_LCD:		DB 'Set Soak Time   ', '                '
+SETSOAKTEMPERATURE_LCD:	DB 'Set Soak        ', 'Temperature     '
 
-DEFAULT1_SOAKRATE		EQU 3
-DEFAULT1_SOAKTEMP		EQU 150
-DEFAULT1_SOAKTIME		EQU 1
-DEFAULT1_REFLOWRATE		EQU 1
-DEFAULT1_REFLOWTEMP		EQU 1
-DEFAULT1_REFLOWTIME		EQU 1
-DEFAULT1_COOLRATE		EQU 1
+PREHEATSOAK_LCD			DB 'Heating to Soak ', '                '
+SOAK_LCD:				DB 'Soak            ', '                '
+PREHEATREFLOW_LCD:		DB 'Heating to      ', 'Reflow          '
+REFLOW_LCD:				DB 'Reflow          ', '                '
+COOLDOWN_LCD: 			DB 'Cooling down    ', '                '
+STOPPED_LCD:            DB 'Stopped         ', '                '
+FINISHED_LCD: 			DB 'Finished!       ', '                '
+
