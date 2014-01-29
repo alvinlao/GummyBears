@@ -28,6 +28,8 @@ DSEG at 30H
 		
 	;VARIABLES
 	currentTemp:		DS 1
+	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
+	runTime:			DS 2
 	
 	;MATH16.asm	
 	output:				DS 1
