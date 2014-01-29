@@ -18,7 +18,7 @@ org 0000H
 
 ORG 001BH
 	ljmp ISR_timer1_buzzer
-	
+
 DSEG at 30H
 	ovenVoltage:	DS 2
 	coldVoltage:	DS 2
@@ -34,7 +34,16 @@ DSEG at 30H
 	x:					DS 2
 	y:					DS 2
 	bcd:				DS 3
-
+	
+	;Setup.asm
+	soakRate: 	DS 1
+ 	soakTemp: 	DS 1
+ 	soakTime:	DS 1
+ 	reflowRate:	DS 1
+ 	reflowTemp:	DS 1
+ 	reflowTime:	DS 1
+ 	coolRate:	DS 1
+	
 BSEG
 	mf:					DBIT 1
 
