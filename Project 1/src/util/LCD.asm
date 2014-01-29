@@ -121,7 +121,6 @@ displayString_L0_LCD:
 	
 	inc R1
 	inc dptr
-	dec R7
 	djnz R7, displayString_L0_LCD
 	ret
 
@@ -129,19 +128,21 @@ displayString_L0_LCD:
 ; + Public function
 ;------------------------------------------------    
 ; void loadString_LCD( dptr )
-; Moves a string to string_LCD
+; Copies a string from code memory to string_LCD
 ;------------------------------------------------     
 ; INPUT:
 ;	dptr - Points to the target string in code memory
 ;------------------------------------------------          
 loadString_LCD:
+	mov R0, #32
+	mov R1, #string_LCD
+loadString_L0_LCD:
 	clr A
 	movc A, @A+dptr
-	mov string_LCD, A
+	mov @R1, A
+	inc R1
 	inc dptr
-	clr A
-	movc A, @A+dptr
-	mov string_LCD+1, A
+	djnz R0, loadString_L0_LCD
 	ret
 	
 $LIST
