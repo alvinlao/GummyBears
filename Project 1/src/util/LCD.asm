@@ -81,8 +81,8 @@ put_LCD:
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------    
-; Setup LCD
-; 	Must be called before using other LCD functions
+; void setup_LCD ( void )
+; Must be called before using other LCD functions
 ;------------------------------------------------     
 setup_LCD:    
     ; Turn LCD on, and wait a bit.
@@ -103,6 +103,7 @@ setup_LCD:
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------    
+; void displayString_LCD( void )
 ; Displays 32 characters on the LCD
 ;------------------------------------------------     
 ; REQUIRES/INPUT:
