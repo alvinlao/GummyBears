@@ -16,7 +16,7 @@ CSEG
 ; void setLine1_LCD( void )
 ; Updates the first line of the LCD screen with the contents of LCD1
 ;------------------------------------------------
-setLCD1_LCD:
+setLine1_LCD:
 	ret
 
 ;------------------------------------------------    
@@ -25,7 +25,7 @@ setLCD1_LCD:
 ; void setLine2_LCD( void )
 ; Updates the second line of the LCD screen with the contents of LCD2
 ;------------------------------------------------
-setLCD2_LCD:
+setLine2_LCD:
 	ret
 
 $LIST
