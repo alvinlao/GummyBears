@@ -104,7 +104,7 @@ setup_LCD:
 ; + Public function
 ;------------------------------------------------    
 ; void displayString_LCD( void )
-; Displays 32 characters on the LCD
+; Displays string stored in DSEG on the LCD
 ;------------------------------------------------     
 ; REQUIRES/INPUT:
 ;	string_LCD (32 bytes)
@@ -113,20 +113,45 @@ setup_LCD:
 ;------------------------------------------------        
 displayString_LCD:
 	mov R7, #32
-	mov R1, #string_LCD
-	mov R2, #80H
+	mov R0, #string_LCD
+	mov R1, #80H
 displayString_L0_LCD:	
-	name_LCD( R2, @R0 )
+	name_LCD( R1, @R0 )
 
+	inc R0
 	inc R1
-	inc R2
 	djnz R7, displayString_L0_LCD
 	ret
 
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------    
-; void loadString_LCD( dptr )
+; void displayStringFromCode_LCD( string [dptr] )
+; Displays string in CSEG on LCD
+;------------------------------------------------     
+; INPUT:
+;	string - dptr points to first character of string in CSEG
+; 
+; ASCII encoded
+;------------------------------------------------        
+displayStringFromCode_LCD:
+	mov R7, #32
+	mov R1, #80H
+displayStringFromCode_L0_LCD:	
+	clr A
+	movc A, @A+dptr
+	mov A, R0
+	name_LCD( R2, R0 )
+
+	inc R1
+	inc dptr
+	djnz R7, displayString_L0_LCD
+	ret
+	
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------    
+; void loadString_LCD( string [dptr] )
 ; Copies a string from code memory to string_LCD
 ;------------------------------------------------     
 ; INPUT:
