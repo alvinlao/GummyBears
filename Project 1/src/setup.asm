@@ -27,6 +27,14 @@ CSEG
 ; 	7) coolRate:	DS 1
 ;------------------------------------------------
 go_setup:
+	mov soakRate, DEFAULT1_SOAKRATE
+	mov soakTemp, DEFAULT1_SOAKTEMP
+	mov soakTime, DEFAULT1_SOAKTIME
+	mov reflowTime, DEFAULT1_REFLOWTIME
+	mov reflowRate, DEFAULT1_reflowRate
+	mov reflowTemp, DEFAULT1_reflowTemp
+	mov coolRate, DEFAULT1_COOLRATE
+	
 	ret
 
 $LIST
