@@ -113,14 +113,13 @@ setup_LCD:
 ;------------------------------------------------        
 displayString_LCD:
 	mov R7, #32
-	mov R1, #80H
-	mov dptr, #string_LCD
+	mov R1, #string_LCD
+	mov R2, #80H
 displayString_L0_LCD:	
-	lcall getCodeByte_helper	; Grab next character in string
-	name_LCD( R1, R0 )
-	
+	name_LCD( R2, @R0 )
+
 	inc R1
-	inc dptr
+	inc R2
 	djnz R7, displayString_L0_LCD
 	ret
 
