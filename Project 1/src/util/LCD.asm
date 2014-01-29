@@ -132,8 +132,8 @@ displayString_L0_LCD:
 ; Moves a string to string_LCD
 ;------------------------------------------------     
 ; INPUT:
-;	dptr - Points to the string to be loaded
-;------------------------------------------------        
+;	dptr - Points to the target string in code memory
+;------------------------------------------------          
 loadString_LCD:
 	clr A
 	movc A, @A+dptr

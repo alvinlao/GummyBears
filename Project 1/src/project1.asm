@@ -59,14 +59,14 @@ $include(util/buzzer.asm)
 $include(util/LCD.asm)
 $include(util/math16.asm)
 
-$include(values/constants.asm)	;Constants
+$include(values/constants.asm)		;Constants
 
 ;-------------------------------------
 ; States
 ;-------------------------------------
-$include(setup.asm)				;Initial user configuration
-$include(live.asm)				;Initial user configuration
-$include(finish.asm)			;Final exit instructions
+$include(setup.asm)					;Initial user configuration
+$include(live.asm)					;Initial user configuration
+$include(finish.asm)				;Final exit instructions
 
 ;-------------------------------------
 ; Oven
