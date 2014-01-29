@@ -20,6 +20,12 @@ ORG 001BH
 	ljmp ISR_timer1_buzzer
 	
 DSEG at 30H
+	ovenVoltage:	DS 2
+	coldVoltage:	DS 2
+
+	line1_LCD:		DS 16
+	line2_LCD:		DS 16
+		
 	;VARIABLES
 	currentTemp:		DS 1
 	
@@ -52,8 +58,8 @@ $include(finish.asm)			;Final exit instructions
 ;-------------------------------------
 ; Oven
 ;-------------------------------------
-$include(oven/driver.asm)		;Oven driver
-$include(oven/controller.asm)		;Oven controller
+;$include(oven/driver.asm)		;Oven driver
+;$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------
 ; Temperature

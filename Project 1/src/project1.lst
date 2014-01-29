@@ -3,11 +3,11 @@
 0000              3   ;------------------------------------------------
 0000              4   ;        GROUP:                  A5
 0000              5   ;------------------------------------------------
-0000              6   ;        MEMBERS:        Alvin Lao                       32510117
+0000              6   ;        MEMBERS:        Alvin Lao                       
 0000              7   ;                                David Henderson                 
 0000              8   ;                                Zhenzheng Xia           
-0000              9   ;                                Bibek Kaur                      15093123
-0000             10   ;                                Jappy Sran                      68226042
+0000              9   ;                                Bibek Kaur                      
+0000             10   ;                                Jappy Sran                      
 0000             11   ;                                Haowei Yu
 0000             12   ;------------------------------------------------
 0000             13   
@@ -145,41 +145,32 @@
 0000            131   LCD_RS    BIT  0DAH ; '0' for commands, '1' for data
 0000            132   LCD_ON    BIT  0DBH ; Write '1' to power the LCD
 0000            133   LCD_BLON  BIT  0DCH ; Write '1' to turn on back light
-0000            134   
-0000            135   FLASH_CMD  data 0DBH ; The control bits of the flash memory:
-0000            136   ; bit 0: FL_RST_N  Set to 1 for normal operation
-0000            137   ; bit 1: FL_WE_N
-0000            138   ; bit 2: FL_OE_N
-0000            139   ; bit 3: FL_CE_N
-0000            140   FLASH_DATA data 0DCH ; 8-bit data bus of flash memory.
-0000            141   FLASH_MOD  data 0DDH ; 0xff makes FLASH_DATA output.  0x00 makes FLASH_DATA input.
-0000            142   FLASH_ADD0 data 0E1H ; address bits 0 to 7.
-0000            143   FLASH_ADD1 data 0E2H ; address bits 8 to 15.
-0000            144   FLASH_ADD2 data 0E3H ; address bits 16 to 21.
-0000            145   
 0000             15   
 0000             16   org 0000H
-0000 0208F5      17      ljmp MyProgram
+0000 0207E4      17      ljmp MyProgram
 0003             18   
 001B             19   ORG 001BH
 001B 0200D5      20            ljmp ISR_timer1_buzzer
 001E             21            
 0030             22   DSEG at 30H
-0030             23            ;VARIABLES
-0030             24            currentTemp:            DS 1
-0031             25            
-0031             26            ;MATH16.asm     
-0031             27            output:                                 DS 1
-0032             28            x:                                      DS 2
-0034             29            y:                                      DS 2
-0036             30            bcd:                            DS 3
-0039             31   
-0000             32   BSEG
-0000             33            mf:                                     DBIT 1
-0001             34   
-0001             35   ;-------------------------------------
-0001             36   ; Utility
-0001             37   ;-------------------------------------
+0030             23            ovenVoltage:    DS 2
+0032             24            coldVoltage:    DS 2
+0034             25            
+0034             26            ;VARIABLES
+0034             27            currentTemp:            DS 1
+0035             28            
+0035             29            ;MATH16.asm     
+0035             30            output:                                 DS 1
+0036             31            x:                                      DS 2
+0038             32            y:                                      DS 2
+003A             33            bcd:                            DS 3
+003D             34   
+0000             35   BSEG
+0000             36            mf:                                     DBIT 1
+0001             37   
+0001             38   ;-------------------------------------
+0001             39   ; Utility
+0001             40   ;-------------------------------------
                  -1   $include(util/helper.asm)
 0001              1   ;------------------------------------------------
 0001              2   ; helper.asm
@@ -234,10 +225,10 @@
 00F2             34   $LIST
                  -1   $include(util/math16.asm)
                 428   $LIST
-02CC             44   
-02CC             45   ;-------------------------------------
-02CC             46   ; States
-02CC             47   ;-------------------------------------
+02CC             47   
+02CC             48   ;-------------------------------------
+02CC             49   ; States
+02CC             50   ;-------------------------------------
                  -1   $include(setup.asm)				;Initial user configuration
 02CC              1   ;------------------------------------------------
 02CC              2   ; setup.asm
@@ -277,100 +268,80 @@
 02CE             12   ;------------------------------------------------
 02CE             13   
 02CF             26   $LIST
-02CF             51   
-02CF             52   ;-------------------------------------
-02CF             53   ; Oven
-02CF             54   ;-------------------------------------
-                 -1   $include(oven/driver.asm)		;Oven driver
-02CF              1   ;------------------------------------------------
-02CF              2   ; driver.asm
-02CF              3   ;------------------------------------------------
-02CF              4   ; Author: Bibek Kaur
-02CF              5   ;------------------------------------------------
-02CF              6   
-03E3            309   $LIST    
-                 -1   $include(oven/controller.asm)		;Oven controller
-03E3              1   ;------------------------------------------------
-03E3              2   ; controller.asm
-03E3              3   ;------------------------------------------------
-03E3              4   ; Control the oven as specified by the reflow soldering parameters
-03E3              5   ;------------------------------------------------
-03E3              6   ; DEPENDENCIES:
-03E3              7   ;        driver.asm
-03E3              8   ;        ../util/buzzer.asm
-03E3              9   ;------------------------------------------------
-03E3             10   ; Author: 
-03E3             11   ;------------------------------------------------
-03E3             12   
-03E4             40   $LIST
-03E4             57   
-03E4             58   ;-------------------------------------
-03E4             59   ; Temperature
-03E4             60   ;-------------------------------------
+02CF             54   
+02CF             55   ;-------------------------------------
+02CF             56   ; Oven
+02CF             57   ;-------------------------------------
+02CF             58   ;$include(oven/driver.asm)               ;Oven driver
+02CF             59   ;$include(oven/controller.asm)           ;Oven controller
+02CF             60   
+02CF             61   ;-------------------------------------
+02CF             62   ; Temperature
+02CF             63   ;-------------------------------------
                  -1   $include(temperature/lm335.asm)		;LM335 voltage to temperature conversion
-03E4              1   ;------------------------------------------------
-03E4              2   ; lm335.asm
-03E4              3   ;------------------------------------------------
-03E4              4   ; LM335 conversion functions
-03E4              5   ;------------------------------------------------
-03E4              6   ; Author: David Henderson
-03E4              7   ;------------------------------------------------
-03E4              8    
-067F            688   $LIST
+02CF              1   ;------------------------------------------------
+02CF              2   ; lm335.asm
+02CF              3   ;------------------------------------------------
+02CF              4   ; LM335 conversion functions
+02CF              5   ;------------------------------------------------
+02CF              6   ; Author: David Henderson
+02CF              7   ;------------------------------------------------
+02CF              8    
+056A            688   $LIST
                  -1   $include(temperature/lookup.asm)	;Lookup table and functions
-067F              1   ;------------------------------------------------
-067F              2   ; lookup.asm
-067F              3   ;------------------------------------------------
-067F              4   ; K-type thermocouple lookup table
-067F              5   ; <key, value> => <temperature (0 - 255), voltage (microvolts)>
-067F              6   ;------------------------------------------------
-067F              7   ; David
-067F              8   ;------------------------------------------------
-067F              9   
+056A              1   ;------------------------------------------------
+056A              2   ; lookup.asm
+056A              3   ;------------------------------------------------
+056A              4   ; K-type thermocouple lookup table
+056A              5   ; <key, value> => <temperature (0 - 255), voltage (microvolts)>
+056A              6   ;------------------------------------------------
+056A              7   ; David
+056A              8   ;------------------------------------------------
+056A              9   
                 335   $LIST
                  -1   $include(temperature/sensor.asm)	;Handle oven temperature
-08AB              1   ;------------------------------------------------
-08AB              2   ; sensor.asm
-08AB              3   ;------------------------------------------------
-08AB              4   ; Sensor for oven temperature 
-08AB              5   ;------------------------------------------------
-08AB              6   ; DEPENDENCIES:
-08AB              7   ;        spi.asm
-08AB              8   ;        lm335.asm
-08AB              9   ;        lookup.asm
-08AB             10   ;        ../util/math16.asm
-08AB             11   ;------------------------------------------------
-08AB             12   ; Author: Alvin Lao
-08AB             13   ;------------------------------------------------
-08AB             14   
-08F5             96   $LIST
-08F5             64   
-08F5             65   CSEG
-08F5             66   
-08F5             67   ;-------------------------------------
-08F5             68   ;MAIN PROGRAM
-08F5             69   ;-------------------------------------
-08F5             70   myprogram:
-08F5 75817F      71       MOV SP, #7FH
-08F8 75E800      72       mov LEDRA, #0
-08FB 759500      73       mov LEDRB, #0
-08FE 759E00      74       mov LEDRC, #0
-0901 75F800      75       mov LEDG, #0
-0904 439A38      76            orl P0MOD, #00111000b           ; make all CEs outputs
-0907             77            
-0907 120068      78            lcall setup_spi                                 ; ADC SPI (Input)
-090A 1200AC      79       lcall setup_serial                   ; Serial (Output)
-090D             80            
-090D             81   mainLoop:
-090D 1208D4      82            lcall getOvenTemp_sensor        ; temp[R0] getOvenTemp(coldVoltage, ovenVoltage)
-0910 88E8        83            mov LEDRA, R0
-0912             84            
-0912 8832        85            mov x, R0
-0914 753300      86            mov x+1, #0
-0917 1200F2      87            lcall hex2bcd
-091A 120037      88            lcall displayBCD_helper                 ; Display the temp on HEX
-091D             89            
-091D             90   ;        lcall logTemperature            ; void logTemperature(temp [R0])
-091D             91   
-091D 12002A      92            lcall Wait_helper
-0920 80EB        93            sjmp mainLoop
+0796              1   ;------------------------------------------------
+0796              2   ; sensor.asm
+0796              3   ;------------------------------------------------
+0796              4   ; Sensor for oven temperature 
+0796              5   ;------------------------------------------------
+0796              6   ; DEPENDENCIES:
+0796              7   ;        spi.asm
+0796              8   ;        lm335.asm
+0796              9   ;        lookup.asm
+0796             10   ;        ../util/math16.asm
+0796             11   ;------------------------------------------------
+0796             12   ; Author: Alvin Lao
+0796             13   ;------------------------------------------------
+0796             14   
+07E4             96   $LIST
+07E4             67   
+07E4             68   CSEG
+07E4             69   
+07E4             70   ;-------------------------------------
+07E4             71   ;MAIN PROGRAM
+07E4             72   ;-------------------------------------
+07E4             73   myprogram:
+07E4 75817F      74       MOV SP, #7FH
+07E7 75E800      75       mov LEDRA, #0
+07EA 759500      76       mov LEDRB, #0
+07ED 759E00      77       mov LEDRC, #0
+07F0 75F800      78       mov LEDG, #0
+07F3 439A38      79            orl P0MOD, #00111000b           ; make all CEs outputs
+07F6             80            
+07F6 120068      81            lcall setup_spi                                 ; ADC SPI (Input)
+07F9 1200AC      82       lcall setup_serial                   ; Serial (Output)
+07FC             83            
+07FC             84   mainLoop:
+07FC 1207BF      85            lcall getOvenTemp_sensor        ; R0 <= oven temperature
+07FF 88E8        86            mov LEDRA, R0
+0801             87            
+0801 8836        88            mov x, R0
+0803 753700      89            mov x+1, #0
+0806 1200F2      90            lcall hex2bcd
+0809 120037      91            lcall displayBCD_helper                 ; Display the temp on 7 seg
+080C             92            
+080C             93            ;lcall logTemperature           ; void logTemperature(temp [R0])
+080C             94   
+080C 12002A      95            lcall Wait_helper
+080F 80EB        96            sjmp mainLoop

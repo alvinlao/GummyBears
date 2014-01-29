@@ -13,9 +13,6 @@
 ;------------------------------------------------
 
 $NOLIST
-DSEG
-	ovenVoltage:	DS 2
-	coldVoltage:	DS 2
 	
 CSEG
 
@@ -46,14 +43,15 @@ ovenBin2Voltage_sensor:
 updateInputVoltages_sensor:
 	mov b, #0  ; Read channel 0 (LM335)
 	lcall Read_ADC_Channel_spi
+
 	mov coldVoltage, R7
 	mov coldVoltage+1, R6
 	
 	mov b, #1  ; Read channel 1 (Thermocouple)
 	lcall Read_ADC_Channel_spi
-
 	mov ovenVoltage, R7
 	mov ovenVoltage+1, R6
+	
 	ret
 
 ;------------------------------------------------
@@ -71,13 +69,15 @@ updateInputVoltages_sensor:
 getOvenTemp_sensor:
 	; Update ovenVoltage and coldVoltage
 	lcall updateInputVoltages_sensor
-	
+
 	; Prepare K-type thermocouple voltage
 	lcall ovenBin2Voltage_sensor
 	mov y+1, R0
 	mov y, R1
 	
 	; Convert LM335 voltage to LUT voltage
+	mov R0, coldVoltage
+	mov R1, coldVoltage+1
 	lcall findLM335Tempurature_lm335		;temp [R0] lm335getTemp(volt [R0, R1])	
 	lcall findVoltage_lookup				;volt [R0, R1] findVoltage(temp [R0])
 	
