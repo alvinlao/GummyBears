@@ -5,11 +5,6 @@
 ;	Define code and global constants here
 ;------------------------------------------------
 
-;------------------------------------------------
-; spi.asm
-;------------------------------------------------
-
-
 
 CSEG
 ;------------------------------------------------
@@ -23,7 +18,7 @@ MAXSOAKTIME:			DB 120		;seconds
 MINSOAKTIME:			DB 80		;seconds
 MAXREFLOWRATE:			DB 5		;*C/s
 MINREFLOWRATE:			DB 1		;*C/s
-MAXREFLOWTEMP:			DB	300		;*C
+MAXREFLOWTEMP:			DW 300		;*C
 MINREFLOWTEMP:			DB 200		;*C
 MAXREFLOWTIME:			DB 90		;seconds
 MINREFLOWTIME:			DB 30		;seconds
@@ -49,7 +44,7 @@ SETCOOLRATE_LCD:		DB 'Set Cool Rate   ', '                '
 SETSOAKTIME_LCD:		DB 'Set Soak Time   ', '                '
 SETSOAKTEMPERATURE_LCD:	DB 'Set Soak        ', 'Temperature     '
 
-PREHEATSOAK_LCD			DB 'Heating to Soak ', '                '
+PREHEATSOAK_LCD:		DB 'Heating to Soak ', '                '
 SOAK_LCD:				DB 'Soak            ', '                '
 PREHEATREFLOW_LCD:		DB 'Heating to      ', 'Reflow          '
 REFLOW_LCD:				DB 'Reflow          ', '                '

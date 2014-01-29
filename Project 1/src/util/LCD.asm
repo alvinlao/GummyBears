@@ -23,7 +23,11 @@ CSEG
 ;		%1 - Character (See put_LCD argument)
 ;------------------------------------------------
 name_LCD MAC 
+	mov a , %0 
+	lcall command_LCD
 
+	mov a , %1
+	lcall put_LCD
 ENDMAC
 
 
@@ -108,20 +112,17 @@ setup_LCD:
 ; Both are ASCII encoded
 ;------------------------------------------------        
 displayString_LCD:
-	mov R0, #32
+	mov R7, #32
 	mov R1, #80H
 	mov dptr, #line1_LCD
-displayString_L0_LCD:
-	clr A
-	movc A, @A+dptr	; Grab next character in string
-	mov R2, A
+displayString_L0_LCD:	
+	lcall getCodeByte_helper	; Grab next character in string
+	name_LCD( R1, R0 )
 	
-	name_LCD( R1, R2 )
-
 	inc R1
 	inc dptr
-	dec R0
-	djnz R0, displayString_L0_LCD
+	dec R7
+	djnz R7, displayString_L0_LCD
 	ret
 	
 $LIST

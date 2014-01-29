@@ -21,12 +21,12 @@ ORG 001BH
 
 DSEG at 30H
 	;temperature/sensor.asm
-	ovenVoltage:	DS 2
-	coldVoltage:	DS 2
+	ovenVoltage:		DS 2
+	coldVoltage:		DS 2
 
 	;LCD.asm
-	line1_LCD:		DS 16
-	line2_LCD:		DS 16		; (!) These two must be right after each other
+	line1_LCD:			DS 16
+	line2_LCD:			DS 16		; (!) These two must be right after each other
 		
 	;VARIABLES
 	currentTemp:		DS 1
@@ -60,6 +60,8 @@ $include(util/serial.asm)
 $include(util/buzzer.asm)
 $include(util/LCD.asm)
 $include(util/math16.asm)
+
+$include(values/constants.asm)	;Constants
 
 ;-------------------------------------
 ; States

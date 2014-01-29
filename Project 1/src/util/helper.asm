@@ -47,7 +47,25 @@ X1_helper:
 	djnz R0, X1_helper ; 9 machine cycles-> 9*30ns*149=40us
     ret
 	
-
+	
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------    
+; Returns a byte from code memory
+;------------------------------------------------
+; INPUT:
+;	dptr - The memory address
+;------------------------------------------------
+; OUTPUT:
+;	R0 - The byte at input memory address
+;------------------------------------------------
+getCodeByte_helper:
+	clr A
+	movc A, @A+dptr
+	mov R0, A
+	ret
+	
+	
 ;------------------------------------------------
 ; + Public function
 ;------------------------------------------------

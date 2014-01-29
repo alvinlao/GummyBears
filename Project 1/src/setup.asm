@@ -27,14 +27,34 @@ CSEG
 ; 	7) coolRate:	DS 1
 ;------------------------------------------------
 go_setup:
-	mov soakRate, DEFAULT1_SOAKRATE
-	mov soakTemp, DEFAULT1_SOAKTEMP
-	mov soakTime, DEFAULT1_SOAKTIME
-	mov reflowTime, DEFAULT1_REFLOWTIME
-	mov reflowRate, DEFAULT1_reflowRate
-	mov reflowTemp, DEFAULT1_reflowTemp
-	mov coolRate, DEFAULT1_COOLRATE
+	mov dptr, #DEFAULT1_SOAKRATE
+	lcall getCodeByte_helper
+	mov soakRate, R0
+
+	mov dptr, #DEFAULT1_SOAKTEMP
+	lcall getCodeByte_helper
+	mov soakTemp, R0
 	
+	mov dptr, #DEFAULT1_SOAKTIME
+	lcall getCodeByte_helper
+	mov soakTime, R0
+	
+	mov dptr, #DEFAULT1_REFLOWTIME
+	lcall getCodeByte_helper
+	mov reflowTime, R0
+	
+	mov dptr, #DEFAULT1_REFLOWRATE
+	lcall getCodeByte_helper
+	mov reflowRate, R0
+	
+	mov dptr, #DEFAULT1_REFLOWTEMP
+	lcall getCodeByte_helper
+	mov reflowTemp, R0	
+	
+	mov dptr, #DEFAULT1_COOLRATE
+	lcall getCodeByte_helper
+	mov coolRate, R0
+
 	ret
 
 $LIST
