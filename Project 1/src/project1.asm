@@ -98,7 +98,9 @@ myprogram:
 	
 	lcall setup_spi				; ADC SPI (Input)
     lcall setup_serial 			; Serial (Output)
-    lcall setup_lcd				;
+    lcall setup_lcd				; Setup LCD
+	lcall setup_driver			; P1 output pins
+	
 mainLoop:
 	lcall getOvenTemp_sensor	; R0 <= oven temperature
 	mov LEDRA, R0
