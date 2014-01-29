@@ -25,8 +25,7 @@ DSEG at 30H
 	coldVoltage:		DS 2
 
 	;LCD.asm
-	line1_LCD:			DS 16
-	line2_LCD:			DS 16		; (!) These two must be right after each other
+	string_LCD:			DS 32
 		
 	;VARIABLES
 	currentTemp:		DS 1
@@ -73,7 +72,7 @@ $include(finish.asm)			;Final exit instructions
 ;-------------------------------------
 ; Oven
 ;-------------------------------------
-;$include(oven/driver.asm)			;Oven driver
+$include(oven/driver.asm)			;Oven driver
 ;$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------

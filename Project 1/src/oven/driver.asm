@@ -29,7 +29,7 @@ setup_driver:
 ; 	R1 - Current temperature in celsius (0 - 255)
 ; 	R2 - Ramp rate in *C/s (0 - 255)
 ;------------------------------------------------
-setRamp_driver;
+setRamp_driver:
 	ret
 	
 ;------------------------------------------------    

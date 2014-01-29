@@ -107,15 +107,14 @@ setup_LCD:
 ; Displays 32 characters on the LCD
 ;------------------------------------------------     
 ; REQUIRES/INPUT:
-;	line1_LCD (16 bytes)
-;	line2_LCD (16 bytes)
+;	string_LCD (32 bytes)
 ; 
 ; Both are ASCII encoded
 ;------------------------------------------------        
 displayString_LCD:
 	mov R7, #32
 	mov R1, #80H
-	mov dptr, #line1_LCD
+	mov dptr, #string_LCD
 displayString_L0_LCD:	
 	lcall getCodeByte_helper	; Grab next character in string
 	name_LCD( R1, R0 )
@@ -125,6 +124,24 @@ displayString_L0_LCD:
 	dec R7
 	djnz R7, displayString_L0_LCD
 	ret
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------    
+; void loadString_LCD( dptr )
+; Moves a string to string_LCD
+;------------------------------------------------     
+; INPUT:
+;	dptr - Points to the string to be loaded
+;------------------------------------------------        
+loadString_LCD:
+	clr A
+	movc A, @A+dptr
+	mov string_LCD, A
+	inc dptr
+	clr A
+	movc A, @A+dptr
+	mov string_LCD+1, A
+	ret
 	
 $LIST
-
