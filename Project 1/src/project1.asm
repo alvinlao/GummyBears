@@ -20,9 +20,11 @@ ORG 001BH
 	ljmp ISR_timer1_buzzer
 
 DSEG at 30H
+	;temperature/sensor.asm
 	ovenVoltage:	DS 2
 	coldVoltage:	DS 2
 
+	;LCD.asm
 	line1_LCD:		DS 16
 	line2_LCD:		DS 16
 		
@@ -30,13 +32,7 @@ DSEG at 30H
 	currentTemp:		DS 1
 	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
 	runTime:			DS 2
-	
-	;MATH16.asm	
-	output:				DS 1
-	x:					DS 2
-	y:					DS 2
-	bcd:				DS 3
-	
+
 	;Setup.asm
 	soakRate: 	DS 1
  	soakTemp: 	DS 1
@@ -45,6 +41,12 @@ DSEG at 30H
  	reflowTemp:	DS 1
  	reflowTime:	DS 1
  	coolRate:	DS 1
+	
+	;MATH16.asm	
+	output:				DS 1
+	x:					DS 2
+	y:					DS 2
+	bcd:				DS 3
 	
 BSEG
 	mf:					DBIT 1

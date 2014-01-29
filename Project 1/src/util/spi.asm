@@ -7,15 +7,6 @@
 ;------------------------------------------------
 $NOLIST
 
-MISO   EQU  P0.0 
-MOSI   EQU  P0.1 
-SCLK   EQU  P0.2
-CE_ADC EQU  P0.3
-
-FREQ   EQU 33333333
-BAUD   EQU 115200
-T2LOAD EQU 65536-(FREQ/(32*BAUD))
-
 CSEG
 
 ;------------------------------------------------    
