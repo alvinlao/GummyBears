@@ -10,6 +10,12 @@ CSEG
 ;------------------------------------------------
 ; LCD.asm
 ;------------------------------------------------
+WELCOME_STRINGS:			DB '    WELCOME!    ', 'REFLOW SOLDERING'
+
+DEFAULT1_STRINGS:			DB '      SET       ', '   DEFAULT 1    '
+DEFAULT2_STRINGS:			DB '      SET       ', '   DEFAULT 2    '
+DEFAULT3_STRINGS:			DB '      SET       ', '   DEFAULT 3    '
+
 SETREFLOWRATE_STRINGS:		DB 'Set Reflow Rate ', '                '
 SETREFLOWTIME_STRINGS:		DB 'Set Reflow Time ', '                '
 SETREFLOWTEMP_STRINGS:		DB 'Set Reflow      ', 'Temperature     '
