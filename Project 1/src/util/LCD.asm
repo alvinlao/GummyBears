@@ -132,28 +132,7 @@ displayStringFromCode_L0_LCD:
 
 	inc R1
 	inc dptr
-	djnz R7, displayString_L0_LCD
-	ret
-	
-;------------------------------------------------    
-; + Public function
-;------------------------------------------------    
-; void loadString_LCD( string [dptr] )
-; Copies a string from code memory to string_LCD
-;------------------------------------------------     
-; INPUT:
-;	dptr - Points to the target string in code memory
-;------------------------------------------------          
-loadString_LCD:
-	mov R0, #32
-	mov R1, #string_LCD
-loadString_L0_LCD:
-	clr A
-	movc A, @A+dptr
-	mov @R1, A
-	inc R1
-	inc dptr
-	djnz R0, loadString_L0_LCD
+	djnz R7, displayStringFromCode_L0_LCD
 	ret
 	
 $LIST
