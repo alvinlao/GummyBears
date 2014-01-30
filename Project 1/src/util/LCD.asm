@@ -12,25 +12,6 @@
 $NOLIST
 CSEG
 
-
-;------------------------------------------------    
-; - Private macro
-;------------------------------------------------    
-; Put character at desired position
-;------------------------------------------------
-;	INPUT:
-;		%0 - Position (See command_LCD argument)
-;		%1 - Character (See put_LCD argument)
-;------------------------------------------------
-name_LCD MAC 
-	mov a , %0 
-	lcall command_LCD
-
-	mov a , %1
-	lcall put_LCD
-ENDMAC
-
-
 ;------------------------------------------------    
 ; - Private function
 ;------------------------------------------------    
