@@ -101,10 +101,12 @@ myprogram:
     mov LEDG, #0
 	orl P0MOD, #00111000b 		; make all CEs outputs
 	
-	lcall setup_spi				; ADC SPI (Input)
-    lcall setup_serial 			; Serial (Output)
-    lcall setup_lcd				; Setup LCD
-	lcall setup_driver			; P1 output pins
+	lcall setup0_timer		; setup timer0
+	lcall setup1_timer		; setup timer1	
+	lcall setup_spi			; ADC SPI (Input)
+	lcall setup_serial 		; Serial (Output)
+	lcall setup_lcd			; Setup LCD
+	lcall setup_driver		; P1 output pins
 	
 mainLoop:
 	lcall getOvenTemp_sensor	; R0 <= oven temperature

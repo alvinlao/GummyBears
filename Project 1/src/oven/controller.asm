@@ -20,12 +20,12 @@ CSEG
 ; void setup_controller( void )
 ; Must be called before the controller is used
 ;------------------------------------------------
-; ENSURES:
+; REQUIRES:
 ;	Setup timer0 for 1 second interrupts
 ;------------------------------------------------
 setup_controller:
 	
-	ret	
+	ret
 
 ;------------------------------------------------    
 ; + Public function
