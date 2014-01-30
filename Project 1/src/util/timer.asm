@@ -12,9 +12,9 @@
 
 CLK EQU 33333333
 FREQ_0 EQU 2000
-FREQ_1 EQU 100
+FREQ_2 EQU 100
 TIMER0_RELOAD EQU 65536-(CLK/(12*2*FREQ_0))
-TIMER1_RELOAD EQU 65536-(CLK/(12*2*FREQ_1))
+TIMER2_RELOAD EQU 65536-(CLK/(12*FREQ_2))
 
 $NOLIST
 CSEG
@@ -30,9 +30,10 @@ ISR_timer0:
 	push dpl
 	push dph
 
-	mov TH0, timer0_reload
-	mov TL0, timer0_reload+1
-
+	mov TH0, reload0_timer
+	mov TL0, reload0_timer+1
+	
+	
 	; DO STUFF
 
 	pop dph
@@ -55,8 +56,8 @@ ISR_timer1_buzzer:
 	push dpl
 	push dph
 
-	mov TH1, timer1_reload
-	mov TL1, timer1_reload+1
+	mov TH1, reload1_timer
+	mov TL1, reload1_timer+1
 
 	; DO STUFF
 

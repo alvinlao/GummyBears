@@ -24,8 +24,8 @@ ORG 001BH
 
 DSEG at 30H
 	;TIMERS
-	timer0_reload:		DS 1
-	timer1_reload:		DS 1
+	reload0_timer:		DS 1
+	reload1_timer:		DS 1
 	
 	;STATES
 	currentTemp:		DS 1
