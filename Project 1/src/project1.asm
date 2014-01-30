@@ -17,9 +17,16 @@ org 0000H
    ljmp MyProgram
 
 ORG 001BH
-	ljmp ISR_timer1_buzzer
+	ljmp ISR_timer0
+	
+ORG 001BH
+	ljmp ISR_timer1
 
 DSEG at 30H
+	;TIMERS
+	timer0_reload:		DS 1
+	timer1_reload:		DS 1
+	
 	;STATES
 	currentTemp:		DS 1
 	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
@@ -97,10 +104,12 @@ myprogram:
     mov LEDG, #0
 	orl P0MOD, #00111000b 		; make all CEs outputs
 	
-	lcall setup_spi				; ADC SPI (Input)
-    lcall setup_serial 			; Serial (Output)
-    lcall setup_lcd				; Setup LCD
-	lcall setup_driver			; P1 output pins
+	lcall setup0_timer		; setup timer0
+	lcall setup1_timer		; setup timer1	
+	lcall setup_spi			; ADC SPI (Input)
+	lcall setup_serial 		; Serial (Output)
+	lcall setup_lcd			; Setup LCD
+	lcall setup_driver		; P1 output pins
 	
 mainLoop:
 	lcall getOvenTemp_sensor	; R0 <= oven temperature

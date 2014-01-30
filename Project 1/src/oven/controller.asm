@@ -13,6 +13,20 @@
 $NOLIST
 CSEG
 
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void setup_controller( void )
+; Must be called before the controller is used
+;------------------------------------------------
+; REQUIRES:
+;	Setup timer0 for 1 second interrupts
+;------------------------------------------------
+setup_controller:
+	
+	ret
+
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
@@ -28,13 +42,17 @@ CSEG
 ;	reflowTime
 ;	coolRate
 ;------------------------------------------------
+; MODIFIES:
+;	currentState - Updates current state
+;------------------------------------------------
 ; ENSURES:
 ; 	Every stage transition, make a short beep (use util/buzzer.asm)
 ;------------------------------------------------
 ; INPUT:
 ; 	R0 - Contains the desired temperature in celsius (0 - 255)
 ;------------------------------------------------
-update_oven:
+update_controller:
+	
 	ret
 
 $LIST
