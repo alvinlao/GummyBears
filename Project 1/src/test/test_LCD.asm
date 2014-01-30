@@ -10,10 +10,18 @@ org 0000H
 	ljmp MyProgram
 
 DSEG at 30H
-	string_LCD: DS 32
+	;util/LCD.asm
+	string_LCD:			DS 32	
+	
+	;util/math16.asm	
+	output:				DS 1
+	x:					DS 2
+	y:					DS 2
+	bcd:				DS 3
 
 CSEG
 $include(../util/LCD.asm)
+$include(../util/helper.asm)
 
 hello:
 	DB 'hello           ', '                '
@@ -28,7 +36,7 @@ myprogram:
 	lcall setup_LCD
 
 Loop:
-	mov dptr, #hello
-	lcall displayStringFromCode_LCD
+	mov string_LCD, #'h'
+	lcall displayString_LCD
 	sjmp Loop
 	
