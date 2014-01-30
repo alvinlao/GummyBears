@@ -84,7 +84,7 @@ put_LCD:
 ; void setup_LCD ( void )
 ; Must be called before using other LCD functions
 ;------------------------------------------------     
-setup_LCD:    
+setup_LCD:   
     ; Turn LCD on, and wait a bit.
     setb LCD_ON
     clr LCD_EN  ; Default state of enable must be zero
@@ -113,17 +113,17 @@ setup_LCD:
 ;------------------------------------------------        
 displayString_LCD:
 	mov R7, #32
-	mov R0, #string_LCD
-	mov R1, #80H
+	mov R1, #string_LCD
+	mov R2, #80H
 displayString_L0_LCD:	
-	mov A, R1
+	mov A, R2
 	lcall command_LCD
 
-	mov A, @R0
+	mov A, @R1
 	lcall put_LCD
 
-	inc R0
 	inc R1
+	inc R2
 	djnz R7, displayString_L0_LCD
 	ret
 

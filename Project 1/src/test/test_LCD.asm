@@ -38,5 +38,5 @@ myprogram:
 Loop:
 	mov string_LCD, #'h'
 	lcall displayString_LCD
-	sjmp Loop
+	sjmp $
 	
