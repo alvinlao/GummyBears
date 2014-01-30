@@ -46,6 +46,9 @@ DSEG at 30H
 	y:					DS 2
 	bcd:				DS 3
 	
+	;compare for cjne instruction
+	compare:			DS 1
+	
 BSEG
 	mf:					DBIT 1
 
