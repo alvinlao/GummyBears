@@ -116,7 +116,11 @@ displayString_LCD:
 	mov R0, #string_LCD
 	mov R1, #80H
 displayString_L0_LCD:	
-	name_LCD( R1, @R0 )
+	mov A, R1
+	lcall command_LCD
+
+	mov A, @R0
+	lcall put_LCD
 
 	inc R0
 	inc R1
@@ -138,10 +142,12 @@ displayStringFromCode_LCD:
 	mov R7, #32
 	mov R1, #80H
 displayStringFromCode_L0_LCD:	
+	mov A, R1
+	lcall command_LCD
+
 	clr A
 	movc A, @A+dptr
-	mov A, R0
-	name_LCD( R2, R0 )
+	lcall put_LCD
 
 	inc R1
 	inc dptr
