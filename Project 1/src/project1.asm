@@ -30,7 +30,7 @@ DSEG at 30H
 		
 	;VARIABLES
 	currentTemp:		DS 1
-	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
+	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL, STOPPED, FINISHED
 	runTime:			DS 2
 
 	;Setup.asm
@@ -96,7 +96,7 @@ myprogram:
 	
 	lcall setup_spi				; ADC SPI (Input)
     lcall setup_serial 			; Serial (Output)
-    	
+	
 mainLoop:
 	lcall getOvenTemp_sensor	; R0 <= oven temperature
 	mov LEDRA, R0

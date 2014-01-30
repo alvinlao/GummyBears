@@ -27,74 +27,43 @@ CSEG
 ; 	7) coolRate:	DS 1	->SWA.6
 ;------------------------------------------------
 go_setup:
-	mov soakRate, #DEFAULT1_SOAKRATE
-	mov soakTemp, #DEFAULT1_SOAKTEMP
-	mov soakTime, #DEFAULT1_SOAKTIME
-	mov reflowRate, #DEFAULT1_reflowRate
-	mov reflowTemp, #DEFAULT1_reflowTemp
-	mov reflowTime, #DEFAULT1_REFLOWTIME
-	mov coolRate, #DEFAULT1_COOLRATE
-	
-	mov line1_LCD+0, #'C'
-	mov line1_LCD+1, #'H'
-	mov line1_LCD+2, #'A'
-	mov line1_LCD+3, #'N'
-	mov line1_LCD+4, #'G'
-	mov line1_LCD+5, #'I'
-	mov line1_LCD+6, #'N'
-	mov line1_LCD+7, #'G'
-	mov line1_LCD+8, #'.'
-	mov line1_LCD+9, #'.'
-	mov line1_LCD+10, #'.'
-	mov line1_LCD+11, #' '
-	mov line1_LCD+12, #' '
-	mov line1_LCD+13, #' '
-	mov line1_LCD+14, #' '
-	mov line1_LCD+15, #' '
 
-	LCALL setLine1_LCD
+	mov dptr, #DEFAULT1_SOAKRATE
+	lcall getCodeByte_helper
+	mov soakRate, R0
+
+	mov dptr, #DEFAULT1_SOAKTEMP
+	lcall getCodeByte_helper
+	mov soakTemp, R0
 	
-	mov line2_LCD+0, #'S'
-	mov line2_LCD+1, #'e'
-	mov line2_LCD+2, #'l'
-	mov line2_LCD+3, #'e'
-	mov line2_LCD+4, #'c'
-	mov line2_LCD+5, #'t'
-	mov line2_LCD+6, #' '
-	mov line2_LCD+7, #'P'
-	mov line2_LCD+8, #'r'
-	mov line2_LCD+9, #'o'
-	mov line2_LCD+10, #'f'
-	mov line2_LCD+11, #'i'
-	mov line2_LCD+12, #'l'
-	mov line2_LCD+13, #'e'
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
+	mov dptr, #DEFAULT1_SOAKTIME
+	lcall getCodeByte_helper
+	mov soakTime, R0
 	
-	LCALL setLine2_LCD
+	mov dptr, #DEFAULT1_REFLOWTIME
+	lcall getCodeByte_helper
+	mov reflowTime, R0
+	
+	mov dptr, #DEFAULT1_REFLOWRATE
+	lcall getCodeByte_helper
+	mov reflowRate, R0
+	
+	mov dptr, #DEFAULT1_REFLOWTEMP
+	lcall getCodeByte_helper
+	mov reflowTemp, R0        
+	
+	mov dptr, #DEFAULT1_COOLRATE
+	lcall getCodeByte_helper
+	mov coolRate, R0
 	
 ;	soakRate
 L0:	
+	JB SWA.7, L1
 	jnb SWA.0, L1
 	
-	mov line2_LCD+0, #'0'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'S'
-	mov line2_LCD+3, #'O'
-	mov line2_LCD+4, #'C'
-	mov line2_LCD+5, #'K'
-	mov line2_LCD+6, #' '
-	mov line2_LCD+7, #'R'
-	mov line2_LCD+8, #'A'
-	mov line2_LCD+9, #'T'
-	mov line2_LCD+10, #'E'
-	mov line2_LCD+11, #' '
-	mov line2_LCD+12, #' '
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETSOAKRATE_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, soakRate
 	MOV X+1, #00H
@@ -106,7 +75,9 @@ L01:
 	jb KEY.0, L02
 	jnb KEY.0, $
 	MOV A, soakRate
-	CJNE A, #MAX_SOAKRATE, SHORT0
+	mov dptr, #MAX_SOAKRATE
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT0
 	SJMP L02
 SHORT0:
 	INC A
@@ -121,7 +92,9 @@ L02:
 	jb KEY.1, L03
 	jnb KEY.1, $
 	MOV A, soakRate
-	CJNE A, #MIN_SOAKRATE, SHORTC0
+	mov dptr, #MIN_SOAKRATE
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC0
 	SJMP L03
 SHORTC0:
 	DEC A
@@ -137,26 +110,12 @@ L03:
 	
 ;	soakTemp
 L1:
+	JB SWA.7, L2
 	jnb SWA.1, L2
 	
-	mov line2_LCD+0, #'1'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'S'
-	mov line2_LCD+3, #'O'
-	mov line2_LCD+4, #'C'
-	mov line2_LCD+5, #'K'
-	mov line2_LCD+6, #' '
-	mov line2_LCD+7, #'T'
-	mov line2_LCD+8, #'E'
-	mov line2_LCD+9, #'M'
-	mov line2_LCD+10, #'P'
-	mov line2_LCD+11, #'.'
-	mov line2_LCD+12, #' '
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETSOAKTEMPERATURE_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, soakTemp
 	MOV X+1, #00H
@@ -168,7 +127,9 @@ L11:
 	jb KEY.0, L12
 	jnb KEY.0, $
 	MOV A, soakTemp
-	CJNE A, #MAX_SOAKTEMP, SHORT1
+	mov dptr, #MAX_SOAKTEMP
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT1
 	SJMP L12
 SHORT1:
 	INC A
@@ -183,7 +144,9 @@ L12:
 	jb KEY.1, L13
 	jnb KEY.1, $
 	MOV A, soakTemp
-	CJNE A, #MIN_SOAKTEMP, SHORTC1
+	mov dptr, #MIN_SOAKTEMP
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC1
 	SJMP L13
 SHORTC1:
 	DEC A
@@ -199,26 +162,12 @@ L13:
 	
 ;	soakTime
 L2:
+	JB SWA.7, L3
 	jnb SWA.2, L3
 	
-	mov line2_LCD+0, #'2'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'S'
-	mov line2_LCD+3, #'O'
-	mov line2_LCD+4, #'C'
-	mov line2_LCD+5, #'K'
-	mov line2_LCD+6, #' '
-	mov line2_LCD+7, #'T'
-	mov line2_LCD+8, #'I'
-	mov line2_LCD+9, #'M'
-	mov line2_LCD+10, #'E'
-	mov line2_LCD+11, #' '
-	mov line2_LCD+12, #' '
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETSOAKTIME_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, soakTime
 	MOV X+1, #00H
@@ -230,7 +179,9 @@ L21:
 	jb KEY.0, L22
 	jnb KEY.0, $
 	MOV A, soakTime
-	CJNE A, #MAX_SOAKTIME, SHORT2
+	mov dptr, #MAX_SOAKTIME
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT2
 	SJMP L22
 SHORT2:
 	INC A
@@ -245,7 +196,9 @@ L22:
 	jb KEY.1, L23
 	jnb KEY.1, $
 	MOV A, soakTime
-	CJNE A, #MIN_SOAKTIME, SHORTC2
+	mov dptr, #MIN_SOAKTIME
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC2
 	SJMP L23
 SHORTC2:
 	DEC A
@@ -261,26 +214,12 @@ L23:
 	
 ;	reflowRate
 L3:
+	JB SWA.7, L4
 	jnb SWA.3, L4
 	
-	mov line2_LCD+0, #'3'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'R'
-	mov line2_LCD+3, #'E'
-	mov line2_LCD+4, #'F'
-	mov line2_LCD+5, #'L'
-	mov line2_LCD+6, #'O'
-	mov line2_LCD+7, #'W'
-	mov line2_LCD+8, #' '
-	mov line2_LCD+9, #'R'
-	mov line2_LCD+10, #'A'
-	mov line2_LCD+11, #'T'
-	mov line2_LCD+12, #'E'
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETREFLOWRATE_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, reflowRate
 	MOV X+1, #00H
@@ -292,7 +231,9 @@ L31:
 	jb KEY.0, L32
 	jnb KEY.0, $
 	MOV A, reflowRate
-	CJNE A, #MAX_reflowRate, SHORT3
+	mov dptr, #MAX_reflowRate
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT3
 	SJMP L32
 SHORT3:
 	INC A
@@ -307,7 +248,9 @@ L32:
 	jb KEY.1, L33
 	jnb KEY.1, $
 	MOV A, reflowRate
-	CJNE A, #MIN_reflowRate, SHORTC3
+	mov dptr, #MIN_reflowRate
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC3
 	SJMP L33
 SHORTC3:
 	DEC A
@@ -323,26 +266,12 @@ L33:
 	
 ;	reflowTemp	
 L4:
+	JB SWA.7, L5
 	jnb SWA.4, L5
 	
-	mov line2_LCD+0, #'4'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'R'
-	mov line2_LCD+3, #'E'
-	mov line2_LCD+4, #'F'
-	mov line2_LCD+5, #'L'
-	mov line2_LCD+6, #'O'
-	mov line2_LCD+7, #'W'
-	mov line2_LCD+8, #' '
-	mov line2_LCD+9, #'T'
-	mov line2_LCD+10, #'E'
-	mov line2_LCD+11, #'M'
-	mov line2_LCD+12, #'P'
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETREFLOWTEMP_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, reflowTemp
 	MOV X+1, #00H
@@ -354,7 +283,9 @@ L41:
 	jb KEY.0, L42
 	jnb KEY.0, $
 	MOV A, reflowTemp
-	CJNE A, #MAX_reflowTemp, SHORT4
+	mov dptr, #MAX_REFLOWTEMP
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT4
 	SJMP L42
 SHORT4:
 	INC A
@@ -369,7 +300,9 @@ L42:
 	jb KEY.1, L43
 	jnb KEY.1, $
 	MOV A, reflowTemp
-	CJNE A, #MIN_reflowTemp, SHORTC4
+	mov dptr, #MIN_REFLOWTEMP
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC4
 	SJMP L43
 SHORTC4:
 	DEC A
@@ -385,26 +318,12 @@ L43:
 	
 ;	reflowTime
 L5:
+	JB SWA.7, L6
 	jnb SWA.5, L6
 	
-	mov line2_LCD+0, #'5'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'R'
-	mov line2_LCD+3, #'E'
-	mov line2_LCD+4, #'F'
-	mov line2_LCD+5, #'L'
-	mov line2_LCD+6, #'O'
-	mov line2_LCD+7, #'W'
-	mov line2_LCD+8, #' '
-	mov line2_LCD+9, #'T'
-	mov line2_LCD+10, #'I'
-	mov line2_LCD+11, #'M'
-	mov line2_LCD+12, #'E'
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETREFLOWTIME_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, reflowTime
 	MOV X+1, #00H
@@ -416,7 +335,9 @@ L51:
 	jb KEY.0, L52
 	jnb KEY.0, $
 	MOV A, reflowTime
-	CJNE A, #MAX_reflowTime, SHORT5
+	mov dptr, #MAX_REFLOWTIME
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT5
 	SJMP L52
 SHORT5:
 	INC A
@@ -431,7 +352,9 @@ L52:
 	jb KEY.1, L53
 	jnb KEY.1, $
 	MOV A, reflowTime
-	CJNE A, #MIN_reflowTime, SHORTC5
+	mov dptr, #MIN_REFLOWTIME
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC5
 	SJMP L53
 SHORTC5:
 	DEC A
@@ -447,26 +370,12 @@ L53:
 
 ;	coolRate
 L6:
+	JB SWA.7, L8
 	jnb SWA.6, L7
 	
-	mov line2_LCD+0, #'6'
-	mov line2_LCD+1, #' '
-	mov line2_LCD+2, #'C'
-	mov line2_LCD+3, #'O'
-	mov line2_LCD+4, #'O'
-	mov line2_LCD+5, #'L'
-	mov line2_LCD+6, #' '
-	mov line2_LCD+7, #'R'
-	mov line2_LCD+8, #'A'
-	mov line2_LCD+9, #'T'
-	mov line2_LCD+10, #'E'
-	mov line2_LCD+11, #' '
-	mov line2_LCD+12, #' '
-	mov line2_LCD+13, #' '
-	mov line2_LCD+14, #' '
-	mov line2_LCD+15, #' '
-	
-	LCALL setLine2_LCD
+	mov dptr, #SETCOOLRATE_STRINGS
+	LCALL loadString_LCD
+	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, coolRate
 	MOV X+1, #00H
@@ -478,7 +387,9 @@ L61:
 	jb KEY.0, L62
 	jnb KEY.0, $
 	MOV A, coolRate
-	CJNE A, #MAX_coolRate, SHORT6
+	mov dptr, #MAX_COOLRATE
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORT6
 	SJMP L62
 SHORT6:
 	INC A
@@ -493,7 +404,9 @@ L62:
 	jb KEY.1, L63
 	jnb KEY.1, $
 	MOV A, coolRate
-	CJNE A, #MIN_coolRate, SHORTC6
+	mov dptr, #MIN_COOLRATE
+	lcall getCodeByte_helper
+	CJNE A, R0, SHORTC6
 	SJMP L63
 SHORTC6:
 	DEC A
@@ -507,7 +420,10 @@ SHORTC6:
 L63:	
 	LJMP L6
 L7:
-	ret
+	JB SWA.7, L8
+	LJMP L0
+L8: 
+	RET
 
 $LIST
 
