@@ -17,9 +17,16 @@ org 0000H
    ljmp MyProgram
 
 ORG 001BH
-	ljmp ISR_timer1_buzzer
+	ljmp ISR_timer0
+	
+ORG 001BH
+	ljmp ISR_timer1
 
 DSEG at 30H
+	;TIMERS
+	timer0_reload:		DS 1
+	timer1_reload:		DS 1
+	
 	;STATES
 	currentTemp:		DS 1
 	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
