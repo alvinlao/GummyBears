@@ -20,29 +20,27 @@ ORG 001BH
 	ljmp ISR_timer1_buzzer
 
 DSEG at 30H
-	;temperature/sensor.asm
-	ovenVoltage:	DS 2
-	coldVoltage:	DS 2
-
-	;LCD.asm
-	line1_LCD:		DS 16
-	line2_LCD:		DS 16
-		
-	;VARIABLES
+	;STATES
 	currentTemp:		DS 1
-	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL, STOPPED, FINISHED
+	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
 	runTime:			DS 2
 
-	;Setup.asm
-	soakRate: 	DS 1
- 	soakTemp: 	DS 1
- 	soakTime:	DS 1
- 	reflowRate:	DS 1
- 	reflowTemp:	DS 1
- 	reflowTime:	DS 1
- 	coolRate:	DS 1
+	soakRate: 			DS 1
+ 	soakTemp: 			DS 1
+ 	soakTime:			DS 1
+ 	reflowRate:			DS 1
+ 	reflowTemp:			DS 1
+ 	reflowTime:			DS 1
+ 	coolRate:			DS 1
+ 	
+	;temperature/sensor.asm
+	ovenVoltage:		DS 2
+	coldVoltage:		DS 2
+		
+	;util/LCD.asm
+	string_LCD:			DS 32	
 	
-	;MATH16.asm	
+	;util/math16.asm	
 	output:				DS 1
 	x:					DS 2
 	y:					DS 2
@@ -61,17 +59,19 @@ $include(util/buzzer.asm)
 $include(util/LCD.asm)
 $include(util/math16.asm)
 
+$include(values/constants.asm)		;Constants
+
 ;-------------------------------------
 ; States
 ;-------------------------------------
-$include(setup.asm)				;Initial user configuration
-$include(live.asm)				;Initial user configuration
-$include(finish.asm)			;Final exit instructions
+$include(setup.asm)					;Initial user configuration
+$include(live.asm)					;Initial user configuration
+$include(finish.asm)				;Final exit instructions
 
 ;-------------------------------------
 ; Oven
 ;-------------------------------------
-;$include(oven/driver.asm)		;Oven driver
+$include(oven/driver.asm)			;Oven driver
 ;$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------
@@ -96,6 +96,8 @@ myprogram:
 	
 	lcall setup_spi				; ADC SPI (Input)
     lcall setup_serial 			; Serial (Output)
+    lcall setup_lcd				; Setup LCD
+	lcall setup_driver			; P1 output pins
 	
 mainLoop:
 	lcall getOvenTemp_sensor	; R0 <= oven temperature

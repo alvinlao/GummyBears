@@ -6,20 +6,12 @@
 
 $NOLIST
 CSEG
-;-------------------------------------------------------------------------------
-;	HELPER:
-;-------------------------------------------------------------------------------
-	;if T_(current) > T_(desired) : P1.0 on
-	;else P1.0 off
-	;where T_(desired) is T_(initial) + slope* number of times called in a sec
-	;T_(initial) = T(current-1)
-;-------------------------------------------------------------------------------
-	
+
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
 ; void setup_driver( void )
-; Setup the ports
+; Setup port 1 output pins
 ;------------------------------------------------
 setup_driver:
 	mov P1MOD, #0FFH 	;Make all P1 output
@@ -29,19 +21,21 @@ setup_driver:
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
-; void setTemp_driver( temperature [R0] )
-; Set the oven target temperature
+; void setRamp_driver( prevTemp [R0], curTemp [R1], rate [R2] )
+; Increase oven temperature at specified rate 
 ;------------------------------------------------
 ; INPUT:
-; 	R0 - Contains the desired temperature in celsius (0 - 255)
+; 	R0 - Previous temperature in celsius (0 - 255)
+; 	R1 - Current temperature in celsius (0 - 255)
+; 	R2 - Ramp rate in *C/s (0 - 255)
 ;------------------------------------------------
-setTemp_driver;
+setRamp_driver:
 	ret
 	
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
-; void maintainTemp_driver( currentTemp [R0], targetTemp [R1] )
+; void maintainTemp_driver( curTemp [R0], targetTemp [R1] )
 ; Tell the driver to maintain target temperature
 ;------------------------------------------------
 ; INPUT:
@@ -51,11 +45,5 @@ setTemp_driver;
 maintainTemp_driver:
 	ret
 	
-;------------------------------------------------
-; - Private function
-;------------------------------------------------
-VoltageControlSignal_oven:
-	
-	ret
 	
 $LIST	

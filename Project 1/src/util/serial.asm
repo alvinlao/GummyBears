@@ -59,11 +59,11 @@ SSDone_serial:
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
-; void sendByte_serial( message [R0] )
+; void sendByte_serial( character [R0] )
 ; Send a byte through the serial port
 ;------------------------------------------------
 ; INPUT:
-; 	message - A byte ASCII encoded
+; 	character - A byte ASCII encoded
 ;------------------------------------------------
 sendByte_serial:
 	mov A, R0
