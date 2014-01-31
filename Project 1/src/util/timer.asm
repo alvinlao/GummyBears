@@ -82,8 +82,6 @@ setup0_timer:
 	clr TF0
 	mov TH0, reload0_timer
 	mov TL0, reload0_timer+1
-	setb TR0		;Enable timer 0	
-	setb ET0		;Enable timer 0 interrupt
 	ret
 
 ;------------------------------------------------    
@@ -98,7 +96,51 @@ setup1_timer:
 	clr TF1
 	mov TH1, reload1_timer
 	mov TL1, reload1_timer+1
-	setb TR1		;Enable timer 1
-	setb ET1		;Enable timer 1 interrupt
 	ret
+
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void start0_timer ( void )
+; Start timer0
+;------------------------------------------------
+start0_timer:
+	setb TR0 		;Enable timer0
+	setb ET0		;Enable timer0 interrupt
+	ret
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void start1_timer ( void )
+; Start timer1
+;------------------------------------------------
+start1_timer:
+	setb TR1		;Enable timer1
+	setb ET1		;Enable timer1 interrupt
+	ret
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void stop0_timer ( void )
+; Stop timer0
+;------------------------------------------------
+stop0_timer
+	clr TR0
+	clr ET0
+	ret
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void stop1_timer ( void )
+; Stop timer1
+;------------------------------------------------
+stop1_timer
+	clr TR1
+	clr ET1
+	ret
+
 $LIST
