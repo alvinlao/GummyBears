@@ -80,38 +80,75 @@ displayBCD_helper:
 	mov dptr, #sevenSegLUT
 
 	; Display HEX 
+   
+    mov A, BCD+2
+    swap A
+    anl A, #0FH
+    jnz dis5_HELPER
+	mov HEX5, #7FH
+    
 	mov A, BCD+2
     anl A, #0FH
-    movc A, @A+dptr
-    mov HEX4, A
+    jnz dis4_HELPER
+	mov HEX4, #7FH
+	
+    mov A, BCD+1
+    swap A
+    anl A, #0FH
+    jnz dis3_HELPER
+	mov HEX3, #7FH
+	
+    mov A, BCD+1
+    anl A, #0FH
+    jnz dis2_HELPER
+	mov HEX2, #7FH
     
-    mov A, BCD+2
+	mov A, BCD
+    swap A
+    anl A, #0FH
+    jnz dis1_HELPER
+	mov HEX1, #7FH
+	
+    mov A, BCD
+    anl A, #0FH
+    movc A, @A+dptr
+    mov HEX0, A
+	
+	ret
+dis5_HELPER:	
+	mov A, BCD+2
     swap A
     anl A, #0FH
     movc A, @A+dptr
     mov HEX5, A
-    
-    mov A, BCD+1
+dis4_HELPER:    
+	mov A, BCD+2
     anl A, #0FH
     movc A, @A+dptr
-    mov HEX2, A
-    
+    mov HEX4, A
+dis3_HELPER:	
     mov A, BCD+1
     swap A
     anl A, #0FH
     movc A, @A+dptr
     mov HEX3, A
-
-    mov A, BCD
+dis2_HELPER:	
+    mov A, BCD+1
     anl A, #0FH
     movc A, @A+dptr
-    mov HEX0, A
-    
-    mov A, BCD
+    mov HEX2, A
+dis1_HELPER:    
+	mov A, BCD
     swap A
     anl A, #0FH
     movc A, @A+dptr
     mov HEX1, A
+	
+    mov A, BCD
+    anl A, #0FH
+    movc A, @A+dptr
+    mov HEX0, A
+	
 	ret
 	
 $LIST

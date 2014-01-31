@@ -111,6 +111,8 @@ setup_LCD:
 ; 
 ; Both are ASCII encoded
 ;------------------------------------------------        
+; TODO: See displayStringFromCode_LCD
+;------------------------------------------------        
 displayString_LCD:
 	mov R7, #32
 	mov R1, #string_LCD
@@ -139,7 +141,7 @@ displayString_L0_LCD:
 ; ASCII encoded
 ;------------------------------------------------        
 displayStringFromCode_LCD:
-	mov R7, #32
+	mov R7, #16
 	mov R1, #80H
 displayStringFromCode_L0_LCD:	
 	mov A, R1
@@ -152,6 +154,20 @@ displayStringFromCode_L0_LCD:
 	inc R1
 	inc dptr
 	djnz R7, displayStringFromCode_L0_LCD
+	
+	mov R7, #16
+	mov R1, #0C0H
+displayStringFromCode_L1_LCD:	
+	mov A, R1
+	lcall command_LCD
+
+	clr A
+	movc A, @A+dptr
+	lcall put_LCD
+
+	inc R1
+	inc dptr
+	djnz R7, displayStringFromCode_L1_LCD
 	ret
 	
 $LIST

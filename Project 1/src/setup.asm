@@ -27,7 +27,17 @@ CSEG
 ; 	7) coolRate:	DS 1	->SWA.6
 ;------------------------------------------------
 go_setup:
-
+	
+	mov dptr, #WELCOME_STRINGS
+	LCALL displayStringFromCode_LCD
+	
+DEFAULT1_setup:
+	jb KEY.1, DEFAULT2_setup
+	jnb KEY.1, $
+	
+	mov dptr, #DEFAULT1_STRINGS
+	LCALL displayStringFromCode_LCD
+	
 	mov dptr, #DEFAULT1_SOAKRATE
 	lcall getCodeByte_helper
 	mov soakRate, R0
@@ -55,14 +65,83 @@ go_setup:
 	mov dptr, #DEFAULT1_COOLRATE
 	lcall getCodeByte_helper
 	mov coolRate, R0
+
+DEFAULT2_setup:
+	jb KEY.2, DEFAULT3_setup
+	jnb KEY.2, $
 	
+	mov dptr, #DEFAULT2_STRINGS
+	LCALL displayStringFromCode_LCD
+	
+	mov dptr, #DEFAULT2_SOAKRATE
+	lcall getCodeByte_helper
+	mov soakRate, R0
+
+	mov dptr, #DEFAULT2_SOAKTEMP
+	lcall getCodeByte_helper
+	mov soakTemp, R0
+	
+	mov dptr, #DEFAULT2_SOAKTIME
+	lcall getCodeByte_helper
+	mov soakTime, R0
+	
+	mov dptr, #DEFAULT2_REFLOWTIME
+	lcall getCodeByte_helper
+	mov reflowTime, R0
+	
+	mov dptr, #DEFAULT2_REFLOWRATE
+	lcall getCodeByte_helper
+	mov reflowRate, R0
+	
+	mov dptr, #DEFAULT2_REFLOWTEMP
+	lcall getCodeByte_helper
+	mov reflowTemp, R0        
+	
+	mov dptr, #DEFAULT2_COOLRATE
+	lcall getCodeByte_helper
+	mov coolRate, R0
+	
+DEFAULT3_setup:
+	jb KEY.3, L00_setup
+	jnb KEY.3, $
+	
+	mov dptr, #DEFAULT3_STRINGS
+	LCALL displayStringFromCode_LCD
+	
+	mov dptr, #DEFAULT3_SOAKRATE
+	lcall getCodeByte_helper
+	mov soakRate, R0
+
+	mov dptr, #DEFAULT3_SOAKTEMP
+	lcall getCodeByte_helper
+	mov soakTemp, R0
+	
+	mov dptr, #DEFAULT3_SOAKTIME
+	lcall getCodeByte_helper
+	mov soakTime, R0
+	
+	mov dptr, #DEFAULT3_REFLOWTIME
+	lcall getCodeByte_helper
+	mov reflowTime, R0
+	
+	mov dptr, #DEFAULT3_REFLOWRATE
+	lcall getCodeByte_helper
+	mov reflowRate, R0
+	
+	mov dptr, #DEFAULT3_REFLOWTEMP
+	lcall getCodeByte_helper
+	mov reflowTemp, R0        
+	
+	mov dptr, #DEFAULT3_COOLRATE
+	lcall getCodeByte_helper
+	mov coolRate, R0
+
 ;	soakRate
-L0:	
-	JB SWA.7, L1
-	jnb SWA.0, L1
+L00_setup:	
+	JB SWA.7, L10_setup
+	jnb SWA.0, L10_setup
 	
 	mov dptr, #SETSOAKRATE_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, soakRate
@@ -71,14 +150,16 @@ L0:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L01:	
-	jb KEY.0, L02
-	jnb KEY.0, $
+L01_setup:	
+	jb KEY.3, L02_setup
+	jnb KEY.3, $
 	MOV A, soakRate
 	mov dptr, #MAX_SOAKRATE
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT0
-	SJMP L02
+	mov compare, R0
+	MOV A, soakRate
+	CJNE A, compare, SHORT0
+	SJMP L02_setup
 SHORT0:
 	INC A
 	MOV soakRate, A
@@ -88,14 +169,16 @@ SHORT0:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L02:
-	jb KEY.1, L03
-	jnb KEY.1, $
+L02_setup:
+	jb KEY.2, L03_setup
+	jnb KEY.2, $
 	MOV A, soakRate
 	mov dptr, #MIN_SOAKRATE
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC0
-	SJMP L03
+	mov compare, R0
+	MOV A, soakRate
+	CJNE A, compare, SHORTC0
+	SJMP L03_setup
 SHORTC0:
 	DEC A
 	MOV soakRate, A
@@ -105,16 +188,15 @@ SHORTC0:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L03:	
-	LJMP L0
+L03_setup:	
+	LJMP L00_setup
 	
 ;	soakTemp
-L1:
-	JB SWA.7, L2
-	jnb SWA.1, L2
+L10_setup:
+	JB SWA.7, L20_setup
+	jnb SWA.1, L20_setup
 	
 	mov dptr, #SETSOAKTEMPERATURE_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, soakTemp
@@ -123,14 +205,16 @@ L1:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L11:	
-	jb KEY.0, L12
-	jnb KEY.0, $
+L11_setup:	
+	jb KEY.3, L12_setup
+	jnb KEY.3, $
 	MOV A, soakTemp
 	mov dptr, #MAX_SOAKTEMP
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT1
-	SJMP L12
+	mov compare, R0
+	MOV A, soakTemp
+	CJNE A, compare, SHORT1
+	SJMP L12_setup
 SHORT1:
 	INC A
 	MOV soakTemp, A
@@ -140,14 +224,16 @@ SHORT1:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L12:
-	jb KEY.1, L13
-	jnb KEY.1, $
+L12_setup:
+	jb KEY.2, L13_setup
+	jnb KEY.2, $
 	MOV A, soakTemp
 	mov dptr, #MIN_SOAKTEMP
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC1
-	SJMP L13
+	mov compare, R0
+	MOV A, soakTemp
+	CJNE A, compare, SHORTC1
+	SJMP L13_setup
 SHORTC1:
 	DEC A
 	MOV soakTemp, A
@@ -157,16 +243,15 @@ SHORTC1:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L13:	
-	LJMP L1
+L13_setup:	
+	LJMP L10_setup
 	
 ;	soakTime
-L2:
-	JB SWA.7, L3
-	jnb SWA.2, L3
+L20_setup:
+	JB SWA.7, L30_setup
+	jnb SWA.2, L30_setup
 	
 	mov dptr, #SETSOAKTIME_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, soakTime
@@ -175,14 +260,16 @@ L2:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L21:	
-	jb KEY.0, L22
-	jnb KEY.0, $
+L21_setup:	
+	jb KEY.3, L22_setup
+	jnb KEY.3, $
 	MOV A, soakTime
 	mov dptr, #MAX_SOAKTIME
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT2
-	SJMP L22
+	mov compare, R0
+	MOV A, soakTime
+	CJNE A, compare, SHORT2
+	SJMP L22_setup
 SHORT2:
 	INC A
 	MOV soakTime, A
@@ -192,14 +279,16 @@ SHORT2:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L22:
-	jb KEY.1, L23
-	jnb KEY.1, $
+L22_setup:
+	jb KEY.2, L23_setup
+	jnb KEY.2, $
 	MOV A, soakTime
 	mov dptr, #MIN_SOAKTIME
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC2
-	SJMP L23
+	mov compare, R0
+	MOV A, soakTime
+	CJNE A, compare, SHORTC2
+	SJMP L23_setup
 SHORTC2:
 	DEC A
 	MOV soakTime, A
@@ -209,16 +298,15 @@ SHORTC2:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L23:	
-	LJMP L2
+L23_setup:	
+	LJMP L20_setup
 	
 ;	reflowRate
-L3:
-	JB SWA.7, L4
-	jnb SWA.3, L4
+L30_setup:
+	JB SWA.7, L40_setup
+	jnb SWA.3, L40_setup
 	
 	mov dptr, #SETREFLOWRATE_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, reflowRate
@@ -227,14 +315,16 @@ L3:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L31:	
-	jb KEY.0, L32
-	jnb KEY.0, $
+L31_setup:	
+	jb KEY.3, L32_setup
+	jnb KEY.3, $
 	MOV A, reflowRate
 	mov dptr, #MAX_reflowRate
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT3
-	SJMP L32
+	mov compare, R0
+	MOV A, reflowRate
+	CJNE A, compare, SHORT3
+	SJMP L32_setup
 SHORT3:
 	INC A
 	MOV reflowRate, A
@@ -244,14 +334,16 @@ SHORT3:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L32:
-	jb KEY.1, L33
-	jnb KEY.1, $
+L32_setup:
+	jb KEY.2, L33_setup
+	jnb KEY.2, $
 	MOV A, reflowRate
 	mov dptr, #MIN_reflowRate
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC3
-	SJMP L33
+	mov compare, R0
+	MOV A, reflowRate
+	CJNE A, compare, SHORTC3
+	SJMP L33_setup
 SHORTC3:
 	DEC A
 	MOV reflowRate, A
@@ -261,16 +353,15 @@ SHORTC3:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L33:	
-	LJMP L3
+L33_setup:	
+	LJMP L30_setup
 	
 ;	reflowTemp	
-L4:
-	JB SWA.7, L5
-	jnb SWA.4, L5
+L40_setup:
+	JB SWA.7, L5_setup
+	jnb SWA.4, L5_setup
 	
 	mov dptr, #SETREFLOWTEMP_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, reflowTemp
@@ -279,14 +370,16 @@ L4:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L41:	
-	jb KEY.0, L42
-	jnb KEY.0, $
+L41_setup:	
+	jb KEY.3, L42_setup
+	jnb KEY.3, $
 	MOV A, reflowTemp
 	mov dptr, #MAX_REFLOWTEMP
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT4
-	SJMP L42
+	mov compare, R0
+	MOV A, reflowTemp
+	CJNE A, compare, SHORT4
+	SJMP L42_setup
 SHORT4:
 	INC A
 	MOV reflowTemp, A
@@ -296,14 +389,16 @@ SHORT4:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L42:
-	jb KEY.1, L43
-	jnb KEY.1, $
+L42_setup:
+	jb KEY.2, L43_setup
+	jnb KEY.2, $
 	MOV A, reflowTemp
 	mov dptr, #MIN_REFLOWTEMP
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC4
-	SJMP L43
+	mov compare, R0
+	MOV A, reflowTemp
+	CJNE A, compare, SHORTC4
+	SJMP L43_setup
 SHORTC4:
 	DEC A
 	MOV reflowTemp, A
@@ -313,16 +408,15 @@ SHORTC4:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L43:	
-	LJMP L4
+L43_setup:	
+	LJMP L40_setup
 	
 ;	reflowTime
-L5:
-	JB SWA.7, L6
-	jnb SWA.5, L6
+L5_setup:
+	JB SWA.7, L6_setup
+	jnb SWA.5, L6_setup
 	
 	mov dptr, #SETREFLOWTIME_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, reflowTime
@@ -331,14 +425,16 @@ L5:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L51:	
-	jb KEY.0, L52
-	jnb KEY.0, $
+L51_setup:	
+	jb KEY.3, L52_setup
+	jnb KEY.3, $
 	MOV A, reflowTime
 	mov dptr, #MAX_REFLOWTIME
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT5
-	SJMP L52
+	mov compare, R0
+	MOV A, reflowTime
+	CJNE A, compare, SHORT5
+	SJMP L52_setup
 SHORT5:
 	INC A
 	MOV reflowTime, A
@@ -348,14 +444,16 @@ SHORT5:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L52:
-	jb KEY.1, L53
-	jnb KEY.1, $
+L52_setup:
+	jb KEY.2, L53_setup
+	jnb KEY.2, $
 	MOV A, reflowTime
 	mov dptr, #MIN_REFLOWTIME
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC5
-	SJMP L53
+	mov compare, R0
+	MOV A, reflowTime
+	CJNE A, compare, SHORTC5
+	SJMP L53_setup
 SHORTC5:
 	DEC A
 	MOV reflowTime, A
@@ -365,16 +463,15 @@ SHORTC5:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L53:	
-	LJMP L5
+L53_setup:	
+	LJMP L5_setup
 
 ;	coolRate
-L6:
-	JB SWA.7, L8
-	jnb SWA.6, L7
+L6_setup:
+	JB SWA.7, L8_setup
+	jnb SWA.6, L7_setup
 	
 	mov dptr, #SETCOOLRATE_STRINGS
-	LCALL loadString_LCD
 	LCALL displayStringFromCode_LCD
 	
 	MOV X+0, coolRate
@@ -383,14 +480,16 @@ L6:
 	LCALL hex2bcd
 	LCALL displayBCD_helper
 	
-L61:	
-	jb KEY.0, L62
-	jnb KEY.0, $
+L61_setup:	
+	jb KEY.3, L62_setup
+	jnb KEY.3, $
 	MOV A, coolRate
 	mov dptr, #MAX_COOLRATE
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORT6
-	SJMP L62
+	mov compare, R0
+	MOV A, coolRate
+	CJNE A, compare, SHORT6
+	SJMP L62_setup
 SHORT6:
 	INC A
 	MOV coolRate, A
@@ -400,14 +499,16 @@ SHORT6:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L62:
-	jb KEY.1, L63
-	jnb KEY.1, $
+L62_setup:
+	jb KEY.2, L63_setup
+	jnb KEY.2, $
 	MOV A, coolRate
 	mov dptr, #MIN_COOLRATE
 	lcall getCodeByte_helper
-	CJNE A, R0, SHORTC6
-	SJMP L63
+	mov compare, R0
+	MOV A, coolRate
+	CJNE A, compare, SHORTC6
+	SJMP L63_setup
 SHORTC6:
 	DEC A
 	MOV coolRate, A
@@ -417,12 +518,12 @@ SHORTC6:
 	
 	LCALL hex2bcd
 	LCALL displayBCD_helper
-L63:	
-	LJMP L6
-L7:
-	JB SWA.7, L8
-	LJMP L0
-L8: 
+L63_setup:	
+	LJMP L6_setup
+L7_setup:
+	JB SWA.7, L8_setup
+	LJMP DEFAULT1_setup
+L8_setup: 
 	RET
 
 $LIST
