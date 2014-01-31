@@ -29,7 +29,7 @@ DSEG at 30H
 	
 	;STATES
 	currentTemp:			DS 1
-	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL
+	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL, 6 - FINISH
 	currentStateTime:		DS 1
 	runTime:				DS 2 	; [seconds | minutes]
 
@@ -40,6 +40,7 @@ DSEG at 30H
  	reflowTemp:				DS 1
  	reflowTime:				DS 1
  	coolRate:				DS 1
+	finishTemp:				DS 1
  	
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
@@ -111,24 +112,29 @@ myprogram:
 	lcall setup_serial 		; Serial (Output)
 	lcall setup_lcd			; Setup LCD
 	lcall setup_driver		; P1 output pins
+	lcall setup_buzzer		; Buzzer sets up timer1 reload value
 	
 	;Setup global variables	
 	mov currentState, #0
 	mov runTime, #0
 	mov currentStateTime, #0
 
-	;Call setup.asm
+	;Call setup.asm (User loop)
 	lcall go_setup
 
 	;Setup and start timers
 	lcall setup0_timer
 	lcall setup1_timer
-
 	
 	lcall start0_timer
 	lcall start1_timer
 
 mainLoop:
+	;if SWC.1 == 0 STOP!
+	;elif currentState == 6 (FINISH)
+	;lcall update_live
+	;lcall logTemperature
+
 	lcall getOvenTemp_sensor	; R0 <= oven temperature
 	mov LEDRA, R0
 	
