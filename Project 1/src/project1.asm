@@ -40,7 +40,7 @@ DSEG at 30H
  	reflowTemp:				DS 1
  	reflowTime:				DS 1
  	coolRate:				DS 1
- 	
+ 	`
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
 	coldVoltage:			DS 2
