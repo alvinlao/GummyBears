@@ -111,6 +111,8 @@ setup_LCD:
 ; 
 ; Both are ASCII encoded
 ;------------------------------------------------        
+; TODO: See displayStringFromCode_LCD
+;------------------------------------------------        
 displayString_LCD:
 	mov R7, #32
 	mov R1, #string_LCD
