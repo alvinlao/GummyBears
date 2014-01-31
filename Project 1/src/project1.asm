@@ -24,13 +24,13 @@ ORG 001BH
 
 DSEG at 30H
 	;TIMERS
-	reload0_timer:		DS 1
-	reload1_timer:		DS 1
+	reload0_timer:			DS 1
+	reload1_timer:			DS 1
 	
 	;STATES
-	currentTemp:		DS 1
-	currentState:		DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
-	runTime:			DS 2
+	currentTemp:			DS 1
+	currentState:			DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
+	runTime:			DS 2 	; [seconds | minutes]
 
 	soakRate: 			DS 1
  	soakTemp: 			DS 1
@@ -41,23 +41,23 @@ DSEG at 30H
  	coolRate:			DS 1
  	
 	;temperature/sensor.asm
-	ovenVoltage:		DS 2
-	coldVoltage:		DS 2
+	ovenVoltage:			DS 2
+	coldVoltage:			DS 2
 		
 	;util/LCD.asm
 	string_LCD:			DS 32	
 	
 	;util/math16.asm	
 	output:				DS 1
-	x:					DS 2
-	y:					DS 2
+	x:				DS 2
+	y:				DS 2
 	bcd:				DS 3
 	
 	;compare for cjne instruction
 	compare:			DS 1
 	
 BSEG
-	mf:					DBIT 1
+	mf:				DBIT 1
 
 ;-------------------------------------
 ; Utility
