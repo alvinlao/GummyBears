@@ -24,7 +24,10 @@ CSEG
 ;------------------------------------------------    
 ; # Protected function
 ;------------------------------------------------
-; ISR_timer0 (interrupt every 1s)
+; ISR_timer0 100 Hz
+;------------------------------------------------
+; USERS:
+;	oven/controller.asm - Call every 1s
 ;------------------------------------------------
 ISR_timer0:
 	push psw
@@ -34,9 +37,21 @@ ISR_timer0:
 
 	mov TH0, reload0_timer
 	mov TL0, reload0_timer+1
+
+	clr c
+	mov A, count0_100_timer
+	subb A, #100
+	jnz continue0_timer
+	mov count0_100_timer, #0
 	
+	; DO STUFF EVERY 1s
+	lcall update_controller			;Update oven temperature
 	
-	; DO STUFF
+
+continue0_timer:
+	inc count0_100_timer	
+
+	; DO STUFF EVERY 0.1s
 
 	pop dph
 	pop dpl

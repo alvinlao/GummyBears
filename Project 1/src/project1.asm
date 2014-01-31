@@ -24,12 +24,14 @@ ORG 001BH
 
 DSEG at 30H
 	;TIMERS
-	reload0_timer:			DS 1
-	reload1_timer:			DS 1
+	reload0_timer:			DS 2	; [high] [low]
+	reload1_timer:			DS 2	; [high] [low]
+
+	count0_100_timer:		DS 1	; Used for 1s calls
 	
 	;STATES
 	currentTemp:			DS 1
-	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL
+	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL, 6 - FINISH
 	currentStateTime:		DS 1
 	runTime:				DS 2 	; [seconds | minutes]
 
@@ -40,7 +42,8 @@ DSEG at 30H
  	reflowTemp:				DS 1
  	reflowTime:				DS 1
  	coolRate:				DS 1
- 	`
+	finishTemp:				DS 1
+ 	
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
 	coldVoltage:			DS 2
@@ -107,38 +110,58 @@ myprogram:
 	orl P0MOD, #00111000b 		; make all CEs outputs
 
 	;Setup Modules
-	lcall setup0_timer		; setup timer0
-	lcall setup1_timer		; setup timer1	
 	lcall setup_spi			; ADC SPI (Input)
 	lcall setup_serial 		; Serial (Output)
 	lcall setup_lcd			; Setup LCD
 	lcall setup_driver		; P1 output pins
+	lcall setup_buzzer		; Buzzer sets up timer1 reload value
 	
 	;Setup global variables	
 	mov currentState, #0
 	mov runTime, #0
 	mov currentStateTime, #0
 
-	;Call setup.asm
+	;Call setup.asm (User loop)
 	lcall go_setup
 
 	;Setup and start timers
 	lcall setup0_timer
 	lcall setup1_timer
-
+	
 	lcall start0_timer
 	lcall start1_timer
 
 mainLoop:
-	lcall getOvenTemp_sensor	; R0 <= oven temperature
-	mov LEDRA, R0
-	
-	mov x, R0
-	mov x+1, #0
-	lcall hex2bcd
-	lcall displayBCD_helper		; Display the temp on 7 seg
-	
-	;lcall logTemperature 		; void logTemperature(temp [R0])
+	;Check stop switch
+	mov A, SWC
+	anl A, #00000010B
+	jnz forceStop
 
-	lcall Wait_helper
+	;Check if finish state
+	clr c
+	mov A, currentState
+	subb A, #6
+	jz finish
+
+	;Update board displays
+	lcall update_live
+
+	;Send current temperature to computer
+	mov R0, currentTemperature
+	lcall sendByte_serial
+
+	;mov x, R0
+	;mov x+1, #0
+	;lcall hex2bcd
+	;lcall displayBCD_helper		; Display the temp on 7 seg
+	
+	lcall Wait_helper				; Wait 0.25s
 	sjmp mainLoop
+
+forceStop:
+	lcall force_finish
+	sjmp $
+
+finish:
+	lcall go_finish
+	sjmp $

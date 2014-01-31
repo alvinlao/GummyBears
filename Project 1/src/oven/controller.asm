@@ -47,6 +47,7 @@ setup_controller:
 ;	currentStateTime
 ;------------------------------------------------
 ; MODIFIES:
+;	currentTemp - Update current oven temperature
 ;	currentState - Updates current state
 ;	currentStateTime - Reset every change of state
 ;------------------------------------------------

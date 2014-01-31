@@ -4,7 +4,7 @@
 ; Initial setup loop
 ; Allow user to set reflow soldering parameters
 ;------------------------------------------------
-; Author: 
+; Author: Bibek Kaur
 ;------------------------------------------------
 
 $NOLIST
@@ -524,6 +524,7 @@ L7_setup:
 	JB SWA.7, L8_setup
 	LJMP DEFAULT1_setup
 L8_setup: 
+	mov currentState, #1
 	RET
 
 $LIST
