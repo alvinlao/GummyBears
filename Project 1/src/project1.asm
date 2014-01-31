@@ -29,35 +29,35 @@ DSEG at 30H
 	
 	;STATES
 	currentTemp:			DS 1
-	currentState:			DS 1	; IDLE, SOAKRAMP, SOAK, REFLOWRAMP, REFLOW, COOL
-	runTime:			DS 2 	; [seconds | minutes]
+	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL
+	runTime:				DS 2 	; [seconds | minutes]
 
-	soakRate: 			DS 1
- 	soakTemp: 			DS 1
- 	soakTime:			DS 1
- 	reflowRate:			DS 1
- 	reflowTemp:			DS 1
- 	reflowTime:			DS 1
- 	coolRate:			DS 1
+	soakRate: 				DS 1
+ 	soakTemp: 				DS 1
+ 	soakTime:				DS 1
+ 	reflowRate:				DS 1
+ 	reflowTemp:				DS 1
+ 	reflowTime:				DS 1
+ 	coolRate:				DS 1
  	
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
 	coldVoltage:			DS 2
 		
 	;util/LCD.asm
-	string_LCD:			DS 32	
+	string_LCD:				DS 32	
 	
 	;util/math16.asm	
-	output:				DS 1
-	x:				DS 2
-	y:				DS 2
-	bcd:				DS 3
+	output:					DS 1
+	x:						DS 2
+	y:						DS 2
+	bcd:					DS 3
 	
 	;compare for cjne instruction
-	compare:			DS 1
+	compare:				DS 1
 	
 BSEG
-	mf:				DBIT 1
+	mf:						DBIT 1
 
 ;-------------------------------------
 ; Utility
@@ -97,13 +97,15 @@ CSEG
 ;MAIN PROGRAM
 ;-------------------------------------
 myprogram:
+	;Setup Board
     MOV SP, #7FH
     mov LEDRA, #0
     mov LEDRB, #0
     mov LEDRC, #0
     mov LEDG, #0
 	orl P0MOD, #00111000b 		; make all CEs outputs
-	
+
+	;Setup Modules
 	lcall setup0_timer		; setup timer0
 	lcall setup1_timer		; setup timer1	
 	lcall setup_spi			; ADC SPI (Input)

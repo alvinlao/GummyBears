@@ -41,15 +41,17 @@ setup_controller:
 ;	reflowTemp
 ;	reflowTime
 ;	coolRate
+;
+;	currentTemp
+;	currentState
+;	currentStateTime
 ;------------------------------------------------
 ; MODIFIES:
 ;	currentState - Updates current state
+;	currentStateTime - Reset every change of state
 ;------------------------------------------------
 ; ENSURES:
 ; 	Every stage transition, make a short beep (use util/buzzer.asm)
-;------------------------------------------------
-; INPUT:
-; 	R0 - Contains the desired temperature in celsius (0 - 255)
 ;------------------------------------------------
 update_controller:
 	
