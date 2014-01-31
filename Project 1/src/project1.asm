@@ -24,8 +24,8 @@ ORG 001BH
 
 DSEG at 30H
 	;TIMERS
-	reload0_timer:			DS 1
-	reload1_timer:			DS 1
+	reload0_timer:			DS 2	; [high] [low]
+	reload1_timer:			DS 2	; [high] [low]
 	
 	;STATES
 	currentTemp:			DS 1
@@ -40,7 +40,7 @@ DSEG at 30H
  	reflowTemp:				DS 1
  	reflowTime:				DS 1
  	coolRate:				DS 1
- 	`
+ 	
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
 	coldVoltage:			DS 2
@@ -107,8 +107,6 @@ myprogram:
 	orl P0MOD, #00111000b 		; make all CEs outputs
 
 	;Setup Modules
-	lcall setup0_timer		; setup timer0
-	lcall setup1_timer		; setup timer1	
 	lcall setup_spi			; ADC SPI (Input)
 	lcall setup_serial 		; Serial (Output)
 	lcall setup_lcd			; Setup LCD
@@ -126,6 +124,7 @@ myprogram:
 	lcall setup0_timer
 	lcall setup1_timer
 
+	
 	lcall start0_timer
 	lcall start1_timer
 
