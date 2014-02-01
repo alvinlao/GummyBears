@@ -66,7 +66,7 @@ maintainTemp_driver:
 	clr c
 	mov A, R1
 	subb A, R0
-	jz A, off_driver		;Delta == 0
+	jz off_driver		;Delta == 0
 	mov x, A
 	mov y, #0	
 	lcall x_gt_y

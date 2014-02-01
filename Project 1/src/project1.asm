@@ -19,7 +19,7 @@ org 0000H
 ORG 001BH
 	ljmp ISR_timer0
 	
-ORG 001BH
+ORG 002BH
 	ljmp ISR_timer1
 
 DSEG at 30H
