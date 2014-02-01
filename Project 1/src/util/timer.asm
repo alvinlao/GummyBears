@@ -43,6 +43,7 @@ ISR_timer0:
 	subb A, #100
 	jnz continue0_timer
 	mov count0_100_timer, #0
+	
 	; DO STUFF EVERY 1s
 	lcall update_controller			;Update oven temperature
 	
