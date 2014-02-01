@@ -10,6 +10,9 @@
 ; Author: Alvin Lao
 ;------------------------------------------------
 
+
+$NOLIST
+
 CLK EQU 33333333
 FREQ_0 EQU 2000
 FREQ_1 EQU 3000
@@ -18,57 +21,7 @@ TIMER0_RELOAD EQU 65536-(CLK/(12*2*FREQ_0))
 TIMER1_RELOAD EQU 65536-(CLK/(12*FREQ_1))
 TIMER2_RELOAD EQU 65536-(CLK/(12*FREQ_2))
 
-$NOLIST
 CSEG
-
-;------------------------------------------------    
-; # Protected function
-;------------------------------------------------
-; ISR_timer0 (interrupt every 1s)
-;------------------------------------------------
-ISR_timer0:
-	push psw
-	push acc
-	push dpl
-	push dph
-
-	mov TH0, reload0_timer
-	mov TL0, reload0_timer+1
-	
-	
-	; DO STUFF
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
-	reti
-
-
-;------------------------------------------------    
-; # Protected function
-;------------------------------------------------
-; ISR_timer1
-; Interrupt for buzzer
-;------------------------------------------------
-ISR_timer1_buzzer:
-	push psw
-	push acc
-	push dpl
-	push dph
-
-	mov TH1, reload1_timer
-	mov TL1, reload1_timer+1
-
-	; DO STUFF
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
-	reti
 
 ;------------------------------------------------    
 ; + Public function
@@ -127,7 +80,7 @@ start1_timer:
 ; void stop0_timer ( void )
 ; Stop timer0
 ;------------------------------------------------
-stop0_timer
+stop0_timer:
 	clr TR0
 	clr ET0
 	ret
@@ -138,7 +91,7 @@ stop0_timer
 ; void stop1_timer ( void )
 ; Stop timer1
 ;------------------------------------------------
-stop1_timer
+stop1_timer:
 	clr TR1
 	clr ET1
 	ret

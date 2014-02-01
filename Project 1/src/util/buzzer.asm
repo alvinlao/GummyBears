@@ -3,6 +3,9 @@
 ;------------------------------------------------
 ; Provides buzzer functionality
 ;------------------------------------------------
+; DEPENDENCIES:
+; 	helper.asm
+;	timer.asm
 ; NOTE: 
 ;	Requires timer 1
 ;------------------------------------------------
@@ -10,35 +13,24 @@
 ;------------------------------------------------
 
 $NOLIST
-
 CSEG
-WAIT_HALF_SEC:
-	mov R2, #89
-L3_buzzer: mov R1, #250
-L2_buzzer: mov R0, #250
-L1_buzzer: djnz R0, L1_buzzer
-	djnz R1, L2_buzzer
-	djnz R2, L3_buzzer
-	ret
 	
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
 ; void setup_buzzer( void )
-; Setup timer 1 (!) for subsequent buzzer functions
+; Setup buzzer frequency and output port
+;------------------------------------------------
+; MODIFIES:
+;	reload1_timer
 ;------------------------------------------------
 setup_buzzer:
-   	mov P0MOD, #00000011B ; P0.0, P0.1 are outputs.
-   	setb P0.0
+	mov A, #00000010B
+	orl A, P1MOD
+	mov P1MOD, A
 
-	mov TMOD,  #00010001B ; GATE=0, C/T*=0, M1=0, M0=1: 16-bit timer
-	clr TR1 ; Disable timer 0
-	clr TF1
-	mov TH1, #high(TIMER1_RELOAD)
-	mov TL1, #low(TIMER1_RELOAD)
-	;setb TR1 ; Enable timer 0
-    	setb ET1 ; Enable timer 0 interrupt
-	setb EA  ; Enable all interrupts
+	mov reload1_timer, #high(TIMER1_RELOAD)
+	mov reload1_timer+1, #low(TIMER1_RELOAD)
 	ret
 
 ;------------------------------------------------    
@@ -48,9 +40,9 @@ setup_buzzer:
 ; Makes a short beep
 ;------------------------------------------------
 shortBeep_buzzer:
-	setb tr1
-	lcall WAIT_HALF_SEC
-	clr TR1
+	lcall start1_timer
+	lcall Wait_helper
+	lcall stop1_timer
 	ret
 	
 ;------------------------------------------------    
@@ -60,11 +52,12 @@ shortBeep_buzzer:
 ; Makes a long beep
 ;------------------------------------------------
 longBeep_buzzer:
-	setb tr1
-	lcall WAIT_HALF_SEC
-	lcall WAIT_HALF_SEC
-	lcall WAIT_HALF_SEC
-	clr TR1
+	lcall start1_timer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall stop1_timer
 	ret
 	
 ;------------------------------------------------    
@@ -74,13 +67,6 @@ longBeep_buzzer:
 ; Makes six beeps
 ;------------------------------------------------
 sixBeeps_buzzer:
-	MOV R3, #6
-L0_buzzer:
-	setb tr1
-	lcall WAIT_HALF_SEC
-	clr TR1
-	lcall WAIT_HALF_SEC
-	DJNZ R3, L0_buzzer
 	ret
 
 $LIST

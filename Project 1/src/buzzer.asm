@@ -5,7 +5,9 @@
 $NOLIST
 
 DSEG at 30H
-timer:
+;timer:
+
+CSEG
 
 WAIT_HALF_SEC:
 	mov R2, #89

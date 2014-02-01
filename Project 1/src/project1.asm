@@ -16,7 +16,7 @@ $MODDE2
 org 0000H
    ljmp MyProgram
 
-ORG 001BH
+ORG 000BH
 	ljmp ISR_timer0
 	
 ORG 001BH
@@ -26,6 +26,8 @@ DSEG at 30H
 	;TIMERS
 	reload0_timer:			DS 2	; [high] [low]
 	reload1_timer:			DS 2	; [high] [low]
+
+	count0_100_timer:		DS 1	; Used for 1s calls
 	
 	;STATES
 	currentTemp:			DS 1
@@ -65,13 +67,18 @@ BSEG
 ; Utility
 ;-------------------------------------
 $include(util/helper.asm)
+$include(util/timer.asm)
 $include(util/spi.asm)
 $include(util/serial.asm)
 $include(util/buzzer.asm)
 $include(util/LCD.asm)
 $include(util/math16.asm)
 
+;-------------------------------------
+; Values
+;-------------------------------------
 $include(values/constants.asm)		;Constants
+$include(values/strings.asm)		;Strings (for LCD)
 
 ;-------------------------------------
 ; States
@@ -84,7 +91,7 @@ $include(finish.asm)				;Final exit instructions
 ; Oven
 ;-------------------------------------
 $include(oven/driver.asm)			;Oven driver
-;$include(oven/controller.asm)		;Oven controller
+$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------
 ; Temperature
@@ -95,6 +102,70 @@ $include(temperature/sensor.asm)	;Handle oven temperature
 
 CSEG
 
+;------------------------------------------------    
+; # Protected function
+;------------------------------------------------
+; ISR_timer0 100 Hz
+;------------------------------------------------
+; USERS:
+;	oven/controller.asm - Call every 1s
+;------------------------------------------------
+ISR_timer0:
+	push psw
+	push acc
+	push dpl
+	push dph
+
+	mov TH0, reload0_timer
+	mov TL0, reload0_timer+1
+
+	clr c
+	mov A, count0_100_timer
+	subb A, #100
+	jnz continue0_timer
+	mov count0_100_timer, #0
+	
+	; DO STUFF EVERY 1s
+	lcall update_controller			;Update oven temperature
+	
+
+continue0_timer:
+	inc count0_100_timer	
+
+	; DO STUFF EVERY 0.1s
+
+	pop dph
+	pop dpl
+	pop acc
+	pop psw
+
+	reti
+
+
+;------------------------------------------------    
+; # Protected function
+;------------------------------------------------
+; ISR_timer1
+; Interrupt for buzzer
+;------------------------------------------------
+ISR_timer1:
+	push psw
+	push acc
+	push dpl
+	push dph
+
+	mov TH1, reload1_timer
+	mov TL1, reload1_timer+1
+
+	; DO STUFF
+
+	pop dph
+	pop dpl
+	pop acc
+	pop psw
+
+	reti
+	
 ;-------------------------------------
 ;MAIN PROGRAM
 ;-------------------------------------
@@ -119,7 +190,7 @@ myprogram:
 	mov runTime, #0
 	mov currentStateTime, #0
 
-	;Call setup.asm (User loop)
+	;Go to setup.asm (User input loop)
 	lcall go_setup
 
 	;Setup and start timers
@@ -130,20 +201,36 @@ myprogram:
 	lcall start1_timer
 
 mainLoop:
-	;if SWC.1 == 0 STOP!
-	;elif currentState == 6 (FINISH)
-	;lcall update_live
-	;lcall logTemperature
+	;Check stop switch
+	mov A, SWC
+	anl A, #00000010B
+	jnz forceStop
 
-	lcall getOvenTemp_sensor	; R0 <= oven temperature
-	mov LEDRA, R0
-	
-	mov x, R0
-	mov x+1, #0
-	lcall hex2bcd
-	lcall displayBCD_helper		; Display the temp on 7 seg
-	
-	;lcall logTemperature 		; void logTemperature(temp [R0])
+	;Check if finish state
+	clr c
+	mov A, currentState
+	subb A, #6
+	jz finish
 
-	lcall Wait_helper
+	;Update board displays
+	lcall update_live
+
+	;Send current temperature to computer
+	mov R0, currentTemp
+	lcall sendByte_serial
+
+	;mov x, R0
+	;mov x+1, #0
+	;lcall hex2bcd
+	;lcall displayBCD_helper		; Display the temp on 7 seg
+	
+	lcall Wait_helper				; Wait 0.25s
 	sjmp mainLoop
+
+forceStop:
+	lcall force_finish
+	sjmp $
+
+finish:
+	lcall go_finish
+	sjmp $

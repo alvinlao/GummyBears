@@ -1,10 +1,11 @@
 ;------------------------------------------------
 ; finish.asm
 ;------------------------------------------------
-; Called after the reflow soldering
+; Contains clean up code (things that need to be done before the program exits)
 ; Perhaps LCD animation and buzzer music?
 ;------------------------------------------------
 ; DEPENDENCIES:
+;	oven/driver.asm
 ;	util/buzzer.asm
 ;	util/LCD.asm
 ;------------------------------------------------
@@ -21,6 +22,16 @@ CSEG
 ; Entry function for the final exit code
 ;------------------------------------------------
 go_finish:
+	ret
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void force_finish( void )
+; Handle user force stop action
+;------------------------------------------------
+force_finish:
+	lcall off_driver		;Turn off the oven
 	ret
 
 $LIST
