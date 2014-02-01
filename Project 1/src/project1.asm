@@ -130,20 +130,38 @@ myprogram:
 	lcall start1_timer
 
 mainLoop:
-	;if SWC.1 == 0 STOP!
-	;elif currentState == 6 (FINISH)
-	;lcall update_live
-	;lcall logTemperature
+	;Check stop switch
+	mov A, SWC
+	anl A, #00000010B
+	jnz forceStop
 
-	lcall getOvenTemp_sensor	; R0 <= oven temperature
-	mov LEDRA, R0
-	
-	mov x, R0
-	mov x+1, #0
-	lcall hex2bcd
-	lcall displayBCD_helper		; Display the temp on 7 seg
+	;Check if finish state
+	clr c
+	mov A, currentState
+	subb A, #6
+	jz finish
+
+	;Update board displays
+	lcall update_live
+
+	;Send current temperature to computer
+	mov R0, currentTemperature
+	lcall sendByte_serial
+
+	;mov x, R0
+	;mov x+1, #0
+	;lcall hex2bcd
+	;lcall displayBCD_helper		; Display the temp on 7 seg
 	
 	;lcall logTemperature 		; void logTemperature(temp [R0])
 
 	lcall Wait_helper
 	sjmp mainLoop
+
+forceStop:
+	lcall force_finish
+	sjmp $
+
+finish:
+	lcall go_finish
+	sjmp $
