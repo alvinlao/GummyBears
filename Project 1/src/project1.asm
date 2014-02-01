@@ -30,9 +30,9 @@ DSEG at 30H
 	count0_100_timer:		DS 1	; Used for 1s calls
 	
 	;STATES
-	currentTemp:			DS 1
+	currentTemp:			DS 2
 	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL, 6 - FINISH
-	currentStateTime:		DS 1
+	currentStateTime:		DS 2
 	runTime:				DS 2 	; [seconds | minutes]
 
 	soakRate: 				DS 1
@@ -204,6 +204,7 @@ myprogram:
 	set EA							; Enable interrupts
 
 mainLoop:
+	;Check if temp > 300
 	;Check stop switch
 	mov A, SWC
 	anl A, #00000010B
@@ -220,6 +221,10 @@ mainLoop:
 
 	;Send current temperature to computer
 	mov R0, currentTemp
+	lcall sendByte_serial
+	mov R0, currentTemp+1
+	lcall sendByte_serial
+	mov R0, #'\n'
 	lcall sendByte_serial
 
 	;mov x, R0
