@@ -158,6 +158,7 @@ ISR_timer1:
 	mov TL1, reload1_timer+1
 
 	; DO STUFF
+	cpl P1.1
 
 	pop dph
 	pop dpl
@@ -199,6 +200,8 @@ myprogram:
 	
 	lcall start0_timer
 	lcall start1_timer
+
+	set EA							; Enable interrupts
 
 mainLoop:
 	;Check stop switch

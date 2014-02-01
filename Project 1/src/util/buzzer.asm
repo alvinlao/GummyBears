@@ -44,8 +44,6 @@ shortBeep_buzzer:
 	lcall start1_timer
 	lcall Wait_helper
 	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
 	lcall stop1_timer
 	ret
 	
@@ -61,6 +59,10 @@ longBeep_buzzer:
 	lcall Wait_helper
 	lcall Wait_helper
 	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
 	lcall stop1_timer
 	ret
 	
@@ -71,6 +73,12 @@ longBeep_buzzer:
 ; Makes six beeps
 ;------------------------------------------------
 sixBeeps_buzzer:
+	mov R0, #6
+sixBeeps_L0_buzzer:
+	lcall shortBeep_buzzer
+	lcall Wait_helper
+	lcall Wait_helper
+	djnz R0, sixBeeps_L0_buzzer
 	ret
 
 $LIST
