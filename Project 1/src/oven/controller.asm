@@ -56,6 +56,7 @@ setup_controller:
 ;------------------------------------------------
 update_controller:
 	clr a
+	mov a, currentStateTime
 	inc a
 	mov currentStateTime, a
 	
@@ -90,7 +91,7 @@ update_controller:
 	lcall x_gteq_y	;if true change state to 2, call buzzer, call maintainTemp_driver
 	
 	mov R0, SoakTemp
-	jnb mf, setRamp_driver_controller
+	jnb mf, shortcut_controller
 	
 	mov currentState, #2
 	mov currentStateTime, #0
@@ -114,6 +115,7 @@ state2_controller:
 	lcall shortBeep_buzzer
 	
 	mov R0, reflowTemp
+shortcut_controller:
 	ljmp setRamp_driver_controller
 	
 state3_controller:
