@@ -121,7 +121,7 @@ myprogram:
 	mov runTime, #0
 	mov currentStateTime, #0
 
-	;Call setup.asm (User loop)
+	lcall setup.asm (User loop)
 	lcall go_setup
 
 	;Setup and start timers

@@ -10,6 +10,9 @@
 ; Author: Alvin Lao
 ;------------------------------------------------
 
+
+$NOLIST
+
 CLK EQU 33333333
 FREQ_0 EQU 2000
 FREQ_1 EQU 3000
@@ -18,7 +21,6 @@ TIMER0_RELOAD EQU 65536-(CLK/(12*2*FREQ_0))
 TIMER1_RELOAD EQU 65536-(CLK/(12*FREQ_1))
 TIMER2_RELOAD EQU 65536-(CLK/(12*FREQ_2))
 
-$NOLIST
 CSEG
 
 ;------------------------------------------------    
