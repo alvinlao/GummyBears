@@ -30,7 +30,7 @@ CSEG
 ; Setup timer 0
 ;------------------------------------------------
 setup0_timer:
-	mov TMOD, #00000001B	;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer
+	mov TMOD, #00000001B	;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer	
 	clr TR0			;Disable timer0
 	clr TF0
 	mov TH0, reload0_timer
@@ -44,7 +44,7 @@ setup0_timer:
 ; Setup timer 1
 ;------------------------------------------------
 setup1_timer:
-	mov TMOD, #00000001B	;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer
+	mov TMOD, #00010000B	;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer
 	clr TR1			;Disable timer1
 	clr TF1
 	mov TH1, reload1_timer

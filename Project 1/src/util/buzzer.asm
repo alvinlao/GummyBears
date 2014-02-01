@@ -25,6 +25,7 @@ CSEG
 ;	reload1_timer
 ;------------------------------------------------
 setup_buzzer:
+	;Setup buzzer output port P1.1
 	mov A, #00000010B
 	orl A, P1MOD
 	mov P1MOD, A
@@ -41,6 +42,9 @@ setup_buzzer:
 ;------------------------------------------------
 shortBeep_buzzer:
 	lcall start1_timer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
 	lcall Wait_helper
 	lcall stop1_timer
 	ret
