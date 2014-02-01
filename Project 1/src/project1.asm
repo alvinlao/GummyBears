@@ -26,6 +26,8 @@ DSEG at 30H
 	;TIMERS
 	reload0_timer:			DS 2	; [high] [low]
 	reload1_timer:			DS 2	; [high] [low]
+
+	count0_100_timer:		DS 1	; Used for 1s calls
 	
 	;STATES
 	currentTemp:			DS 1
