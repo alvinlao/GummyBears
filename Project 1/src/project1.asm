@@ -153,9 +153,7 @@ mainLoop:
 	;lcall hex2bcd
 	;lcall displayBCD_helper		; Display the temp on 7 seg
 	
-	;lcall logTemperature 		; void logTemperature(temp [R0])
-
-	lcall Wait_helper
+	lcall Wait_helper				; Wait 0.25s
 	sjmp mainLoop
 
 forceStop:
