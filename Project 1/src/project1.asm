@@ -16,10 +16,10 @@ $MODDE2
 org 0000H
    ljmp MyProgram
 
-ORG 001BH
+ORG 000BH
 	ljmp ISR_timer0
 	
-ORG 002BH
+ORG 001BH
 	ljmp ISR_timer1
 
 DSEG at 30H
@@ -67,13 +67,18 @@ BSEG
 ; Utility
 ;-------------------------------------
 $include(util/helper.asm)
+$include(util/timer.asm)
 $include(util/spi.asm)
 $include(util/serial.asm)
 $include(util/buzzer.asm)
 $include(util/LCD.asm)
 $include(util/math16.asm)
 
+;-------------------------------------
+; Values
+;-------------------------------------
 $include(values/constants.asm)		;Constants
+$include(values/strings.asm)		;Strings (for LCD)
 
 ;-------------------------------------
 ; States
@@ -86,7 +91,7 @@ $include(finish.asm)				;Final exit instructions
 ; Oven
 ;-------------------------------------
 $include(oven/driver.asm)			;Oven driver
-;$include(oven/controller.asm)		;Oven controller
+$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------
 ; Temperature
@@ -97,6 +102,70 @@ $include(temperature/sensor.asm)	;Handle oven temperature
 
 CSEG
 
+;------------------------------------------------    
+; # Protected function
+;------------------------------------------------
+; ISR_timer0 100 Hz
+;------------------------------------------------
+; USERS:
+;	oven/controller.asm - Call every 1s
+;------------------------------------------------
+ISR_timer0:
+	push psw
+	push acc
+	push dpl
+	push dph
+
+	mov TH0, reload0_timer
+	mov TL0, reload0_timer+1
+
+	clr c
+	mov A, count0_100_timer
+	subb A, #100
+	jnz continue0_timer
+	mov count0_100_timer, #0
+	
+	; DO STUFF EVERY 1s
+	lcall update_controller			;Update oven temperature
+	
+
+continue0_timer:
+	inc count0_100_timer	
+
+	; DO STUFF EVERY 0.1s
+
+	pop dph
+	pop dpl
+	pop acc
+	pop psw
+
+	reti
+
+
+;------------------------------------------------    
+; # Protected function
+;------------------------------------------------
+; ISR_timer1
+; Interrupt for buzzer
+;------------------------------------------------
+ISR_timer1:
+	push psw
+	push acc
+	push dpl
+	push dph
+
+	mov TH1, reload1_timer
+	mov TL1, reload1_timer+1
+
+	; DO STUFF
+
+	pop dph
+	pop dpl
+	pop acc
+	pop psw
+
+	reti
+	
 ;-------------------------------------
 ;MAIN PROGRAM
 ;-------------------------------------
@@ -121,7 +190,7 @@ myprogram:
 	mov runTime, #0
 	mov currentStateTime, #0
 
-	lcall setup.asm (User loop)
+	;Go to setup.asm (User input loop)
 	lcall go_setup
 
 	;Setup and start timers
@@ -147,7 +216,7 @@ mainLoop:
 	lcall update_live
 
 	;Send current temperature to computer
-	mov R0, currentTemperature
+	mov R0, currentTemp
 	lcall sendByte_serial
 
 	;mov x, R0

@@ -67,13 +67,6 @@ longBeep_buzzer:
 ; Makes six beeps
 ;------------------------------------------------
 sixBeeps_buzzer:
-	MOV R3, #6
-L0_buzzer:
-	setb tr1
-	lcall WAIT_HALF_SEC
-	clr TR1
-	lcall WAIT_HALF_SEC
-	DJNZ R3, L0_buzzer
 	ret
 
 $LIST

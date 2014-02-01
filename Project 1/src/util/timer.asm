@@ -24,70 +24,6 @@ TIMER2_RELOAD EQU 65536-(CLK/(12*FREQ_2))
 CSEG
 
 ;------------------------------------------------    
-; # Protected function
-;------------------------------------------------
-; ISR_timer0 100 Hz
-;------------------------------------------------
-; USERS:
-;	oven/controller.asm - Call every 1s
-;------------------------------------------------
-ISR_timer0:
-	push psw
-	push acc
-	push dpl
-	push dph
-
-	mov TH0, reload0_timer
-	mov TL0, reload0_timer+1
-
-	clr c
-	mov A, count0_100_timer
-	subb A, #100
-	jnz continue0_timer
-	mov count0_100_timer, #0
-	
-	; DO STUFF EVERY 1s
-	lcall update_controller			;Update oven temperature
-	
-
-continue0_timer:
-	inc count0_100_timer	
-
-	; DO STUFF EVERY 0.1s
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
-	reti
-
-
-;------------------------------------------------    
-; # Protected function
-;------------------------------------------------
-; ISR_timer1
-; Interrupt for buzzer
-;------------------------------------------------
-ISR_timer1_buzzer:
-	push psw
-	push acc
-	push dpl
-	push dph
-
-	mov TH1, reload1_timer
-	mov TL1, reload1_timer+1
-
-	; DO STUFF
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
-	reti
-
-;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
 ; void setup0_timer ( void )
@@ -144,7 +80,7 @@ start1_timer:
 ; void stop0_timer ( void )
 ; Stop timer0
 ;------------------------------------------------
-stop0_timer
+stop0_timer:
 	clr TR0
 	clr ET0
 	ret
@@ -155,7 +91,7 @@ stop0_timer
 ; void stop1_timer ( void )
 ; Stop timer1
 ;------------------------------------------------
-stop1_timer
+stop1_timer:
 	clr TR1
 	clr ET1
 	ret
