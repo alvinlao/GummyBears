@@ -21,12 +21,18 @@ sevenSegLUT:
 ; Wait 0.25 second
 ;------------------------------------------------
 Wait_helper:
+	push ar0
+	push ar1
+	push ar2
 	mov R2, #45
 L3: mov R1, #250
 L2: mov R0, #250
 L1: djnz R0, L1 ; 3 machine cycles-> 3*30ns*250=22.5us
 	djnz R1, L2 ; 22.5us*250=5.625ms
 	djnz R2, L3 ; 5.625ms*90=0.5s (approximately)
+	pop ar2
+	pop ar1
+	pop ar0
 	ret
 
 	

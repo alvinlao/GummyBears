@@ -37,22 +37,9 @@ $include(../util/buzzer.asm)
 ; Interrupt for buzzer
 ;------------------------------------------------
 ISR_timer1:
-	push psw
-	push acc
-	push dpl
-	push dph
-
 	mov TH1, reload1_timer
 	mov TL1, reload1_timer+1
 	cpl P1.1
-	
-	; DO STUFF
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
 	reti
 	
 MyProgram:
@@ -71,12 +58,7 @@ MyProgram:
 	lcall start1_timer
 	setb EA
 testLoop:
-	lcall shortBeep_buzzer
-	lcall wait_helper
-	lcall wait_helper
-	lcall wait_helper
-	lcall wait_helper
-	lcall wait_helper
+	lcall sixBeeps_buzzer
 	cpl LEDRA.0
 	
-	sjmp testLoop
+	sjmp $

@@ -75,6 +75,7 @@ longBeep_buzzer:
 sixBeeps_buzzer:
 	mov R0, #6
 sixBeeps_L0_buzzer:
+cpl LEDG.0
 	lcall shortBeep_buzzer
 	lcall Wait_helper
 	lcall Wait_helper
