@@ -139,8 +139,8 @@ DEFAULT3_setup:
 ;	soakRate
 L00_setup:	
 	mov a, SWC
-	anl a, #00000010
-	JNZ L10_setup
+	anl a, #00000010B
+	jnz L10_setup
 	jnb SWA.0, L10_setup
 	
 	mov dptr, #SETSOAKRATE_STRINGS
@@ -196,8 +196,8 @@ L03_setup:
 ;	soakTemp
 L10_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L20_setup
+	anl a, #00000010B
+	jnz L20_setup
 	jnb SWA.1, L20_setup
 	
 	mov dptr, #SETSOAKTEMPERATURE_STRINGS
@@ -253,8 +253,8 @@ L13_setup:
 ;	soakTime
 L20_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L30_setup
+	anl a, #00000010B
+	jnz L30_setup
 	jnb SWA.2, L30_setup
 	
 	mov dptr, #SETSOAKTIME_STRINGS
@@ -310,8 +310,8 @@ L23_setup:
 ;	reflowRate
 L30_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L40_setup
+	anl a, #00000010B
+	jnz L40_setup
 	jnb SWA.3, L40_setup
 	
 	mov dptr, #SETREFLOWRATE_STRINGS
@@ -367,8 +367,8 @@ L33_setup:
 ;	reflowTemp	
 L40_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L5_setup
+	anl a, #00000010B
+	jnz L5_setup
 	jnb SWA.4, L5_setup
 	
 	mov dptr, #SETREFLOWTEMP_STRINGS
@@ -424,8 +424,8 @@ L43_setup:
 ;	reflowTime
 L5_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L6_setup
+	anl a, #00000010B
+	jnz L6_setup
 	jnb SWA.5, L6_setup
 	
 	mov dptr, #SETREFLOWTIME_STRINGS
@@ -481,8 +481,8 @@ L53_setup:
 ;	coolRate
 L6_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L7_setup
+	anl a, #00000010B
+	jnz L7_setup
 	jnb SWA.6, L7_setup
 	
 	mov dptr, #SETCOOLRATE_STRINGS
@@ -536,8 +536,8 @@ L63_setup:
 	LJMP L6_setup
 L7_setup:
 	mov a, SWC
-	anl a, #00000010
-	JNZ L8_setup
+	anl a, #00000010B
+	jnz L8_setup
 	LJMP DEFAULT1_setup
 L8_setup: 
 	mov currentState, #1
