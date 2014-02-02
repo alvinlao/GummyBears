@@ -32,4 +32,5 @@ COOLDOWN_STRINGS: 			DB 'Cooling down    ', '                '
 STOPPED_STRINGS:            DB 'Stopped         ', '                '
 FINISHED_STRINGS: 			DB 'Finished!       ', '                '
 
+Nothing_Strings:			DB '                ', '                '
 $LIST
