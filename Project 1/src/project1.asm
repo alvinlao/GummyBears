@@ -120,8 +120,7 @@ ISR_timer0:
 	mov TL0, reload0_timer+1
 	
 	djnz count0_100_timer, continue0_timer
-	mov count0_100_timer, #100
-	cpl LEDG.0
+	mov count0_100_timer, #100	
 	; DO STUFF EVERY 1s
 
 	;Update run time
@@ -141,13 +140,13 @@ ISR_timer0:
 	mov currentStateTime+1, A
 
 	;Update oven temperature	
-	;lcall update_controller
+	lcall update_controller
 
 	cpl LEDG.0
 	
 continue0_timer:
 	; DO STUFF EVERY 0.1s
-cpl LEDG.1
+	
 	pop dph
 	pop dpl
 	pop acc
@@ -207,7 +206,7 @@ myprogram:
 
 	;Go to setup.asm (User input loop)
 	lcall go_setup
-cpl LEDRA.0
+
 	;Setup and start timers
 	lcall setup0_timer
 	lcall setup1_timer

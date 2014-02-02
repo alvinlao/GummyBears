@@ -103,8 +103,6 @@ update_live:
 	ljmp Done_live
 	Six_live: 
 	mov a , currentState
-	subb a , #7 
-	jnc Seven_live
 	mov dptr , #FINISHED_STRINGS
 	lcall displayStringFromCode_LCD
 Done_live:
