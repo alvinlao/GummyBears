@@ -123,13 +123,27 @@ ISR_timer0:
 	mov count0_100_timer, #100
 	
 	; DO STUFF EVERY 1s
-	inc runTime
-	inc currentStateTime
-	lcall update_controller			;Update oven temperature
+
+	;Update run time
+	mov A, runTime
+	add A, #1
+	mov runTime, A
+	mov A, runTime+1
+	addc A, #0
+	mov runTime+1, A
+
+	;Update current state run tim
+	mov A, currentStateTime
+	add A, #1
+	mov currentStateTime, A
+	mov A, currentStateTime+1
+	addc A, #0
+	mov currentStateTime+1, A
+
+	;Update oven temperature	
+	lcall update_controller
 
 continue0_timer:
-	inc count0_100_timer	
-
 	; DO STUFF EVERY 0.1s
 
 	pop dph
