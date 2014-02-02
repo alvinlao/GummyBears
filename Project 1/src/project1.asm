@@ -201,7 +201,7 @@ myprogram:
 	lcall start0_timer
 	lcall start1_timer
 
-	set EA							; Enable interrupts
+	setb EA							; Enable interrupts
 
 mainLoop:
 	;Check if temp > 300
