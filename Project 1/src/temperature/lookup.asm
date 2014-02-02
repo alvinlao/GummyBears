@@ -268,7 +268,7 @@ dw 10153 ; 250
 ; + Public function
 ;------------------------------------------------
 ; Input: 16bit voltage held as [R0 , R1]
-; Output: Temperature [R0, R1]
+; Output: Temperature [R0]
 ; Note: No math16 calls
 ;------------------------------------------------
 findTemperature_lookup:
@@ -306,7 +306,7 @@ done_lookup:
 ;------------------------------------------------
 ; + Public function
 ;------------------------------------------------
-; Input: Tempurature in [R0, R1]
+; Input: Tempurature in [R0]
 ; Output: 16 bit Voltage in [ R0 , R1 ]
 ; Note: V2 unknown error in n, working perhaps because of no math16 functions
 ;------------------------------------------------

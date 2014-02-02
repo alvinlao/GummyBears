@@ -14,10 +14,10 @@
 $NOLIST
 
 CLK EQU 33333333
-FREQ_0 EQU 2000
+FREQ_0 EQU 100
 FREQ_1 EQU 3000
 BAUD EQU 115200
-TIMER0_RELOAD EQU 65536-(CLK/(12*2*FREQ_0))
+TIMER0_RELOAD EQU 65536-(CLK/(12*FREQ_0))
 TIMER1_RELOAD EQU 65536-(CLK/(12*FREQ_1))
 TIMER2_RELOAD EQU 65536-(CLK/(32*BAUD))
 
@@ -30,6 +30,9 @@ CSEG
 ; Setup timer 0
 ;------------------------------------------------
 setup0_timer:
+	mov reload0_timer, #high(TIMER0_RELOAD)
+	mov reload0_timer+1, #low(TIMER0_RELOAD)
+	
 	mov A, #00000001B
 	orl A, TMOD
 	mov TMOD, A		;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer	
@@ -46,6 +49,9 @@ setup0_timer:
 ; Setup timer 1
 ;------------------------------------------------
 setup1_timer:
+	mov reload1_timer, #high(TIMER1_RELOAD)
+	mov reload1_timer+1, #low(TIMER1_RELOAD)
+	
 	mov A, #00010000B
 	orl A, TMOD
 	mov TMOD, A		;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer

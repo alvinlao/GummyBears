@@ -28,10 +28,15 @@ CSEG
 ;------------------------------------------------
 go_setup:
 	
+DEFAULT1_setup:
+	MOV A, #01111111B
+	MOV HEX0, A
+	MOV HEX1, A
+	MOV HEX2, A
+	
 	mov dptr, #WELCOME_STRINGS
 	LCALL displayStringFromCode_LCD
 	
-DEFAULT1_setup:
 	jb KEY.1, DEFAULT2_setup
 	jnb KEY.1, $
 	
@@ -138,6 +143,8 @@ DEFAULT3_setup:
 
 ;	soakRate
 L00_setup:	
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L10_setup
@@ -195,6 +202,8 @@ L03_setup:
 	
 ;	soakTemp
 L10_setup:
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L20_setup
@@ -252,6 +261,8 @@ L13_setup:
 	
 ;	soakTime
 L20_setup:
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L30_setup
@@ -309,6 +320,8 @@ L23_setup:
 	
 ;	reflowRate
 L30_setup:
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L40_setup
@@ -366,6 +379,8 @@ L33_setup:
 	
 ;	reflowTemp	
 L40_setup:
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L5_setup
@@ -423,6 +438,8 @@ L43_setup:
 	
 ;	reflowTime
 L5_setup:
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L6_setup
@@ -480,6 +497,8 @@ L53_setup:
 
 ;	coolRate
 L6_setup:
+	
+	
 	mov a, SWC
 	anl a, #00000010B
 	jnz L7_setup
