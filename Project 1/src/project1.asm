@@ -126,6 +126,8 @@ ISR_timer0:
 	mov count0_100_timer, #0
 	
 	; DO STUFF EVERY 1s
+	inc runTime
+	inc currentStateTime
 	lcall update_controller			;Update oven temperature
 	
 
