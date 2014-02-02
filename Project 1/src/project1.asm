@@ -119,17 +119,13 @@ ISR_timer0:
 	mov TH0, reload0_timer
 	mov TL0, reload0_timer+1
 
-	clr c
-	mov A, count0_100_timer
-	subb A, #100
-	jnz continue0_timer
-	mov count0_100_timer, #0
+	djnz count0_100_timer, continue0_timer
+	mov count0_100_timer, #100
 	
 	; DO STUFF EVERY 1s
 	inc runTime
 	inc currentStateTime
 	lcall update_controller			;Update oven temperature
-	
 
 continue0_timer:
 	inc count0_100_timer	
