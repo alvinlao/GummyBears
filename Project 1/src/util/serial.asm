@@ -3,6 +3,9 @@
 ;------------------------------------------------
 ; Used to send information through the serial port
 ;------------------------------------------------
+; DEPENDENCIES:
+;	timer.asm
+;------------------------------------------------
 ; Author: Alvin Lao
 ;------------------------------------------------
 
@@ -18,8 +21,8 @@ CSEG
 setup_serial:
 	clr TR2 ; Disable timer 2
 	mov T2CON, #30H ; RCLK=1, TCLK=1 
-	mov RCAP2H, #high(T2LOAD)  
-	mov RCAP2L, #low(T2LOAD)
+	mov RCAP2H, #high(TIMER2_RELOAD)  
+	mov RCAP2L, #low(TIMER2_RELOAD)
 	setb TR2 ; Enable timer 2
 	mov SCON, #52H
 	ret

@@ -4,9 +4,9 @@
 ; Sensor for oven temperature 
 ;------------------------------------------------
 ; DEPENDENCIES:
-; 	spi.asm
 ;	lm335.asm
 ;	lookup.asm
+; 	../spi.asm
 ;	../util/math16.asm
 ;------------------------------------------------
 ; Author: Alvin Lao
@@ -57,7 +57,7 @@ updateInputVoltages_sensor:
 ;------------------------------------------------
 ; + Public function	
 ;------------------------------------------------	
-; temp[R0, R1] & temp[currentTemp] getOvenTemp( void )
+; temp[R0, R1] & temp[currentTemp, currentTemp+1] getOvenTemp( void )
 ;------------------------------------------------	
 ; REQUIRES:
 ;	coldVoltage (2 bytes)

@@ -4,8 +4,8 @@
 ; Timer operations
 ;------------------------------------------------
 ; REQURIES:
-;		timer0_reload: DS 2
-;		timer1_reload: DS 2
+;		reload0_timer: DS 2
+;		reload1_timer: DS 2
 ;------------------------------------------------
 ; Author: Alvin Lao
 ;------------------------------------------------
@@ -16,10 +16,10 @@ $NOLIST
 CLK EQU 33333333
 FREQ_0 EQU 2000
 FREQ_1 EQU 3000
-FREQ_2 EQU 100
+BAUD EQU 115200
 TIMER0_RELOAD EQU 65536-(CLK/(12*2*FREQ_0))
 TIMER1_RELOAD EQU 65536-(CLK/(12*FREQ_1))
-TIMER2_RELOAD EQU 65536-(CLK/(12*FREQ_2))
+TIMER2_RELOAD EQU 65536-(CLK/(32*BAUD))
 
 CSEG
 
