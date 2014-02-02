@@ -63,6 +63,7 @@ setup1_timer:
 start0_timer:
 	setb TR0 		;Enable timer0
 	setb ET0		;Enable timer0 interrupt
+	mov count0_100_timer, #100
 	ret
 
 ;------------------------------------------------    
