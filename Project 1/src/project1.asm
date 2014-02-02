@@ -118,10 +118,10 @@ ISR_timer0:
 
 	mov TH0, reload0_timer
 	mov TL0, reload0_timer+1
-
+	
 	djnz count0_100_timer, continue0_timer
 	mov count0_100_timer, #100
-	
+	cpl LEDG.0
 	; DO STUFF EVERY 1s
 
 	;Update run time
@@ -141,7 +141,7 @@ ISR_timer0:
 	mov currentStateTime+1, A
 
 	;Update oven temperature	
-	lcall update_controller
+	;lcall update_controller
 
 continue0_timer:
 	; DO STUFF EVERY 0.1s
@@ -211,16 +211,16 @@ myprogram:
 	lcall setup1_timer
 	
 	lcall start0_timer
-	lcall start1_timer
-
+	
 	setb EA							; Enable interrupts
+	mov LEDRA, #0H
 
 mainLoop:
 	;Check if temp > 300
 	;Check stop switch
 	mov A, SWC
 	anl A, #00000010B
-	jnz forceStop
+	jz forceStop
 
 	;Check if finish state
 	clr c
@@ -239,18 +239,17 @@ mainLoop:
 	mov R0, #'\n'
 	lcall sendByte_serial
 
-	;mov x, R0
-	;mov x+1, #0
-	;lcall hex2bcd
-	;lcall displayBCD_helper		; Display the temp on 7 seg
-	
 	lcall Wait_helper				; Wait 0.25s
 	sjmp mainLoop
 
 forceStop:
+	setb LEDRA.0
+	lcall stop0_timer
 	lcall force_finish
 	sjmp $
 
 finish:
+	setb LEDRA.1
+	lcall stop0_timer
 	lcall go_finish
 	sjmp $
