@@ -22,6 +22,9 @@ CSEG
 ; Entry function for the final exit code
 ;------------------------------------------------
 go_finish:
+	mov dptr , #FINISHED_STRINGS
+	lcall displayStringFromCode_LCD
+	lcall sixBeeps_buzzer
 	ret
 
 ;------------------------------------------------    
