@@ -62,7 +62,7 @@ updateInputVoltages_sensor:
 ;------------------------------------------------
 ; + Public function	
 ;------------------------------------------------	
-; temp[R0] & temp[currentTemp, currentTemp+1] getOvenTemp( void )
+; temp[R0] & temp[currentTemp] getOvenTemp( void )
 ;------------------------------------------------	
 ; REQUIRES:
 ;	coldVoltage (2 bytes)
@@ -95,6 +95,7 @@ getOvenTemp_sensor:
 	
 	; Convert voltage to temperature
 	lcall findTemperature_lookup
+	mov prevTemp, currentTemp
 	mov currentTemp, R0
 	ret
 	

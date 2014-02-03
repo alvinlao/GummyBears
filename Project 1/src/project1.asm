@@ -30,7 +30,8 @@ DSEG at 30H
 	count1_100_timer:		DS 1	; Used for 1s calls
 	
 	;STATES
-	currentTemp:			DS 1
+	prevTemp:				DS 1	; *C
+	currentTemp:			DS 1	; *C
 	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL, 6 - FINISH
 	currentStateTime:		DS 1	; seconds
 	runTime:				DS 2 	; [seconds | minutes]
@@ -83,7 +84,7 @@ $include(values/strings.asm)		;Strings (for LCD)
 ; States
 ;-------------------------------------
 $include(setup.asm)					;Initial user configuration
-;f$include(live.asm)					;Initial user configuration
+$include(live.asm)					;Initial user configuration
 $include(finish.asm)				;Final exit instructions
 
 ;-------------------------------------
@@ -191,8 +192,11 @@ myprogram:
 	lcall setup_buzzer		; Buzzer sets up timer1 reload value
 	
 	;Setup global variables	
+	mov prevTemp, #0
+	mov currentTemp, #0	
 	mov currentState, #0
 	mov runTime, #0
+	mov runTime+1, #0
 	mov currentStateTime, #0
 
 	;Go to setup.asm (User input loop)
@@ -210,6 +214,13 @@ myprogram:
 	lcall shortBeep_buzzer
 mainLoop:
 	;Check if temp > 250
+	mov x, currentTemp
+	mov x+1, #0
+	mov y, #250
+	mov y+1, #0
+	lcall x_gt_y
+	jb mf, forceStop
+	
 	;Check stop switch
 	mov A, SWC
 	anl A, #00000010B
@@ -222,7 +233,7 @@ mainLoop:
 	jz finish
 
 	;Update board displays
-	;lcall update_live
+	lcall update_live
 
 	;Send current temperature to computer
 	mov R0, currentTemp
