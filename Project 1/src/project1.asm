@@ -84,7 +84,7 @@ $include(values/strings.asm)		;Strings (for LCD)
 ; States
 ;-------------------------------------
 $include(setup.asm)					;Initial user configuration
-$include(live.asm)					;Initial user configuration
+;f$include(live.asm)					;Initial user configuration
 $include(finish.asm)				;Final exit instructions
 
 ;-------------------------------------
@@ -231,7 +231,7 @@ mainLoop:
 	jz finish
 
 	;Update board displays
-	lcall update_live
+	;lcall update_live
 
 	;Send current temperature to computer
 	mov R0, currentTemp

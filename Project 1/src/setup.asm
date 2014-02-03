@@ -26,6 +26,15 @@ CSEG
 ; 	6) reflowTime:	DS 1	->SWA.5
 ; 	7) coolRate:	DS 1	->SWA.6
 ;------------------------------------------------
+WaitHalfSec_SETUP:
+	mov R7, #180
+L3_SETUP: mov R6, #250
+L2_SETUP: mov R5, #250
+L1_SETUP: djnz R5, L1_SETUP ; 3 machine cycles-> 3*30ns*250=22.5us
+	djnz R6, L2_SETUP ; 22.5us*250=5.625ms
+	djnz R7, L3_SETUP ; 5.625ms*90=0.5s (approximately)
+	ret
+	
 go_setup:
 	
 DEFAULT1_setup:
@@ -70,7 +79,8 @@ DEFAULT1_setup:
 	mov dptr, #DEFAULT1_COOLRATE
 	lcall getCodeByte_helper
 	mov coolRate, R0
-
+	
+	lcall WaitHalfSec_SETUP
 DEFAULT2_setup:
 	jb KEY.2, DEFAULT3_setup
 	jnb KEY.2, $
@@ -106,6 +116,7 @@ DEFAULT2_setup:
 	lcall getCodeByte_helper
 	mov coolRate, R0
 	
+	lcall WaitHalfSec_SETUP
 DEFAULT3_setup:
 	jb KEY.3, L00_setup
 	jnb KEY.3, $
@@ -141,6 +152,7 @@ DEFAULT3_setup:
 	lcall getCodeByte_helper
 	mov coolRate, R0
 
+	lcall WaitHalfSec_SETUP
 ;	soakRate
 L00_setup:	
 	
