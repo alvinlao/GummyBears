@@ -44,6 +44,11 @@ DSEG at 30H
  	reflowTime:				DS 1
  	coolRate:				DS 1
  	
+ 	;buzzer 
+ 	buzzer_small:           DS 1	; [high] [low]
+	buzzer_big:				DS 1
+	buzzer_temp:			DS 1
+ 	
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
 	coldVoltage:			DS 2
@@ -109,11 +114,14 @@ CSEG
 ; Interrupt for buzzer
 ;------------------------------------------------
 ISR_timer0:
+	cpl P1.1
 	mov TH0, reload0_timer
 	mov TL0, reload0_timer+1
-
-	; DO STUFF
-	cpl P1.1
+	djnz buzzer_small , skip_buzzer ; decrements the first one 
+	mov buzzer_small , buzzer_temp	; resets the first one
+	djnz buzzer_big , skip_buzzer ; decrements the second onemov buzzer_big , buzzer_tempLoop ; resets the second one
+	lcall stop0_timer
+skip_buzzer:
 	reti
 
 

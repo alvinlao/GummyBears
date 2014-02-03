@@ -9,7 +9,7 @@
 ; NOTE: 
 ;	Requires timer 0
 ;------------------------------------------------
-; Author: Zhenzheng Xia
+; Author: David Henderson
 ;------------------------------------------------
 
 $NOLIST
