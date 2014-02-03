@@ -113,7 +113,7 @@ state2_controller:
 	
 	mov currentstate, #3
 	lcall shortBeep_buzzer
-	
+	cpl LEDRA.0
 	mov R0, reflowTemp
 shortcut_controller:
 	ljmp setRamp_driver_controller

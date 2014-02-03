@@ -74,7 +74,7 @@ updateInputVoltages_sensor:
 getOvenTemp_sensor:
 	; Update ovenVoltage and coldVoltage
 	lcall updateInputVoltages_sensor
-	
+
 	; Prepare K-type thermocouple voltage
 	lcall ovenBin2Voltage_sensor
 	mov y+1, R0

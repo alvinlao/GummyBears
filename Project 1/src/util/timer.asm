@@ -14,8 +14,8 @@
 $NOLIST
 
 CLK EQU 33333333
-FREQ_0 EQU 100
-FREQ_1 EQU 3000
+FREQ_0 EQU 3000
+FREQ_1 EQU 100
 BAUD EQU 115200
 TIMER0_RELOAD EQU 65536-(CLK/(12*FREQ_0))
 TIMER1_RELOAD EQU 65536-(CLK/(12*FREQ_1))
@@ -32,8 +32,7 @@ CSEG
 setup0_timer:
 	mov reload0_timer, #high(TIMER0_RELOAD)
 	mov reload0_timer+1, #low(TIMER0_RELOAD)
-	mov count0_100_timer, #0
-	
+	setb PT0
 	mov A, #00000001B
 	orl A, TMOD
 	mov TMOD, A		;GATE = 0, C/T*=0, M1=0, M0=1: 16-bit timer	
@@ -52,6 +51,7 @@ setup0_timer:
 setup1_timer:
 	mov reload1_timer, #high(TIMER1_RELOAD)
 	mov reload1_timer+1, #low(TIMER1_RELOAD)
+	mov count1_100_timer, #0
 	
 	mov A, #00010000B
 	orl A, TMOD
@@ -68,9 +68,10 @@ setup1_timer:
 ; Start timer0
 ;------------------------------------------------
 start0_timer:
+	mov TH0, reload0_timer
+	mov TL0, reload0_timer+1
 	setb TR0 		;Enable timer0
-	setb ET0		;Enable timer0 interrupt
-	mov count0_100_timer, #100
+	setb ET0		;Enable timer0 interrupt	
 	ret
 
 ;------------------------------------------------    
@@ -80,8 +81,11 @@ start0_timer:
 ; Start timer1
 ;------------------------------------------------
 start1_timer:
+	mov TH1, reload1_timer
+	mov TL1, reload1_timer+1
 	setb TR1		;Enable timer1
 	setb ET1		;Enable timer1 interrupt
+	mov count1_100_timer, #100
 	ret
 
 ;------------------------------------------------    
