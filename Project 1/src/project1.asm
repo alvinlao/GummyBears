@@ -27,7 +27,7 @@ DSEG at 30H
 	reload0_timer:			DS 2	; [high] [low]
 	reload1_timer:			DS 2	; [high] [low]
 
-	count0_100_timer:		DS 1	; Used for 1s calls
+	count1_100_timer:		DS 1	; Used for 1s calls
 	
 	;STATES
 	currentTemp:			DS 1
@@ -105,24 +105,43 @@ CSEG
 ;------------------------------------------------    
 ; # Protected function
 ;------------------------------------------------
-; ISR_timer0 100 Hz
+; ISR_timer0
+; Interrupt for buzzer
+;------------------------------------------------
+ISR_timer0:
+	mov TH0, reload0_timer
+	mov TL0, reload0_timer+1
+
+	; DO STUFF
+	cpl P1.1
+	reti
+
+
+;------------------------------------------------    
+; # Protected function
+;------------------------------------------------
+; ISR_timer1 100 Hz
 ;------------------------------------------------
 ; USERS:
 ;	oven/controller.asm - Call every 1s
 ;------------------------------------------------
-ISR_timer0:
+ISR_timer1:
 	push psw
 	push acc
 	push dpl
 	push dph
-
-	mov TH0, reload0_timer
-	mov TL0, reload0_timer+1
 	
-	djnz count0_100_timer, continue0_timer
-	mov count0_100_timer, #100	
+	clr RS0
+	setb RS1
+	
+	mov TH1, reload1_timer
+	mov TL1, reload1_timer+1
+	
+	djnz count1_100_timer, continue1_timer
+	mov count1_100_timer, #100	
+	
 	; DO STUFF EVERY 1s
-
+	
 	;Update run time
 	mov A, runTime
 	add A, #1
@@ -139,47 +158,22 @@ ISR_timer0:
 	addc A, #0
 	mov currentStateTime+1, A
 
-	;Update oven temperature	
+	;Get oven temperature
+	lcall getOvenTemp_sensor
+	
+	;Update target oven temperature	
 	lcall update_controller
 
-	cpl LEDG.0
+	cpl LEDG.0	
 	
-continue0_timer:
+continue1_timer:
 	; DO STUFF EVERY 0.1s
 	
 	pop dph
 	pop dpl
 	pop acc
 	pop psw
-
 	reti
-
-
-;------------------------------------------------    
-; # Protected function
-;------------------------------------------------
-; ISR_timer1
-; Interrupt for buzzer
-;------------------------------------------------
-ISR_timer1:
-	push psw
-	push acc
-	push dpl
-	push dph
-
-	mov TH1, reload1_timer
-	mov TL1, reload1_timer+1
-
-	; DO STUFF
-	cpl P1.1
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
-	reti
-	
 ;-------------------------------------
 ;MAIN PROGRAM
 ;-------------------------------------
@@ -211,11 +205,12 @@ myprogram:
 	lcall setup0_timer
 	lcall setup1_timer
 	
-	lcall start0_timer
+	lcall start1_timer
 	
 	setb EA							; Enable interrupts
 	mov LEDRA, #0H
-
+	
+	lcall shortBeep_buzzer
 mainLoop:
 	;Check if temp > 250
 	;Check stop switch
@@ -234,6 +229,7 @@ mainLoop:
 
 	;Send current temperature to computer
 	mov R0, currentTemp
+	;mov LEDRB, currentTemp
 	lcall sendByte_serial
 	mov R0, #'\n'
 	lcall sendByte_serial

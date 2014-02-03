@@ -7,7 +7,7 @@
 ; 	helper.asm
 ;	timer.asm
 ; NOTE: 
-;	Requires timer 1
+;	Requires timer 0
 ;------------------------------------------------
 ; Author: Zhenzheng Xia
 ;------------------------------------------------
@@ -30,8 +30,8 @@ setup_buzzer:
 	orl A, P1MOD
 	mov P1MOD, A
 
-	mov reload1_timer, #high(TIMER1_RELOAD)
-	mov reload1_timer+1, #low(TIMER1_RELOAD)
+	mov reload0_timer, #high(TIMER0_RELOAD)
+	mov reload0_timer+1, #low(TIMER0_RELOAD)
 	ret
 
 ;------------------------------------------------    
@@ -41,10 +41,9 @@ setup_buzzer:
 ; Makes a short beep
 ;------------------------------------------------
 shortBeep_buzzer:
-	lcall start1_timer
+	lcall start0_timer
 	lcall Wait_helper
-	lcall Wait_helper
-	lcall stop1_timer
+	lcall stop0_timer
 	ret
 	
 ;------------------------------------------------    
@@ -54,7 +53,7 @@ shortBeep_buzzer:
 ; Makes a long beep
 ;------------------------------------------------
 longBeep_buzzer:
-	lcall start1_timer
+	lcall start0_timer
 	lcall Wait_helper
 	lcall Wait_helper
 	lcall Wait_helper
@@ -63,7 +62,7 @@ longBeep_buzzer:
 	lcall Wait_helper
 	lcall Wait_helper
 	lcall Wait_helper
-	lcall stop1_timer
+	lcall stop0_timer
 	ret
 	
 ;------------------------------------------------    

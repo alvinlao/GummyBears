@@ -4,10 +4,15 @@
 ; Sensor for oven temperature 
 ;------------------------------------------------
 ; DEPENDENCIES:
+; 	../util/spi.asm
+;	../util/math16.asm
 ;	lm335.asm
 ;	lookup.asm
-; 	../spi.asm
-;	../util/math16.asm
+;------------------------------------------------
+; REQUIRES:
+;	currentTemp:			DS 1
+;	ovenVoltage:			DS 2
+;	coldVoltage:			DS 2
 ;------------------------------------------------
 ; Author: Alvin Lao
 ;------------------------------------------------
@@ -74,7 +79,7 @@ getOvenTemp_sensor:
 	lcall ovenBin2Voltage_sensor
 	mov y+1, R0
 	mov y, R1
-	
+
 	; Convert LM335 voltage to LUT voltage
 	mov R0, coldVoltage
 	mov R1, coldVoltage+1
