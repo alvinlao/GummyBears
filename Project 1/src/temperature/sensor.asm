@@ -95,6 +95,7 @@ getOvenTemp_sensor:
 	
 	; Convert voltage to temperature
 	lcall findTemperature_lookup
+	mov prevTemp, currentTemp
 	mov currentTemp, R0
 	ret
 	
