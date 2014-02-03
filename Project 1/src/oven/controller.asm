@@ -91,14 +91,17 @@ update_controller:
 	mov y+1, #0
 	lcall x_gteq_y	;if true change state to 2, call buzzer, call maintainTemp_driver
 	
-	mov R0, SoakTemp
+	mov R0, PrevTemp
+	mov R1, currentTemp
+	mov R2, soakRate
 	jnb mf, shortcut_controller
 	
 	mov currentState, #2
 	mov currentStateTime, #0
 	lcall shortBeep_buzzer
 	
-	mov R0, SoakTemp
+	mov R0, currentTemp
+	mov R1, SoakTemp
 	ljmp maintainTemp_driver_controller
 
 ;	In state 2:	
@@ -109,13 +112,16 @@ state2_controller:
 	mov y+1, #0
 	lcall x_gteq_y
 	
-	mov R0, SoakTemp
+	mov R0, currentTemp
+	mov R1, SoakTemp
 	jnb mf, maintainTemp_driver_controller
 	
 	mov currentstate, #3
 	lcall shortBeep_buzzer
 	cpl LEDRA.0
-	mov R0, reflowTemp
+	mov R0, PrevTemp
+	mov R1, currentTemp
+	mov R2, reflowRate
 shortcut_controller:
 	ljmp setRamp_driver_controller
 	
@@ -126,13 +132,16 @@ state3_controller:
 	mov y+1, #0
 	lcall x_gteq_y
 	
-	mov R0, ReflowTemp
+	mov R0, PrevTemp
+	mov R1, currentTemp
+	mov R2, reflowRate
 	jnb mf, setRamp_driver_controller
 	
 	mov currentstate, #4
 	lcall shortBeep_buzzer
 	
-	mov R0, reflowTemp
+	mov R0, currentTemp
+	mov R1, reflowTemp
 	ljmp maintainTemp_driver_controller
 	
 state4_controller:
@@ -142,7 +151,8 @@ state4_controller:
 	mov y+1, #0
 	lcall x_gteq_y
 	
-	mov R0, ReflowTemp
+	mov R0, currentTemp
+	mov R1, ReflowTemp
 	jnb mf, maintainTemp_driver_controller
 	
 	mov currentstate, #5
@@ -153,11 +163,14 @@ state4_controller:
 state5_controller:
 	mov x+0, currentTemp
 	mov x+1, #0
-	mov y+0, FINISH_TEMP
+	mov dptr, #FINISH_TEMP
+	lcall getCodeByte_helper
+	mov y+0, R0
 	mov y+1, #0
 	lcall x_lteq_y
 	
-	mov R0, ReflowTemp
+	mov R0, currentTemp
+	mov R1, ReflowTemp
 	jnb mf, maintainTemp_driver_controller
 	
 	mov currentstate, #6
