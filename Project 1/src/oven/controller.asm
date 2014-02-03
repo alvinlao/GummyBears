@@ -42,6 +42,7 @@ setup_controller:
 ;	reflowTime
 ;	coolRate
 ;
+;	prevTemp
 ;	currentTemp
 ;	currentState
 ;	currentStateTime
