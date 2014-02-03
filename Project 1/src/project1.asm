@@ -149,7 +149,7 @@ ISR_timer1:
 	mov count1_100_timer, #100	
 	
 	; DO STUFF EVERY 1s
-	
+	mov LEDRA, currentStateTime
 	;Update run time
 	mov A, runTime
 	add A, #1
