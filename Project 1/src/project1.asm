@@ -214,6 +214,13 @@ myprogram:
 	lcall shortBeep_buzzer
 mainLoop:
 	;Check if temp > 250
+	mov x, currentTemp
+	mov x+1, #0
+	mov y, #250
+	mov y+1, #0
+	lcall x_gt_y
+	jb mf, forceStop
+	
 	;Check stop switch
 	mov A, SWC
 	anl A, #00000010B
