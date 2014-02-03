@@ -65,7 +65,7 @@ update_live:
 	subb a , #1 
 	jnc One_live
 	mov LEDRA , #00000000B
-	sjmp Done_live
+	ljmp Done_live
 	One_live: 
 	mov a , currentState
 	subb a , #2 
