@@ -65,7 +65,7 @@ update_live:
 	subb a , #1 
 	jnc One_live
 	mov LEDRA , #00000000B
-	sjmp Done_live
+	ljmp Done_live
 	One_live: 
 	mov a , currentState
 	subb a , #2 
@@ -103,8 +103,6 @@ update_live:
 	ljmp Done_live
 	Six_live: 
 	mov a , currentState
-	subb a , #7 
-	jnc Seven_live
 	mov dptr , #FINISHED_STRINGS
 	lcall displayStringFromCode_LCD
 Done_live:

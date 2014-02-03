@@ -30,7 +30,7 @@ PREHEATREFLOW_STRINGS:		DB 'Heating to      ', 'Reflow          '
 REFLOW_STRINGS:				DB 'Reflow          ', '                '
 COOLDOWN_STRINGS: 			DB 'Cooling down    ', '                '
 STOPPED_STRINGS:            DB 'Stopped         ', '                '
-FINISHED_STRINGS: 			DB 'Finished!       ', '                '
+FINISHED_STRINGS: 			DB 'PCB ready for   ', 'handling        '
 
 Nothing_Strings:			DB '                ', '                '
 $LIST
