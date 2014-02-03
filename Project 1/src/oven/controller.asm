@@ -152,7 +152,7 @@ state4_controller:
 state5_controller:
 	mov x+0, currentTemp
 	mov x+1, #0
-	mov y+0, finishTemp
+	mov y+0, FINISH_TEMP
 	mov y+1, #0
 	lcall x_lteq_y
 	

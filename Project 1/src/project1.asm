@@ -32,7 +32,7 @@ DSEG at 30H
 	;STATES
 	currentTemp:			DS 1
 	currentState:			DS 1	; 0 - IDLE, 1 - PREHEAT, 2 - SOAK, 3 - REFLOWRAMP, 4 - REFLOW, 5 - COOL, 6 - FINISH
-	currentStateTime:		DS 2
+	currentStateTime:		DS 1	; seconds
 	runTime:				DS 2 	; [seconds | minutes]
 
 	soakRate: 				DS 1
@@ -42,7 +42,6 @@ DSEG at 30H
  	reflowTemp:				DS 1
  	reflowTime:				DS 1
  	coolRate:				DS 1
-	finishTemp:				DS 1
  	
 	;temperature/sensor.asm
 	ovenVoltage:			DS 2
@@ -145,18 +144,16 @@ ISR_timer1:
 	;Update run time
 	mov A, runTime
 	add A, #1
-	mov runTime, A
-	mov A, runTime+1
-	addc A, #0
-	mov runTime+1, A
+	mov B, A
+	subb A, #60
+	jnz saveRunTime	; Normal inc
+	mov B, #0
+	inc runTime+1	
+saveRunTime:
+	mov runTime, B
 
 	;Update current state run tim
-	mov A, currentStateTime
-	add A, #1
-	mov currentStateTime, A
-	mov A, currentStateTime+1
-	addc A, #0
-	mov currentStateTime+1, A
+	inc currentStateTime
 
 	;Get oven temperature
 	lcall getOvenTemp_sensor
@@ -164,7 +161,7 @@ ISR_timer1:
 	;Update target oven temperature	
 	lcall update_controller
 
-	cpl LEDG.0	
+	cpl LEDG.0
 	
 continue1_timer:
 	; DO STUFF EVERY 0.1s
