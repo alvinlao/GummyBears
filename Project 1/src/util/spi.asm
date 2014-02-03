@@ -21,6 +21,7 @@ CSEG
 ;------------------------------------------------    
 setup_spi:
 	setb CE_ADC			  ; Set CS output to 1 (Pause ADC)
+	orl P0MOD, #00111000b ; make all CEs outputs
     orl P0MOD, #00000110b ; Set SCLK, MOSI as outputs
     anl P0MOD, #11111110b ; Set MISO as input
     clr SCLK              ; For mode (0,0) SCLK is zero

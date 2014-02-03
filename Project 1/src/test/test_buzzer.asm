@@ -52,13 +52,10 @@ MyProgram:
 	;Setup
 	lcall setup_buzzer
 	lcall setup1_timer
-		
-	mov reload1_timer, #high(TIMER1_RELOAD)
-	mov reload1_timer+1, #low(TIMER1_RELOAD)
-	lcall start1_timer
+
 	setb EA
 testLoop:
-	lcall sixBeeps_buzzer
+	lcall shortBeep_buzzer
 	cpl LEDRA.0
 	
 	sjmp $

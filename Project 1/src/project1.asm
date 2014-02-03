@@ -115,7 +115,10 @@ ISR_timer0:
 	push acc
 	push dpl
 	push dph
-
+	
+	clr RS0
+	setb RS1
+	
 	mov TH0, reload0_timer
 	mov TL0, reload0_timer+1
 	
@@ -139,7 +142,10 @@ ISR_timer0:
 	addc A, #0
 	mov currentStateTime+1, A
 
-	;Update oven temperature	
+	;Get oven temperature
+	lcall getOvenTemp_sensor
+	
+	;Update target oven temperature	
 	lcall update_controller
 
 	cpl LEDG.0
@@ -162,22 +168,11 @@ continue0_timer:
 ; Interrupt for buzzer
 ;------------------------------------------------
 ISR_timer1:
-	push psw
-	push acc
-	push dpl
-	push dph
-
 	mov TH1, reload1_timer
 	mov TL1, reload1_timer+1
 
 	; DO STUFF
 	cpl P1.1
-
-	pop dph
-	pop dpl
-	pop acc
-	pop psw
-
 	reti
 	
 ;-------------------------------------
@@ -215,7 +210,8 @@ myprogram:
 	
 	setb EA							; Enable interrupts
 	mov LEDRA, #0H
-
+	
+	lcall shortBeep_buzzer
 mainLoop:
 	;Check if temp > 250
 	;Check stop switch
@@ -234,6 +230,7 @@ mainLoop:
 
 	;Send current temperature to computer
 	mov R0, currentTemp
+	;mov LEDRB, currentTemp
 	lcall sendByte_serial
 	mov R0, #'\n'
 	lcall sendByte_serial

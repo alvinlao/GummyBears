@@ -32,6 +32,7 @@ CSEG
 setup0_timer:
 	mov reload0_timer, #high(TIMER0_RELOAD)
 	mov reload0_timer+1, #low(TIMER0_RELOAD)
+	mov count0_100_timer, #0
 	
 	mov A, #00000001B
 	orl A, TMOD
