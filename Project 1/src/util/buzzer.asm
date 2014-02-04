@@ -9,7 +9,7 @@
 ; NOTE: 
 ;	Requires timer 0
 ;------------------------------------------------
-; Author: Zhenzheng Xia
+; Author: David Henderson
 ;------------------------------------------------
 
 $NOLIST
@@ -42,8 +42,9 @@ setup_buzzer:
 ;------------------------------------------------
 shortBeep_buzzer:
 	lcall start0_timer
-	lcall Wait_helper
-	lcall stop0_timer
+	mov buzzer_small , #250
+	mov buzzer_big , #3
+	mov buzzer_temp , buzzer_small
 	ret
 	
 ;------------------------------------------------    
@@ -54,15 +55,9 @@ shortBeep_buzzer:
 ;------------------------------------------------
 longBeep_buzzer:
 	lcall start0_timer
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall Wait_helper
-	lcall stop0_timer
+	mov buzzer_small , #250
+	mov buzzer_big , # 15
+	mov buzzer_temp , buzzer_small
 	ret
 	
 ;------------------------------------------------    
@@ -72,13 +67,34 @@ longBeep_buzzer:
 ; Makes six beeps
 ;------------------------------------------------
 sixBeeps_buzzer:
-	mov R0, #6
-sixBeeps_L0_buzzer:
-cpl LEDG.0
 	lcall shortBeep_buzzer
 	lcall Wait_helper
 	lcall Wait_helper
-	djnz R0, sixBeeps_L0_buzzer
-	ret
-
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall shortBeep_buzzer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall shortBeep_buzzer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall shortBeep_buzzer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall shortBeep_buzzer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall shortBeep_buzzer
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
+	lcall Wait_helper
 $LIST

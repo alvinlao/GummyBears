@@ -55,13 +55,7 @@ setup_controller:
 ; ENSURES:
 ; 	Every stage transition, make a short beep (use util/buzzer.asm)
 ;------------------------------------------------
-update_controller:
-	clr a
-	mov a, currentStateTime
-	inc a
-	mov currentStateTime, a
-	
-	
+update_controller:	
 	mov x+0, currentState
 	mov x+1, #0
 	
@@ -115,9 +109,7 @@ state2_controller:
 	mov x+1, #0
 	mov y+0, soakTime
 	mov y+1, #0
-	lcall x_gteq_y
-	
-	mov LEDRA, currentStateTime
+	lcall x_gteq_y	
 	
 	mov R0, currentTemp
 	mov R1, SoakTemp
