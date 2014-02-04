@@ -61,6 +61,7 @@ update_controller:
 	inc a
 	mov currentStateTime, a
 	
+	
 	mov x+0, currentState
 	mov x+1, #0
 	
@@ -116,13 +117,14 @@ state2_controller:
 	mov y+1, #0
 	lcall x_gteq_y
 	
+	mov LEDRA, currentStateTime
+	
 	mov R0, currentTemp
 	mov R1, SoakTemp
 	jnb mf, maintainTemp_driver_controller
 	
 	mov currentstate, #3
 	lcall shortBeep_buzzer
-	cpl LEDRA.0
 	mov R0, PrevTemp
 	mov R1, currentTemp
 	mov R2, reflowRate
@@ -173,9 +175,7 @@ state5_controller:
 	mov y+1, #0
 	lcall x_lteq_y
 	
-	mov R0, currentTemp
-	mov R1, ReflowTemp
-	jnb mf, maintainTemp_driver_controller
+	jnb mf, return_controller
 	
 	mov currentstate, #6
 	LCALL sixBeeps_buzzer
