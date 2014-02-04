@@ -77,13 +77,17 @@ update_controller:
 	mov y+0, #4
 	mov y+1, #0
 	lcall x_eq_y
-	jb mf, state4_controller
+	jnb mf, continueState1_1_controller
+	ljmp state4_controller
 	
+continueState1_1_controller:	
 	mov y+0, #5
 	mov y+1, #0
 	lcall x_eq_y
-	jb mf, state5_controller
-
+	jnb mf, continueState1_2_controller
+	ljmp state5_controller
+	
+continueState1_2_controller:	
 ;	In state 1:	
 	mov x+0, currentTemp
 	mov x+1, #0

@@ -91,7 +91,7 @@ $include(finish.asm)				;Final exit instructions
 ; Oven
 ;-------------------------------------
 $include(oven/driver.asm)			;Oven driver
-;$include(oven/controller.asm)		;Oven controller
+$include(oven/controller.asm)		;Oven controller
 
 ;-------------------------------------
 ; Temperature
@@ -160,7 +160,7 @@ saveRunTime:
 	lcall getOvenTemp_sensor
 	
 	;Update target oven temperature	
-	;lcall update_controller
+	lcall update_controller
 
 	cpl LEDG.0
 	

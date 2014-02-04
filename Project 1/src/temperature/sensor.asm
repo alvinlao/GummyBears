@@ -62,7 +62,7 @@ updateInputVoltages_sensor:
 ;------------------------------------------------
 ; + Public function	
 ;------------------------------------------------	
-; temp[R0] & temp[currentTemp, currentTemp+1] getOvenTemp( void )
+; temp[R0] & temp[currentTemp] getOvenTemp( void )
 ;------------------------------------------------	
 ; REQUIRES:
 ;	coldVoltage (2 bytes)

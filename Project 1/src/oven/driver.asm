@@ -17,7 +17,7 @@ CSEG
 ; Setup port 1 output pins
 ;------------------------------------------------
 setup_driver:
-	mov P1MOD, #0FFH 	;Make all P1 output
+	orl P1MOD, #00000001B
 	ret
 	
 ;------------------------------------------------    
@@ -42,7 +42,9 @@ setRamp_driver:
 	subb A, R0
 	jc on_driver		 	;Cooling (!)
 	mov x, A
+	mov x+1, #0
 	mov y, R2
+	mov y+1, #0
 	lcall x_lteq_y
 	jb mf, on_driver		;OvenOn
 	sjmp off_driver			;OvenOff
@@ -61,7 +63,6 @@ setRamp_finish_driver:
 ;------------------------------------------------
 ; LOGIC:
 ;	delta = target - curTemp
-;	if(delta == 0) ovenOff
 ;	if(delta > 0) ovenOn
 ;	else ovenOff
 ;------------------------------------------------
@@ -69,9 +70,11 @@ maintainTemp_driver:
 	clr c
 	mov A, R1
 	subb A, R0
-	jz off_driver		;Delta == 0
+	jc off_driver		;Delta < 0
 	mov x, A
+	mov x+1, #0
 	mov y, #0	
+	mov y+1, #0
 	lcall x_gt_y
 	jb mf, on_driver		;Delta > 0
 	sjmp off_driver			;Delta < 0
