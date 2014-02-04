@@ -138,6 +138,7 @@ state3_controller:
 	mov currentstate, #4
 	lcall shortBeep_buzzer
 	
+	mov currentStateTime, #0
 	mov R0, currentTemp
 	mov R1, reflowTemp
 	ljmp maintainTemp_driver_controller
