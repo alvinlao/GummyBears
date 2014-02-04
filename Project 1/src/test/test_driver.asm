@@ -21,6 +21,12 @@ DSEG at 30H
 
 	count1_100_timer:		DS 1	; Used for 1s calls
 	
+ 	;buzzer 
+ 	buzzer_small:           DS 1	; [high] [low]
+	buzzer_big:				DS 1
+	buzzer_temp:			DS 1
+ 	
+ 		
 	;STATES
 	prevTemp:				DS 1
 	currentTemp:			DS 1

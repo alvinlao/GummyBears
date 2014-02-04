@@ -17,8 +17,7 @@ DSEG at 30H
 	reload1_timer:			DS 2	; [high] [low]
 
 	count1_100_timer:		DS 1	; Used for 1s calls
-	
-	
+
 CSEG
 
 ;Dependencies
@@ -38,7 +37,7 @@ MyProgram:
 	
 	setb EA
 testLoop:
-	mov R0, #122
+	mov R0, #121
 	lcall sendByte_serial
 	
 	lcall Wait_helper
