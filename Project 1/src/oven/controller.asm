@@ -170,6 +170,8 @@ state5_controller:
 	
 	jnb mf, return_controller
 	
+	lcall off_driver
+	
 	mov currentstate, #6
 	LCALL sixBeeps_buzzer
 	lcall return_controller
