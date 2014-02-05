@@ -227,7 +227,7 @@ mainLoop:
 	mov y, #250
 	mov y+1, #0
 	lcall x_gt_y
-	jb mf, forceStop
+	jb mf, hotStop
 	
 	;Check stop switch
 	mov A, SWC
@@ -252,15 +252,18 @@ mainLoop:
 
 	lcall Wait_helper				; Wait 0.25s
 	sjmp mainLoop
-
+	
+hotStop:
+	lcall stop0_timer
+	lcall hot_finish
+	sjmp $
+	
 forceStop:
-	setb LEDRA.0
 	lcall stop0_timer
 	lcall force_finish
 	sjmp $
 
 finish:
-	setb LEDRA.1
 	lcall stop0_timer
 	lcall go_finish
 	sjmp $
