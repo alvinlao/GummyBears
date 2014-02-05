@@ -31,7 +31,7 @@ REFLOW_STRINGS:				DB 'Reflow          ', '                '
 COOLDOWN_STRINGS: 			DB 'Cooling down    ', '                '
 
 STOPPED_STRINGS:            DB 'Stopped         ', '                '
-FINISHED_STRINGS: 			DB 'PCB ready for   ', 'handling        '
+FINISHED_STRINGS: 			DB 'Cooling Complete', 'PCD Ready!      '
 OVERHEAT_STRINGS: 			DB 'Temp Over 25 Deg', 'Overheat Stop   '
 
 Nothing_Strings:			DB '                ', '                '
