@@ -34,7 +34,20 @@ go_finish:
 ; Handle user force stop action
 ;------------------------------------------------
 force_finish:
+	mov dptr, #STOPPED_STRINGS
+	lcall displayStringFromCode_LCD
 	lcall off_driver		;Turn off the oven
 	ret
 
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void hot_finish( void )
+; Handle over heat finish
+;------------------------------------------------
+hot_finish:
+	mov dptr, #OVERHEAT_STRINGS
+	lcall displayStringFromCode_LCD
+	lcall off_driver		;Turn off the oven
+	ret
 $LIST
