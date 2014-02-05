@@ -173,7 +173,6 @@ state5_controller:
 	lcall off_driver
 	
 	mov currentstate, #6
-	LCALL sixBeeps_buzzer
 	lcall return_controller
 	
 setRamp_driver_controller:
