@@ -185,11 +185,29 @@ saveRunTime:
 continue1_timer:
 	; DO STUFF EVERY 0.1s
 	
+	jnb SWA.3, finish1_timer
+	
+	;Avoid double sample every 1s
+	clr c
+	mov A, count1_100_timer
+	subb A, #100
+	jz finish1_timer
+	
+	;Get oven temperature - R0 = curTemp
+	lcall getOvenTemp_sensor
+	
+	;Send current temperature to computer
+	lcall sendByte_serial
+	mov R0, #'\n'
+	lcall sendByte_serial
+
+finish1_timer:		
 	pop dph
 	pop dpl
 	pop acc
 	pop psw
 	reti
+	
 ;-------------------------------------
 ;MAIN PROGRAM
 ;-------------------------------------
