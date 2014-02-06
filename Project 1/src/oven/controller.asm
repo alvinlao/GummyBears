@@ -7,7 +7,7 @@
 ;	driver.asm
 ;	../util/buzzer.asm
 ;------------------------------------------------
-; Author: Alvin Lao
+; Author: Bibek Kaur
 ;------------------------------------------------
 
 $NOLIST
