@@ -234,8 +234,11 @@ myprogram:
 	mov runTime+1, #0
 	mov currentStateTime, #0
 
+	;If SWA.0 == 1, get setup variables from serial port
+	;Else use on board switches and push buttons
 	jnb SWA.0, normalSetup
 	;Use external setup variables
+	lcall setup_read_serial
 	lcall ext_setup
 	sjmp afterSetup
 
