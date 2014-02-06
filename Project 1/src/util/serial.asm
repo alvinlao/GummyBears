@@ -15,10 +15,11 @@ CSEG
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
-; void setup_read_serial( void )
+; void setup_write_serial( void )
+; For writing (OUTPUT from serial port)
 ; Setup serial ports and timer 2 for baud rate generation
 ;------------------------------------------------
-setup_read_serial:
+setup_write_serial:
 	clr TR2 ; Disable timer 2
 	mov T2CON, #30H ; RCLK=1, TCLK=1 
 	mov RCAP2H, #high(TIMER2_RELOAD)  
