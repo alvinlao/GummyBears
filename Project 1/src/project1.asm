@@ -157,7 +157,7 @@ ISR_timer1:
 	subb A, #60
 	jnz saveRunTime	; Normal inc
 	mov B, #0
-	inc runTime+1	
+	inc runTime+1		
 saveRunTime:
 	mov runTime, B
 
@@ -170,6 +170,16 @@ saveRunTime:
 	;Update target oven temperature	
 	lcall update_controller
 
+	;Update board displays
+	lcall update_live
+
+	;Send current temperature to computer
+	mov R0, currentTemp
+	;mov LEDRB, currentTemp
+	lcall sendByte_serial
+	mov R0, #'\n'
+	lcall sendByte_serial
+	
 	cpl LEDG.0
 	
 continue1_timer:
@@ -220,6 +230,7 @@ myprogram:
 	mov LEDRA, #0H
 	
 	lcall shortBeep_buzzer
+	
 mainLoop:
 	;Check if temp > 250
 	mov x, currentTemp
@@ -239,16 +250,6 @@ mainLoop:
 	mov A, currentState
 	subb A, #6
 	jz finish
-
-	;Update board displays
-	lcall update_live
-
-	;Send current temperature to computer
-	mov R0, currentTemp
-	;mov LEDRB, currentTemp
-	lcall sendByte_serial
-	mov R0, #'\n'
-	lcall sendByte_serial
 
 	lcall Wait_helper				; Wait 0.25s
 	sjmp mainLoop
