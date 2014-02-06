@@ -36,6 +36,33 @@ L1_SETUP: djnz R5, L1_SETUP ; 3 machine cycles-> 3*30ns*250=22.5us
 	ret
 	
 go_setup:
+	mov dptr, #DEFAULT1_SOAKRATE
+	lcall getCodeByte_helper
+	mov soakRate, R0
+
+	mov dptr, #DEFAULT1_SOAKTEMP
+	lcall getCodeByte_helper
+	mov soakTemp, R0
+	
+	mov dptr, #DEFAULT1_SOAKTIME
+	lcall getCodeByte_helper
+	mov soakTime, R0
+	
+	mov dptr, #DEFAULT1_REFLOWTIME
+	lcall getCodeByte_helper
+	mov reflowTime, R0
+	
+	mov dptr, #DEFAULT1_REFLOWRATE
+	lcall getCodeByte_helper
+	mov reflowRate, R0
+	
+	mov dptr, #DEFAULT1_REFLOWTEMP
+	lcall getCodeByte_helper
+	mov reflowTemp, R0        
+	
+	mov dptr, #DEFAULT1_COOLRATE
+	lcall getCodeByte_helper
+	mov coolRate, R0
 	
 DEFAULT1_setup:
 	MOV A, #01111111B

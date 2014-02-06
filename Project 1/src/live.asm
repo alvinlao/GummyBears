@@ -42,7 +42,40 @@ update_live:
 	mov HEX6 , a
 
 	;Tempurature
-
+	jnb SWA.0, celsius_live
+fahrenheit_live:
+	; (currentTemp * 9/5) + 32
+	mov x, currentTemp
+	mov x+1, #0
+	mov y, #9
+	mov y+1, #0
+	lcall mul16
+	mov y, #5
+	mov y+1, #0
+	lcall div16
+	mov y, #32
+	mov y+1, #0
+	lcall add16
+	lcall hex2bcd
+	
+	;Display
+    mov A, BCD+1
+    anl A, #0FH
+	mov HEX2, #7FH
+    
+	mov A, BCD
+    swap A
+    anl A, #0FH
+	mov HEX1, #7FH
+	
+    mov A, BCD
+    anl A, #0FH
+    movc A, @A+dptr
+    mov HEX0, A
+    	
+	sjmp displayState_live
+	
+celsius_live:
 	mov a , currentTemp
 	mov b,#100
 	div ab
@@ -57,9 +90,59 @@ update_live:
 	movc a , @a+dptr
 	mov HEX0 , a
 
+displayState_live:
 	;State decision only goes up to three different states right now.
+	
+	jnb SWA.1, overall_live
+progress_bar_live:
 	clr c
-
+Zero_progress_live:
+	mov a , currentState
+	subb a , #1 
+	jnc One_progress_live
+	ljmp Done_live
+One_progress_live: 
+	mov a , currentState
+	subb a , #2 
+	jnc Two_progress_live
+	mov dptr , #PROGRESS_0_STRINGS
+	lcall displayStringFromCode_LCD
+	ljmp Done_live
+Two_progress_live: 
+	mov a , currentState
+	subb a , #3 
+	jnc Three_progress_live
+	mov dptr , #PROGRESS_25_STRINGS
+	lcall displayStringFromCode_LCD
+	ljmp Done_live
+Three_progress_live:
+	mov a , currentState
+	subb a , #4
+	jnc Four_progress_live
+	mov dptr , #PROGRESS_50_STRINGS
+	lcall displayStringFromCode_LCD
+	ljmp Done_live
+Four_progress_live: 
+	mov a , currentState
+	subb a , #5 
+	jnc Five_progress_live
+	mov dptr , #PROGRESS_50_STRINGS
+	lcall displayStringFromCode_LCD
+	ljmp Done_live
+Five_progress_live: 
+	mov a , currentState
+	subb a , #6 
+	jnc Six_progress_live
+	mov dptr , #PROGRESS_75_STRINGS
+	lcall displayStringFromCode_LCD
+	ljmp Done_live
+Six_progress_live: 
+	mov a , currentState
+	mov dptr , #PROGRESS_100_STRINGS
+	lcall displayStringFromCode_LCD
+	ret
+overall_live:
+	clr c
 	Zero_live:
 	mov a , currentState
 	subb a , #1 

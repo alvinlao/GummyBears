@@ -18,21 +18,29 @@ DEFAULT3_STRINGS:			DB '      SET       ', '   DEFAULT 3    '
 
 SETREFLOWRATE_STRINGS:		DB 'Set Reflow Rate ', '                '
 SETREFLOWTIME_STRINGS:		DB 'Set Reflow Time ', '                '
-SETREFLOWTEMP_STRINGS:		DB 'Set Reflow      ', 'Temperature     '
-SETSOAKRATE_STRINGS:		DB 'Set Soak Rate   ', '                '
-SETCOOLRATE_STRINGS:		DB 'Set Cool Rate   ', '                '
-SETSOAKTIME_STRINGS:		DB 'Set Soak Time   ', '                '
-SETSOAKTEMPERATURE_STRINGS:	DB 'Set Soak        ', 'Temperature     '
+SETREFLOWTEMP_STRINGS:		DB '   Set Reflow   ', '  Temperature   '
+SETSOAKRATE_STRINGS:		DB ' Set Soak Rate  ', '                '
+SETCOOLRATE_STRINGS:		DB ' Set Cool Rate  ', '                '
+SETSOAKTIME_STRINGS:		DB ' Set Soak Time  ', '                '
+SETSOAKTEMPERATURE_STRINGS:	DB '    Set Soak    ', '  Temperature   '
 
 PREHEATSOAK_STRINGS:		DB 'Heating to Soak ', '                '
-SOAK_STRINGS:				DB 'Soak            ', '                '
-PREHEATREFLOW_STRINGS:		DB 'Heating to      ', 'Reflow          '
-REFLOW_STRINGS:				DB 'Reflow          ', '                '
-COOLDOWN_STRINGS: 			DB 'Cooling down    ', '                '
+SOAK_STRINGS:				DB '      Soak      ', '                '
+PREHEATREFLOW_STRINGS:		DB ' Heat to Reflow ', '                '
+REFLOW_STRINGS:				DB '     Reflow     ', '                '
+COOLDOWN_STRINGS: 			DB '  Cooling down  ', '                '
 
-STOPPED_STRINGS:            DB 'Stopped         ', '                '
-FINISHED_STRINGS: 			DB 'Cooling Complete', 'PCD Ready!      '
-OVERHEAT_STRINGS: 			DB 'Temp Over 25 Deg', 'Overheat Stop   '
+STOPPED_STRINGS:            DB '    STOPPED!    ', '                '
+FINISHED_STRINGS: 			DB 'Cooling Complete', '   PCD Ready!   '
+OVERHEAT_STRINGS: 			DB 'Temp Over 25 Deg', '  Overheat Stop '
 
 Nothing_Strings:			DB '                ', '                '
+
+;219 is all pixels on
+PROGRESS_0_STRINGS:				DB '    PROGRESS    ', '                '
+PROGRESS_25_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, '            '
+PROGRESS_50_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, 219, 219, 219, 219,'        '
+PROGRESS_75_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, '    '
+PROGRESS_100_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219
+
 $LIST

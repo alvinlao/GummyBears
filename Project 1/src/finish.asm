@@ -22,6 +22,7 @@ CSEG
 ; Entry function for the final exit code
 ;------------------------------------------------
 go_finish:
+	clr EA							;Stop interrupts
 	mov dptr , #FINISHED_STRINGS
 	lcall displayStringFromCode_LCD
 	lcall sixBeeps_buzzer
@@ -34,6 +35,7 @@ go_finish:
 ; Handle user force stop action
 ;------------------------------------------------
 force_finish:
+	clr EA							;Stop interrupts
 	mov dptr, #STOPPED_STRINGS
 	lcall displayStringFromCode_LCD
 	lcall off_driver		;Turn off the oven
@@ -46,6 +48,7 @@ force_finish:
 ; Handle over heat finish
 ;------------------------------------------------
 hot_finish:
+	clr EA							;Stop interrupts
 	mov dptr, #OVERHEAT_STRINGS
 	lcall displayStringFromCode_LCD
 	lcall off_driver		;Turn off the oven
