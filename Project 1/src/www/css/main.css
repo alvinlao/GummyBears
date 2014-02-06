@@ -15,3 +15,7 @@ input {
 	background-color: #3AB821;
 	border: none;
 }
+
+#submit:hover {
+	background-color: #59E33D;
+}
