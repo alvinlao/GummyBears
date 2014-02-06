@@ -194,7 +194,7 @@ myprogram:
 
 	;Setup Modules
 	lcall setup_spi			; ADC SPI (Input)
-	lcall setup_serial 		; Serial (Output)
+	lcall setup_read_serial 		; Serial (Output)
 	lcall setup_lcd			; Setup LCD
 	lcall setup_driver		; P1 output pins
 	lcall setup_buzzer		; Buzzer sets up timer1 reload value
