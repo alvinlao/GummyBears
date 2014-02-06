@@ -42,7 +42,42 @@ update_live:
 	mov HEX6 , a
 
 	;Tempurature
-
+	jz SWA.0, celsius_live
+fahrenheit_live:
+	; (currentTemp * 9/5) + 32
+	mov x, currentTemp
+	mov x+1, #0
+	mov y, #9
+	mov y+1, #0
+	lcall mul16
+	mov y, #5
+	mov y+1, #0
+	lcall div16
+	mov y, #32
+	mov y+1, #0
+	lcall add16
+	lcall hex2bcd
+	
+	;Display
+    mov A, BCD+1
+    anl A, #0FH
+    jnz dis2_HELPER
+	mov HEX2, #7FH
+    
+	mov A, BCD
+    swap A
+    anl A, #0FH
+    jnz dis1_HELPER
+	mov HEX1, #7FH
+	
+    mov A, BCD
+    anl A, #0FH
+    movc A, @A+dptr
+    mov HEX0, A
+    	
+	sjmp displayState_live
+	
+celsius_live:
 	mov a , currentTemp
 	mov b,#100
 	div ab
@@ -57,6 +92,7 @@ update_live:
 	movc a , @a+dptr
 	mov HEX0 , a
 
+displayState_live:
 	;State decision only goes up to three different states right now.
 	clr c
 
