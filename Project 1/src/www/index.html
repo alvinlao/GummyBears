@@ -5,14 +5,14 @@
 	<body>
 		<h1>Reflow Oven Controller</h1>
 
-		<form method="POST" id="setupForm">
-			<input type="text" placeholder="Soak Rate" id="soakRate" />
-			<input type="text" placeholder="Soak Temp" id="soakTemp" />
-			<input type="text" placeholder="Soak Time" id="soakTime" />
-			<input type="text" placeholder="Reflow Rate" id="reflowRate" />
-			<input type="text" placeholder="Reflow Temp" id="reflowTemp" />
-			<input type="text" placeholder="Reflow Time" id="reflowTime" />
-			<input type="text" placeholder="Cooling Rate" id="coolingRate" />
+		<form method="get" action="cgi-bin/setup_server.py" id="setupForm">
+			<input type="text" placeholder="Soak Rate" name="soakRate" />
+			<input type="text" placeholder="Soak Temp" name="soakTemp" />
+			<input type="text" placeholder="Soak Time" name="soakTime" />
+			<input type="text" placeholder="Reflow Rate" name="reflowRate" />
+			<input type="text" placeholder="Reflow Temp" name="reflowTemp" />
+			<input type="text" placeholder="Reflow Time" name="reflowTime" />
+			<input type="text" placeholder="Cooling Rate" name="coolingRate" />
 			<input type="submit" value="Start" id="submit" />
 		</form>
 	</body>
