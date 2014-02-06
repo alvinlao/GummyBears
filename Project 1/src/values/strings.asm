@@ -35,4 +35,12 @@ FINISHED_STRINGS: 			DB 'Cooling Complete', '   PCD Ready!   '
 OVERHEAT_STRINGS: 			DB 'Temp Over 25 Deg', '  Overheat Stop '
 
 Nothing_Strings:			DB '                ', '                '
+
+;219 is all pixels on
+PROGRESS_0_STRINGS:				DB '    PROGRESS    ', '                '
+PROGRESS_25_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, '            '
+PROGRESS_50_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, 219, 219, 219, 219,'        '
+PROGRESS_75_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, '    '
+PROGRESS_100_STRINGS:			DB '    PROGRESS    ', 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219, 219
+
 $LIST
