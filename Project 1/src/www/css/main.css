@@ -1,0 +1,17 @@
+body {
+	font-family: sans-serif;
+}
+
+form {
+	width: 500px;
+	margin: 0 auto;
+}
+
+input {
+	width: 100%;
+}
+
+#submit {
+	background-color: #3AB821;
+	border: none;
+}
