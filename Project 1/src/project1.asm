@@ -222,7 +222,6 @@ myprogram:
 
 	;Setup Modules
 	lcall setup_spi			; ADC SPI (Input)
-	lcall setup_write_serial 		; Serial (Output)
 	lcall setup_lcd			; Setup LCD
 	lcall setup_driver		; P1 output pins
 	lcall setup_buzzer		; Buzzer sets up timer1 reload value
@@ -235,8 +234,18 @@ myprogram:
 	mov runTime+1, #0
 	mov currentStateTime, #0
 
-	;Go to setup.asm (User input loop)
+	jnb SWA.0, normalSetup
+	;Use external setup variables
+	lcall ext_setup
+	sjmp afterSetup
+
+normalSetup:
+	;Go to normal setup.asm (User input loop)
 	lcall go_setup
+
+afterSetup:
+	;Setup serial write
+	lcall setup_write_serial 		; Serial (Output)
 
 	;Setup and start timers
 	lcall setup0_timer

@@ -34,7 +34,21 @@ L1_SETUP: djnz R5, L1_SETUP ; 3 machine cycles-> 3*30ns*250=22.5us
 	djnz R6, L2_SETUP ; 22.5us*250=5.625ms
 	djnz R7, L3_SETUP ; 5.625ms*90=0.5s (approximately)
 	ret
-	
+
+
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void ext_setup( void )
+; Waits for setup information from serial port
+;------------------------------------------------
+; PROTOCOL:
+;	Waits for 7 bytes of data
+;------------------------------------------------
+ext_setup:
+	ret
+
+
 go_setup:
 	mov dptr, #DEFAULT1_SOAKRATE
 	lcall getCodeByte_helper
