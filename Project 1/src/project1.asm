@@ -234,19 +234,23 @@ myprogram:
 	mov runTime+1, #0
 	mov currentStateTime, #0
 
-	;If SWA.0 == 1, get setup variables from serial port
+	;If SWC.0 == 1, get setup variables from serial port
 	;Else use on board switches and push buttons
-	jnb SWA.0, normalSetup
-	;Use external setup variables
-	lcall setup_read_serial
-	lcall ext_setup
-	sjmp afterSetup
+	mov A, SWC
+	anl A, #00000001B
+	jz normalSetup
+		lcall setup_read_serial		;Use external setup variables
+		setb EA
+		lcall ext_setup
+		sjmp afterSetup
 
 normalSetup:
 	;Go to normal setup.asm (User input loop)
 	lcall go_setup
 
 afterSetup:
+	clr EA
+	
 	;Setup serial write
 	lcall setup_write_serial 		; Serial (Output)
 
