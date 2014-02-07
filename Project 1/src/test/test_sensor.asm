@@ -19,6 +19,7 @@ DSEG at 30H
 	ovenVoltage:			DS 2
 	coldVoltage:			DS 2
 	currentTemp:			DS 1
+	prevTemp:			DS 1
 	
 BSEG
 	mf:						DBIT 1
