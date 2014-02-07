@@ -2,20 +2,79 @@ body {
 	font-family: sans-serif;
 }
 
-form {
-	width: 500px;
-	margin: 0 auto;
+h1 {
+	text-transform: uppercase;	
+	color: #2b3775;
+	text-align: center;
 }
 
-input {
+#container {
+	background-color: #ececec;
+	padding: 30px;
+	margin: 30px;
+	width: 500px;
+	margin: 50px auto;
+}
+
+.profile {
+	display: inline-block;
+	background-color: #c8c8c8;
+	padding: 8px;
+	color: white;
+	margin-top: 10px;
+	text-transform: uppercase;
+}
+
+.profile:hover {
+	cursor: pointer;
+	background-color: #ed500b;
+}
+
+.selected {
+	background-color: #ed500b;
+}
+
+form {
 	width: 100%;
 }
 
+input {
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
+	background-color: white;
+	border: none;
+	padding: 10px;
+	margin-top: 15px;
+}
+
 #submit {
+	color: white;
 	background-color: #3AB821;
 	border: none;
 }
 
 #submit:hover {
 	background-color: #59E33D;
+}
+
+.tooltip{
+    display: inline;
+    position: relative;
+}
+
+.tooltip:hover:after{
+    background: #333;
+    background: rgba(0,0,0,.8);
+    border-radius: 5px;
+    bottom: 42px;
+    color: #fff;
+    content: attr(title);
+    left: 510px;
+    padding: 5px 15px;
+    position: absolute;
+    z-index: 98;
+    width: 250px;
+	text-align: center;
+	padding: 10px;
 }
