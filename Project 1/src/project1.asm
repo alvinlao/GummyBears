@@ -21,7 +21,11 @@ ORG 000BH
 	
 ORG 001BH
 	ljmp ISR_timer1
-
+	
+ORG 0023H
+	ljmp ISR_serial
+	
+	
 DSEG at 30H
 	;TIMERS
 	reload0_timer:			DS 2	; [high] [low]
@@ -43,6 +47,8 @@ DSEG at 30H
  	reflowTemp:				DS 1
  	reflowTime:				DS 1
  	coolRate:				DS 1
+ 	setupFinish:			DS 1
+ 	setupPointer:			DS 1
  	
  	;buzzer 
  	buzzer_small:           DS 1	; [high] [low]
@@ -207,6 +213,21 @@ finish1_timer:
 	pop acc
 	pop psw
 	reti
+
+;------------------------------------------------    
+; # Protected function
+;------------------------------------------------
+; ISR_serial
+;------------------------------------------------
+; USERS:
+;	setup.asm
+;------------------------------------------------	
+ISR_serial:
+	mov R0, setupPointer
+	mov @R0, SBUF
+	inc setupPointer
+	clr RI
+	reti
 	
 ;-------------------------------------
 ;MAIN PROGRAM
@@ -233,6 +254,7 @@ myprogram:
 	mov runTime, #0
 	mov runTime+1, #0
 	mov currentStateTime, #0
+	mov setupFinish, #0
 
 	;If SWC.0 == 1, get setup variables from serial port
 	;Else use on board switches and push buttons
@@ -240,20 +262,17 @@ myprogram:
 	anl A, #00000001B
 	jz normalSetup
 		lcall setup_read_serial		;Use external setup variables
-		setb EA
 		lcall ext_setup
 		sjmp afterSetup
-
+		
 normalSetup:
 	;Go to normal setup.asm (User input loop)
 	lcall go_setup
 
-afterSetup:
-	clr EA
-	
+afterSetup:	
 	;Setup serial write
 	lcall setup_write_serial 		; Serial (Output)
-
+	
 	;Setup and start timers
 	lcall setup0_timer
 	lcall setup1_timer
@@ -262,7 +281,6 @@ afterSetup:
 	
 	setb EA							; Enable interrupts
 	mov LEDRA, #0H
-	
 	lcall shortBeep_buzzer
 	
 mainLoop:
@@ -289,16 +307,16 @@ mainLoop:
 	sjmp mainLoop
 	
 hotStop:
-	lcall stop0_timer
+	lcall stop1_timer
 	lcall hot_finish
 	sjmp $
 	
 forceStop:
-	lcall stop0_timer
+	lcall stop1_timer
 	lcall force_finish
 	sjmp $
 
 finish:
-	lcall stop0_timer
+	lcall stop1_timer
 	lcall go_finish
 	sjmp $

@@ -11,6 +11,9 @@ CSEG
 ; LCD.asm
 ;------------------------------------------------
 WELCOME_STRINGS:			DB '    WELCOME!    ', 'REFLOW SOLDERING'
+WAIT_EXT_STRINGS:			DB ' WAITING SETUP  ', ' VARS FROM COMP '
+FINISH_EXT_STRINGS:			DB ' GOT VARS FROM  ', '    COMPUTER    '
+
 
 DEFAULT1_STRINGS:			DB '      SET       ', '   DEFAULT 1    '
 DEFAULT2_STRINGS:			DB '      SET       ', '   DEFAULT 2    '

@@ -3,6 +3,7 @@
 print """
 <html>
 	<head>
+            <title>Reflow Oven</title>
 		<link rel="stylesheet" href="css/main.css"/>
 	</head>
 	<body>

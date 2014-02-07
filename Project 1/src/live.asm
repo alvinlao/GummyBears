@@ -61,12 +61,14 @@ fahrenheit_live:
 	;Display
     mov A, BCD+1
     anl A, #0FH
-	mov HEX2, #7FH
+    movc A, @A+dptr
+	mov HEX2, A
     
 	mov A, BCD
     swap A
     anl A, #0FH
-	mov HEX1, #7FH
+    movc A, @A+dptr
+	mov HEX1, A
 	
     mov A, BCD
     anl A, #0FH

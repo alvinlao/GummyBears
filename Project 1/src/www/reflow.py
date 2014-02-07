@@ -28,6 +28,13 @@ def getSetupVars():
 def sendSetupVariables():
     args = getSetupVars()
     #args=[3, 100, 100, 3, 200, 20, 50]
+    print "Content-type: text/html"
+    print
+    print "<html><head><title>Reflow Oven</title></head>"
+    print "<body>"
+    print "<p>Setup variables sent!</p>"
+    print args
+    print "</body></html>"
     
     ser = serial.Serial(
      port=MYPORT, 

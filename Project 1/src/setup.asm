@@ -10,22 +10,7 @@
 $NOLIST
 CSEG
 
-;------------------------------------------------    
-; + Public function
-;------------------------------------------------
-; void go_setup( void )
-; Entry function for the initial setup loop
-;------------------------------------------------
-; ENSURES:
-; 	The following parameters should be set
-; 	1) soakRate: 	DS 1	->SWA.0
-; 	2) soakTemp: 	DS 1	->SWA.1
-; 	3) soakTime:	DS 1	->SWA.2
-; 	4) reflowRate:	DS 1	->SWA.3
-; 	5) reflowTemp:	DS 1	->SWA.4
-; 	6) reflowTime:	DS 1	->SWA.5
-; 	7) coolRate:	DS 1	->SWA.6
-;------------------------------------------------
+
 WaitHalfSec_SETUP:
 	mov R7, #180
 L3_SETUP: mov R6, #250
@@ -46,9 +31,52 @@ L1_SETUP: djnz R5, L1_SETUP ; 3 machine cycles-> 3*30ns*250=22.5us
 ;	Waits for 7 bytes of data
 ;------------------------------------------------
 ext_setup:
+	;Setup pointers to our variables
+	mov setupPointer, #soakRate
+	mov setupFinish, #setupFinish
+	setb EA
+	
+	;Display waiting for computer
+	mov dptr, #WAIT_EXT_STRINGS
+	lcall displayStringFromCode_LCD
+	
+ext_waitVars_setup:
+	;If setupPointer == setupFinish
+	mov A, setupPointer
+	cjne A, setupFinish, ext_waitVars_setup
+	
+	;Got computer variables
+	clr EA		; Stop interrupts
+	clr ES
+	
+	;Display on LCD
+	mov dptr, #FINISH_EXT_STRINGS
+	lcall displayStringFromCode_LCD	
+	
+	;Wait for start switch
+ext_waitStart_setup:
+	mov a, SWC
+	anl a, #00000010B
+	jz ext_waitStart_setup
 	ret
 
 
+;------------------------------------------------    
+; + Public function
+;------------------------------------------------
+; void go_setup( void )
+; Entry function for the initial setup loop
+;------------------------------------------------
+; ENSURES:
+; 	The following parameters should be set
+; 	1) soakRate: 	DS 1	->SWA.0
+; 	2) soakTemp: 	DS 1	->SWA.1
+; 	3) soakTime:	DS 1	->SWA.2
+; 	4) reflowRate:	DS 1	->SWA.3
+; 	5) reflowTemp:	DS 1	->SWA.4
+; 	6) reflowTime:	DS 1	->SWA.5
+; 	7) coolRate:	DS 1	->SWA.6
+;------------------------------------------------
 go_setup:
 	mov dptr, #DEFAULT1_SOAKRATE
 	lcall getCodeByte_helper

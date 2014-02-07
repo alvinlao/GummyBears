@@ -26,7 +26,7 @@ setup_read_serial:
 	mov RCAP2L, #low(TIMER2_RELOAD)
 	setb TR2 ; Enable timer 2
 	mov SCON, #50H
-	setb REN	;Recieve mode
+	setb REN		;Recieve mode
 	setb ES		;Start serial interrupt
 	ret
 
@@ -55,20 +55,6 @@ setup_write_serial:
 ; A - Contains character to send
 ;------------------------------------------------
 putchar_serial:
-    JNB TI, putchar_serial
-    CLR TI
-    MOV SBUF, a
-    RET
-    
-;------------------------------------------------    
-; - Private function
-;------------------------------------------------
-; Send a character through the serial port
-;------------------------------------------------v
-; INPUT:
-; A - Contains character to send
-;------------------------------------------------
-getchar_serial:
     JNB TI, putchar_serial
     CLR TI
     MOV SBUF, a
