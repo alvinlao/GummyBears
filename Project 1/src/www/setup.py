@@ -6,15 +6,19 @@ print """
 		<link rel="stylesheet" href="css/main.css"/>
 		<script src="js/jquery2-1.js"></script>
 		<script src="js/main.js"></script>
+		<script src="js/Chart.min.js"></script>
+		
+		<title>Reflow Oven Controller</title>
 	</head>
 	<body>
 		<div id="container">
+			<div id="setup">
 			<h1>Reflow Oven Controller</h1>
 			<div class="profile" id="profile1">Profile 1</div>
 			<div class="profile" id="profile2">Profile 2</div>
 			<div class="profile" id="profile3">Profile 3</div>
 			
-			<form method="get" action="reflow.py" id="setupForm">
+			<form method="get" action="cgi-bin/setup_server.cgi" id="setupForm">
 				<div class="tooltip" title="Between 1 and 5 degrees">
 					<input type="text" placeholder="Soak Rate" name="soakRate" maxlength="3"/>
 				</div>
@@ -45,8 +49,14 @@ print """
 				
 				<input type="submit" value="Start" id="submit" />
 			</form>
+			</div>
+			
+			<div id="graph">
+				<canvas id="reflowChart" width="750px" height="605px"></canvas>
+			</div>
 		</div>
 	</body>
 </html>
+
 
 """
