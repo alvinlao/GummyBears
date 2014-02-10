@@ -60,3 +60,8 @@ print """
 </html>
 
 """
+
+#Prevent file not existing crash
+f = open('temp.json', 'w')
+f.write('{"data": 20}')
+f.close()
