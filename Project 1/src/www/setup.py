@@ -6,7 +6,8 @@ print """
 		<link rel="stylesheet" href="css/main.css"/>
 		<script src="js/jquery2-1.js"></script>
 		<script src="js/main.js"></script>
-		<script src="js/Chart.min.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
 		
 		<title>Reflow Oven Controller</title>
 	</head>
@@ -52,11 +53,10 @@ print """
 			</div>
 			
 			<div id="graph">
-				<canvas id="reflowChart" width="750px" height="605px"></canvas>
+				<div id="chart" style="width:750px; height:605px;"></div>
 			</div>
 		</div>
 	</body>
 </html>
-
 
 """
