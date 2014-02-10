@@ -77,7 +77,7 @@ $(function() {
 		$("#profile2").removeClass("selected");
 		$("#profile3").removeClass("selected");
 		
-		var values = [3, 170, 100, 3, 230, 40, 6];
+		var values = [1, 170, 100, 3, 230, 40, 6];
 		updateFields(values);
 		updateTargetChart();
 	});
@@ -87,7 +87,7 @@ $(function() {
 		$("#profile2").addClass("selected");
 		$("#profile3").removeClass("selected");
 		
-		var values = [2, 150, 100, 2, 220, 2, 2];
+		var values = [1, 150, 100, 2, 220, 2, 2];
 		updateFields(values);
 		updateTargetChart();
 	});
@@ -97,7 +97,7 @@ $(function() {
 		$("#profile2").removeClass("selected");
 		$("#profile3").addClass("selected");
 		
-		var values = [3, 150, 100, 3, 220, 3, 3];
+		var values = [1, 150, 100, 3, 220, 3, 3];
 		updateFields(values);
 		updateTargetChart();
 	});
