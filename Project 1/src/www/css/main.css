@@ -6,6 +6,7 @@ h1 {
 	text-transform: uppercase;	
 	color: #2b3775;
 	text-align: center;
+	text-shadow: 2px 1px #ffffff;
 }
 
 #container {
