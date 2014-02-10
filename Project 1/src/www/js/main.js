@@ -14,7 +14,7 @@ function updateTargetChart() {
 	targetXAxis[2] = parseInt(targetXAxis[1]) + parseInt((soakTime === 0) ? 1 : soakTime);
 	targetXAxis[3] = parseInt(targetXAxis[2]) + parseInt((reflowRate === 0) ? 1 : (reflowTemp - soakTemp)/reflowRate);
 	targetXAxis[4] = parseInt(targetXAxis[3]) + parseInt(reflowTime);
-	targetXAxis[5] = parseInt(targetXAxis[4]) + parseInt((soakTime === 0) ? 1 : soakTime);
+	targetXAxis[5] = parseInt(targetXAxis[4]) + parseInt((reflowTemp - roomTemp)/coolingRate);
 	
 	targetYAxis[0] = roomTemp;
 	targetYAxis[1] = soakTemp;

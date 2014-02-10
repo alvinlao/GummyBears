@@ -14,9 +14,7 @@ ser = serial.Serial(
 )
 
 ser.isOpen() 
- 
 xsize=100
-
 
 def data_gen():
     t = data_gen.t
@@ -28,6 +26,9 @@ def data_gen():
        except ValueError:
            val = 0
        print(val)
+       f = open('../www/temperature.json', 'w');
+       f.write("{\"data\":["+str(val)+"]}");
+       f.close();
        yield t, val
 
 def run(data):
@@ -43,6 +44,7 @@ def run(data):
     return line,
 
 def on_close_figure(event):
+    f.close();
     sys.exit(0)
 
 data_gen.t = -1

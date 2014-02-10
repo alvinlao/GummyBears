@@ -1,0 +1,35 @@
+body {
+	font-family: sans-serif;
+}
+
+h1 {
+	text-transform: uppercase;	
+	color: #2b3775;
+	text-align: center;
+}
+
+#container {
+	margin: 30px;
+	width: 800px;
+	margin: 50px auto;
+	background: #eeeeee;
+}
+
+#buttonContainer {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.start {
+	color: white;
+	background-color: #3AB821;
+	border: none;
+	height: 50px;
+	width: 100%;
+	text-transform: uppercase;
+	font-size: 20px;
+}
+
+.start:hover {
+	background-color: #59E33D;
+}

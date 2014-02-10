@@ -1,15 +1,10 @@
 #!/usr/bin/env python
-
+import subprocess
 import cgi
 import sys
 import cgitb; cgitb.enable()
 
-import time, math
 import serial 
-
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 
 
 def getSetupVars():
@@ -25,17 +20,7 @@ def getSetupVars():
     return [int(soakRate), int(soakTemp), int(soakTime), int(reflowRate), int(reflowTemp), int(reflowTime), int(coolingRate)]
 
     
-def sendSetupVariables():
-    args = getSetupVars()
-    #args=[3, 100, 100, 3, 200, 20, 50]
-    print "Content-type: text/html"
-    print
-    print "<html><head><title>Reflow Oven</title></head>"
-    print "<body>"
-    print "<p>Setup variables sent!</p>"
-    print args
-    print "</body></html>"
-    
+def sendSetupVariables():   
     ser = serial.Serial(
      port=MYPORT, 
      baudrate=115200, 
@@ -51,6 +36,50 @@ def sendSetupVariables():
     
     return
 
+def showLogger():
+    print """
+    <html>
+	<head>
+		<link rel="stylesheet" href="css/run.css"/>
+		<!--<script src="js/jquery2-1.js"></script>-->
+      """
+    echoArgs()
+    print """
+      
+    		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+    		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
+    		<script src="js/run.js"></script>
+    		<title>Reflow Oven Controller</title>
+    	</head>
+    	<body>
+    		<div id="container">
+    			<h1>Reflow Oven Controller</h1>
+    			<div id="chart" style="width:800px; height:300px;"></div>
+    			<div id="buttonContainer"><button class="start">Start</button></div>
+    		</div>
+    		
+    		
+    	</body>
+    </html>
+
+    """
+    return
+    
+def echoArgs():
+    print "<script>"
+    print "     var soakRate = " + str(args[0])+";";
+    print "     var soakTemp = " + str(args[1])+";";
+    print "     var soakTime = " + str(args[2])+";";
+    print "     var reflowRate = " + str(args[3])+";";
+    print "     var reflowTemp = " + str(args[4])+";";
+    print "     var reflowTime = " + str(args[5])+";";
+    print "     var coolingRate = " + str(args[6])+";";
+    print "</script>"
+    return
+
+
 #MAIN
 MYPORT = 'COM3'
-sendSetupVariables()
+args = getSetupVars();
+sendSetupVariables();
+showLogger();
