@@ -6,6 +6,43 @@ var roomTemp = 20;
 var targetXAxis = [];
 var targetYAxis = [];
 
+function updateChart() {
+	//Target temperature
+	var target = {
+					color: 'rgba(232,52,65,1)',
+					data: [],
+					points: {
+						fill: true,
+						fillColor: 'rgba(232,52,65,1)'
+					}
+				};
+	
+	var options = {
+		series: {
+			shadowSize: 0
+		},
+		lines: {
+			show: true
+		},
+		points: {
+			show: true
+		},
+		yaxis: {
+			min: 0,
+			max: 300
+		},
+		xaxis: {
+			show: true
+		}
+	};
+	
+	for(var i = 0; i < targetXAxis.length; ++i) {
+		target.data.push([targetXAxis[i], targetYAxis[i]]);
+	}
+	
+	$.plot("#chart", [target], options);
+}
+
 function updateTargetChart() {
 	getFields();
 	
@@ -27,25 +64,7 @@ function updateTargetChart() {
 		targetXAxis[i] = parseInt(targetXAxis[i].toFixed(2));
 	}
 	
-	var myLine = new Chart(document.getElementById("reflowChart").getContext("2d")).Line(lineChartData, {
-		animation: false,
-		bezierCurve : false
-	});		
-}
-
-
-//TARGET & ACTUAL
-var lineChartData = {
-	labels : targetXAxis,
-	datasets : [
-		{
-			fillColor : "rgba(151,187,205,0)",
-			strokeColor : "rgba(232,52,65,1)",
-			pointColor : "rgba(232,52,65,1)",
-			pointStrokeColor : "#fff",
-			data : targetYAxis
-		}
-	]
+	updateChart();
 }
 
 
