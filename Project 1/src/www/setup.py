@@ -6,9 +6,14 @@ print """
 		<link rel="stylesheet" href="css/main.css"/>
 		<script src="js/jquery2-1.js"></script>
 		<script src="js/main.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
+		
+		<title>Reflow Oven Controller</title>
 	</head>
 	<body>
 		<div id="container">
+			<div id="setup">
 			<h1>Reflow Oven Controller</h1>
 			<div class="profile" id="profile1">Profile 1</div>
 			<div class="profile" id="profile2">Profile 2</div>
@@ -45,8 +50,18 @@ print """
 				
 				<input type="submit" value="Start" id="submit" />
 			</form>
+			</div>
+			
+			<div id="graph">
+				<div id="chart" style="width:750px; height:605px;"></div>
+			</div>
 		</div>
 	</body>
 </html>
 
 """
+
+#Prevent file not existing crash
+f = open('temp.json', 'w')
+f.write('{"data": 20}')
+f.close()

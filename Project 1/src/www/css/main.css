@@ -6,14 +6,27 @@ h1 {
 	text-transform: uppercase;	
 	color: #2b3775;
 	text-align: center;
+	text-shadow: 2px 1px #ffffff;
 }
 
 #container {
-	background-color: #ececec;
-	padding: 30px;
 	margin: 30px;
-	width: 500px;
+	width: 1200px;
 	margin: 50px auto;
+}
+
+#setup {
+	width: 310px;
+	float: left;
+	padding: 30px;
+	background-color: #ececec;
+}
+
+#graph {
+	padding: 30px;
+	background-color: #ececec;
+	width: 750px;
+	float: right;
 }
 
 .profile {
@@ -70,7 +83,7 @@ input {
     bottom: 42px;
     color: #fff;
     content: attr(title);
-    left: 510px;
+    left: 320px;
     padding: 5px 15px;
     position: absolute;
     z-index: 98;
