@@ -44,7 +44,7 @@ setRamp_driver:
 	subb A, R1
 	mov x, A
 	mov x+1, #0
-	mov y, #10
+	mov y, #6
 	mov y+1, #0
 	lcall x_lteq_y
 	jb mf, off_driver
