@@ -10,8 +10,8 @@ CSEG
 ;-------------------------------------------------
 ;Buzzer Song
 ;-------------------------------------------------
-VIVALDI_SONG:			DB 
-VIVALDI_DELAY_SONG:		DB
+;VIVALDI_SONG:			DB 
+;VIVALDI_DELAY_SONG:	DB
 
 ;------------------------------------------------
 ; setup.asm

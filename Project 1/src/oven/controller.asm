@@ -170,10 +170,9 @@ state5_controller:
 	mov y+0, R0
 	mov y+1, #0
 	lcall x_lteq_y
+	lcall off_driver
 	
 	jnb mf, return_controller
-	
-	lcall off_driver
 	
 	mov currentstate, #6
 	lcall return_controller
