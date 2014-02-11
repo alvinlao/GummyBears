@@ -189,6 +189,16 @@ overall_live:
 	mov a , currentState
 	mov dptr , #FINISHED_STRINGS
 	lcall displayStringFromCode_LCD
+	orl P3MOD , #00000011B
+	setb P3.0
+	setb P3.1
+	mov flagTemp+2, #40
+Flag3: mov flagTemp+1, #250
+Flag2: mov flagTemp+0, #250
+Flag1: djnz flagTemp+0, Flag1 ; machine cycles -> 3*30ns*250 = 22.5us
+	djnz flagTemp+1, Flag2 ; 22.5us*250=5.625ms
+	djnz flagTemp+2, Flag3 ; 5.625ms*50.0 = around 0.5s
+	clr P3.0
 Done_live:
 	ret
 

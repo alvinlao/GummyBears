@@ -50,6 +50,9 @@ DSEG at 30H
  	setupFinish:			DS 1
  	setupPointer:			DS 1
  	
+ 	;Flag
+ 	flagTemp: 				DS 3
+ 	
  	;buzzer 
  	buzzer_small:           DS 1	; [high] [low]
 	buzzer_big:				DS 1
