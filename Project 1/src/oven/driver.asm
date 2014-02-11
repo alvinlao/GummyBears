@@ -31,6 +31,7 @@ setup_driver:
 ; 	R0 - Previous temperature in celsius (0 - 255)
 ; 	R1 - Current temperature in celsius (0 - 255)
 ; 	R2 - Ramp rate in *C/s (0 - 255)
+;	R3 - Desired temperature *C/s (0 - 255)
 ;------------------------------------------------
 ; LOGIC:
 ;	delta = curTemp - prevTemp
@@ -38,6 +39,16 @@ setup_driver:
 ;	else ovenOff()
 ;------------------------------------------------
 setRamp_driver:
+	clr c
+	mov A, R3
+	subb A, R1
+	mov x, A
+	mov x+1, #0
+	mov y, #10
+	mov y+1, #0
+	lcall x_lteq_y
+	jb mf, off_driver
+	
 	clr c
 	mov A, R1
 	subb A, R0

@@ -93,6 +93,7 @@ continueState1_2_controller:
 	mov R0, PrevTemp
 	mov R1, currentTemp
 	mov R2, soakRate
+	mov R3, soakTemp
 	jnb mf, shortcut_controller
 	
 	mov currentState, #2
@@ -120,6 +121,7 @@ state2_controller:
 	mov R0, PrevTemp
 	mov R1, currentTemp
 	mov R2, reflowRate
+	mov R3, ReflowTemp
 shortcut_controller:
 	ljmp setRamp_driver_controller
 	
@@ -133,6 +135,7 @@ state3_controller:
 	mov R0, PrevTemp
 	mov R1, currentTemp
 	mov R2, reflowRate
+	mov R3, ReflowTemp
 	jnb mf, setRamp_driver_controller
 	
 	mov currentstate, #4

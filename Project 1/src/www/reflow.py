@@ -52,5 +52,5 @@ def sendSetupVariables():
     return
 
 #MAIN
-MYPORT = 'COM3'
+MYPORT = 'COM6'
 sendSetupVariables()
