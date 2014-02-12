@@ -79,12 +79,7 @@ def echoArgs():
 
 
 #MAIN
-<<<<<<< HEAD
-MYPORT = 'COM6'
-sendSetupVariables()
-=======
-MYPORT = 'COM3'
+MYPORT = 'COM5'
 args = getSetupVars();
 sendSetupVariables();
 showLogger();
->>>>>>> 27b03ba1e03f30762330cd367989ec264a5b8c3f
