@@ -22,10 +22,10 @@ CSEG
 ; Entry function for the final exit code
 ;------------------------------------------------
 go_finish:
-	clr EA							;Stop interrupts
 	mov dptr , #FINISHED_STRINGS
 	lcall displayStringFromCode_LCD
 	lcall sixBeeps_buzzer
+	clr EA							;Stop interrupts
 	ret
 
 ;------------------------------------------------    
