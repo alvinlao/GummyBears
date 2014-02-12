@@ -15,39 +15,52 @@ var coolingRate = 6;
 var roomTemp = 20;
 */
 
+var targetTempData = [];
+var realTempData = [];
+//Target temperature
+var target = {
+				color: 'rgba(232,52,65,1)',
+				data: [],
+				points: {
+					fill: true,
+					fillColor: 'rgba(232,52,65,1)'
+				}
+			};
+
+//Real current temperature
+var real = {
+			color: 'rgba(73,182,238,1)',
+			data: [],
+			points: {
+				fill: true,
+				fillColor: 'rgba(73,182,238,1)'
+			}
+		};
+		
+var finish = false;
+
 var roomTemp = 20;
 $(function() {			
 	$("#chart").hide();
+	$("#finishButtonContainer").hide();
+	
+	$("button.finish").click(function() {
+		finish = true;
+		target.data = targetTempData;
+		real.data = realTempData;
+		
+		$.plot("#chart", [real, target], options);
+	})
 	$("button.start").click(function () {
 		$("#chart").show();
-		$("#buttonContainer").hide();
+		$("#finishButtonContainer").show();
+		$("#startButtonContainer").hide();
 		updateChart();
 	});
 });
 
 function updateChart() {
 	var iteration = 0;
-	
-	//Target temperature
-	var target = {
-					color: 'rgba(232,52,65,1)',
-					data: [],
-					points: {
-						fill: true,
-						fillColor: 'rgba(232,52,65,1)'
-					}
-				};
-	
-	//Real current temperature
-	var real = {
-				color: 'rgba(73,182,238,1)',
-				data: [],
-				points: {
-					fill: true,
-					fillColor: 'rgba(73,182,238,1)'
-				}
-			};		
-
 	var options = {
 		series: {
 			shadowSize: 0
@@ -75,6 +88,7 @@ function updateChart() {
 			target.data.splice(0, 1);
 		}
 		target.data.push([iteration, getTargetTemperature(iteration)]);
+		targetTempData.push([iteration, getTargetTemperature(iteration)]);
 		
 		//Get real temperature
 		$.ajax({
@@ -87,13 +101,15 @@ function updateChart() {
 					real.data.splice(0, 1);
 				}
 				real.data.push([iteration, temp.data]);
+				realTempData.push([iteration, temp.data]);
 			}
 		});
 		
 		$.plot("#chart", [real, target], options);
 		
-		
-		setTimeout(fetchData, 1000);
+		if(!finish) {
+			setTimeout(fetchData, 1000);			
+		}
 	}
 
 	//Main update loop
