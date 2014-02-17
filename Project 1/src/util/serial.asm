@@ -63,10 +63,11 @@ putchar_serial:
 ;------------------------------------------------    
 ; + Public function
 ;------------------------------------------------
+; void SendString_serial( pointer [dptr] )
 ; Send a constant-zero-terminated string through the serial port
 ;------------------------------------------------
 ; INPUT:
-; DPTR - Points to CSEG where target string is
+; 	DPTR - Points to CSEG where target string is
 ;------------------------------------------------
 SendString_serial:
     CLR A

@@ -69,13 +69,12 @@ updateInputVoltages_sensor:
 ;	ovenVoltage (2 bytes)
 ;------------------------------------------------	
 ; OUTPUT:
-; 	R0 - The temperature at the hot junction of thermocouple
+; 	R0 - The temperature from thermocouple
 ;------------------------------------------------
 getOvenTemp_sensor:
 	; Update ovenVoltage and coldVoltage
 	lcall updateInputVoltages_sensor
-	mov LEDRB, ovenVoltage
-	mov LEDRA, ovenVoltage+1
+
 	; Prepare K-type thermocouple voltage
 	lcall ovenBin2Voltage_sensor
 	mov y+1, R0
