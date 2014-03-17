@@ -663,8 +663,14 @@ LM335Temp:
 ;------------------------------------------------
 ; + Public function	
 ;------------------------------------------------	
-; Input: 16bit voltage held as [R0 , R1]
-; Output: 8bit tempurature held in R0 (can range from 0 to 86)
+; temp [R0] findLM335Tempurature_lm335( voltage [R0, R1] )
+;------------------------------------------------	
+; INPUT: 
+;	16bit voltage held as [R0 , R1]
+;------------------------------------------------	
+; OUTPUT: 
+;	8bit temperature held in R0 (can range from 0 to 86)
+;------------------------------------------------	
 ; Note: No math16 calls
 ;------------------------------------------------	
 findLM335Tempurature_lm335:	

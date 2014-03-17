@@ -29,6 +29,9 @@ CSEG
 ; void setup0_timer ( void )
 ; Setup timer 0
 ;------------------------------------------------
+; MODIFIES:
+; 	reload0_timer - puts initial timer0 reload
+;------------------------------------------------
 setup0_timer:
 	mov reload0_timer, #high(TIMER0_RELOAD)
 	mov reload0_timer+1, #low(TIMER0_RELOAD)
