@@ -58,6 +58,8 @@ ext_waitStart_setup:
 	mov a, SWC
 	anl a, #00000010B
 	jz ext_waitStart_setup
+	mov dptr, #PREHEATSOAK_STRINGS
+	lcall displayStringFromCode_LCD
 	ret
 
 

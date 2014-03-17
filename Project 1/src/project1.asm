@@ -274,7 +274,7 @@ mainLoop:
 	;Check if temp > 250
 	mov x, currentTemp
 	mov x+1, #0
-	mov y, #250
+	mov y, #235
 	mov y+1, #0
 	lcall x_gt_y
 	jb mf, hotStop
@@ -307,3 +307,8 @@ finish:
 	lcall stop1_timer
 	lcall go_finish
 	sjmp $
+	
+forever:
+	sjmp forever
+END
+

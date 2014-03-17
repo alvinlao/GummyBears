@@ -21,7 +21,7 @@ print """
 			
 			<form method="get" action="reflow.py" id="setupForm">
 				<div class="tooltip" title="Between 1 and 5 degrees">
-					<input type="text" placeholder="Soak Rate" name="soakRate" maxlength="3"/>
+				<input type="text" placeholder="Soak Rate" name="soakRate" maxlength="3"/>
 				</div>
 				
 				<div class="tooltip" title="Between 100 and 200 degrees">

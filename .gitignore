@@ -3,3 +3,8 @@
 *.hex
 *.swp
 *.json
+
+project2/*.asm
+*.lkr
+*.map
+*.obj

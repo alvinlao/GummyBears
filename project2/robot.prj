@@ -1,0 +1,40 @@
+<PRJ>
+     `robot.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\robot.prj`
+     `c51sm.bat` `ld  %pathne% %obj%`
+     `c51sm.bat` `cc "%pathne%"`
+     `` ``
+     1
+</PRJ>
+
+Source Files
+<C>
+`motor.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\motor.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+`robot.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\robot.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+</C>
+
+Header Files
+<H>
+`robot.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\robot.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+</H>
+
+Resource Files
+<R>
+`c51sm.bat` `c51sm.bat`
+   `` ``
+   `` ``
+   `` ``
+   0
+</R>
+

@@ -40,27 +40,28 @@ def showLogger():
     print """
     <html>
 	<head>
-		<link rel="stylesheet" href="css/run.css"/>
-		<!--<script src="js/jquery2-1.js"></script>-->
       """
     echoArgs()
     print """
-      
-    		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
-    		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
-    		<script src="js/run.js"></script>
-    		<title>Reflow Oven Controller</title>
-    	</head>
-    	<body>
-    		<div id="container">
-    			<h1>Reflow Oven Controller</h1>
-    			<div id="chart" style="width:800px; height:300px;"></div>
-    			<div id="buttonContainer"><button class="start">Start</button></div>
-    		</div>
-    		
-    		
-    	</body>
-    </html>
+
+		<link rel="stylesheet" href="css/run.css"/>
+		<!--<script src="js/jquery2-1.js"></script>-->
+		<script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
+		<script src="js/run.js"></script>
+		<title>Reflow Oven Controller</title>
+	</head>
+	<body>
+		<div id="container">
+			<h1>Reflow Oven Controller</h1>
+			<div id="chart" style="width:800px; height:300px;"></div>
+			<div id="startButtonContainer"><button class="start">Start</button></div>
+			<div id="finishButtonContainer"><button class="finish">Finish</button></div>
+		</div>
+		
+		
+	</body>
+</html>
 
     """
     return

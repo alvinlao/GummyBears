@@ -44,7 +44,7 @@ setRamp_driver:
 	subb A, R1
 	mov x, A
 	mov x+1, #0
-	mov y, #6
+	mov y, #4
 	mov y+1, #0
 	lcall x_lteq_y
 	jb mf, off_driver
@@ -52,7 +52,7 @@ setRamp_driver:
 	clr c
 	mov A, R1
 	subb A, R0
-	jc on_driver		 	;Cooling (!)
+	jc on_driver		 	
 	mov x, A
 	mov x+1, #0
 	mov y, R2
