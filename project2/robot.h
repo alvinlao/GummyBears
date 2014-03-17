@@ -20,6 +20,9 @@
 /*
  * Rotate the robot
  *
+ * @requires pwmL1, pwmL2, pwmR1, pwmR2
+ * @modifies pwmL1, pwmL2, pwmR1, pwmR2
+ *
  * @param direction 0 - clockwise, 1 - counter-clockwise
  * @param speed		0 - 100
  *
