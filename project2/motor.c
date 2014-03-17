@@ -1,9 +1,10 @@
 #include "robot.h"
 
-void rotate(int degrees) {
+void rotate(int direction, int speed) {
+	
 	return;
 }
 
-void move(int distance) {
+void move(int direction, int speed) {
 	return;
 }

@@ -6,8 +6,11 @@
 
 //These variables are used in the ISR
 volatile unsigned char pwmcount;
-volatile unsigned char pwm1;
-volatile unsigned char pwm2;
+volatile unsigned char pwmL1;
+volatile unsigned char pwmL2;
+volatile unsigned char pwmR1;
+volatile unsigned char pwmR2;
+
 
 unsigned char _c51_external_startup(void)
 {
@@ -49,8 +52,12 @@ unsigned char _c51_external_startup(void)
 void pwmcounter (void) interrupt 1
 {
 	if(++pwmcount>99) pwmcount=0;
-	P1_0=(pwm1>pwmcount)?1:0;
-	P1_1=(pwm2>pwmcount)?1:0;
+	//Left wheel
+	P1_0=(pwmL1>pwmcount)?1:0;
+	P1_1=(pwmL2>pwmcount)?1:0;
+	//Right wheel
+	P1_2=(pwmR1>pwmcount)?1:0;
+	P1_3=(pwmR2>pwmcount)?1:0;
 }
 
 void main (void)

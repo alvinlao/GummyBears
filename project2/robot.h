@@ -20,17 +20,17 @@
 /*
  * Rotate the robot
  *
- * @param 	degrees		Bearing is relative to the front of the robot.
-						Degree is positive clock-wise
- *						units: ?
+ * @param direction 0 - clockwise, 1 - counter-clockwise
+ * @param speed		0 - 100
+ *
  */
-void rotate(int degrees);
+void rotate(int direction, int speed);
 
 /*
  * Move the robot forwards/backwards
  *
- * @param 	distance	positive is forwards, negative is backwards
- *						units: ?
+ * @param direction 0 - forwards, 1 - backwards
+ * @param speed		0 - 100
  */
-void move(int distance);
+void move(int direction, int speed);
  
