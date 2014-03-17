@@ -3,14 +3,11 @@
 
 #include "robot.h"
 
-
-//These variables are used in the ISR
 volatile unsigned char pwmcount;
 volatile unsigned char pwmL1;
 volatile unsigned char pwmL2;
 volatile unsigned char pwmR1;
 volatile unsigned char pwmR2;
-
 
 unsigned char _c51_external_startup(void)
 {
@@ -62,7 +59,13 @@ void pwmcounter (void) interrupt 1
 
 void main (void)
 {	
-	//Hello
-	return;
+	int direction, speed;
+	while(1) {
+		printf("\nDirection: ");
+		scanf("%i", &direction);
+		printf("\nSpeed: ");
+		scanf("%i", &speed);
+		rotate(direction, speed);
+	}
 }
 
