@@ -1,7 +1,8 @@
+#include <stdio.h>
 #include "robot.h"
 
 void rotate(int direction, int speed) {
-	if(direction == 0) {
+	if(direction == 1) {
 		//Clockwise
 		pwmL1 = speed;
 		pwmL2 = 0;
@@ -17,6 +18,7 @@ void rotate(int direction, int speed) {
 }
 
 void move(int direction, int speed) {
+	printf("hello\n");
 	if(direction == 0) {
 		//Fowards
 		pwmL1 = speed;

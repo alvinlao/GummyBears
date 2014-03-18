@@ -3,6 +3,8 @@
  *
  * 	Project2 header file
 */
+#ifndef ROBOT_H
+#define ROBOT_H
 
 #define CLK 22118400L
 #define BAUD 115200L
@@ -12,6 +14,13 @@
 #define FREQ 10000L
 #define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
 
+
+//These variables are used in the ISR
+extern volatile unsigned char pwmcount;
+extern volatile unsigned char pwmL1;
+extern volatile unsigned char pwmL2;
+extern volatile unsigned char pwmR1;
+extern volatile unsigned char pwmR2;
 
 /********************************************************************
 	motor.c
@@ -37,3 +46,4 @@ void rotate(int direction, int speed);
  */
 void move(int direction, int speed);
  
+#endif
