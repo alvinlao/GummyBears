@@ -4,10 +4,11 @@
 /*
  * Gets the ADC value at selected channel
  * 
- * @requires channel 0 = P2.0
- *			 channel 1 = P2.1
- *			 channel 2 = P2.2
- *			 channel 3 = P2.3
+ * @requires MISO 	P1.5
+ *			 SCK	P1.6
+ *			 MOSI	P1.7
+ *			 CE*	P1.4
+ *
  * @param channel 0 - 3
  * @return 10 bit reading
  */
