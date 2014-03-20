@@ -1,13 +1,13 @@
 void yap_send(unsigned char val) {
 	unsigned char j;
 	//Send the start bit
-	txon=0;
+	P2_0=0;
 	wait_bit_time();
 	for(j=0;j<8;++j) {
 		txon=val&(0x01<<j)?1:0;
 		wait_bit_time();
 	}
-	txon=1;
+	P2_0=1;
 	//Send the stop bits
 	wait_bit_time();
 	wait_bit_time();
