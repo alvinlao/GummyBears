@@ -12,6 +12,11 @@
 #define FREQ 10000L
 #define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
 
+extern volatile unsigned char pwmcount;
+extern volatile unsigned char pwmL1;
+extern volatile unsigned char pwmL2;
+extern volatile unsigned char pwmR1;
+extern volatile unsigned char pwmR2;
 
 /********************************************************************
 	motor.c

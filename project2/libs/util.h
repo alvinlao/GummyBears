@@ -12,7 +12,7 @@
  * @param channel 0 - 3
  * @return 10 bit reading
  */
-unsigned int getADC(char channel);
+unsigned int getADC(unsigned char channel);
 
 /*
  * Wait for BITTIME and BITTIME*1.5

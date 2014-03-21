@@ -5,6 +5,9 @@
 *.json
 
 project2/*.asm
+project2/libs/*.asm
+project2/remote/*.asm
+project2/robot/*.asm
 *.lkr
 *.map
 *.obj

@@ -2,7 +2,8 @@
 #include <at89lp51rd2.h>
 
 #include "robot.h"
-
+#include "../libs/util.h"
+#include "../libs/yap.h"
 
 //These variables are used in the ISR
 volatile unsigned char pwmcount;

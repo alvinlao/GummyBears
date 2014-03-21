@@ -1,10 +1,14 @@
+#include <at89lp51rd2.h>
+#include "yap.h"
+#include "util.h"
+
 void yap_send(unsigned char val) {
 	unsigned char j;
 	//Send the start bit
 	P2_0=0;
 	wait_bit_time();
 	for(j=0;j<8;++j) {
-		txon=val&(0x01<<j)?1:0;
+		P2_0=val&(0x01<<j)?1:0;
 		wait_bit_time();
 	}
 	P2_0=1;

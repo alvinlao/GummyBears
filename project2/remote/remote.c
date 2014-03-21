@@ -40,18 +40,12 @@ unsigned char _c51_external_startup(void)
 // timer 0 overflows: 15.9 kHz
 void square_wave_generator (void) interrupt 1
 {
-	P1_0 = ~P1_0;
+	if(P1_0 == 1) P1_0 = 0;
+	else P1_0 = 1;
+	return;
 }
 
-void main (void)
-{	
-	int direction, speed;
-	while(1) {
-		printf("\nDirection: ");
-		scanf("%i", &direction);
-		printf("\nSpeed: ");
-		scanf("%i", &speed);
-		rotate(direction, speed);
-	}
+void main (void) {
+	return;
 }
 

@@ -1,5 +1,5 @@
 <PRJ>
-     `robot.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\robot.prj`
+     `robot.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\robot.prj`
      `c51sm.bat` `ld  %pathne% %obj%`
      `c51sm.bat` `cc "%pathne%"`
      `` ``
@@ -8,12 +8,22 @@
 
 Source Files
 <C>
-`motor.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\motor.c`
+`robot.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\robot.c`
    `c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
-`robot.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\robot.c`
+`motor.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\motor.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+`util.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+`yap.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.c`
    `c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
@@ -22,7 +32,17 @@ Source Files
 
 Header Files
 <H>
-`robot.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\Project 2\robot.h`
+`robot.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\robot.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`util.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`yap.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.h`
    `` ``
    `` ``
    `` ``

@@ -10,7 +10,7 @@
 #define BAUD 115200L
 #define BRG_VAL (0x100-(CLK/(32L*BAUD)))
 
-#define FREQ 15900L
+#define FREQ 31840L
 #define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
 
 #endif
