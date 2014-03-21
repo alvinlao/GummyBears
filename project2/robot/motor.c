@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include "robot.h"
 
+/*
+ * Rotate the robot
+ *
+ * @requires pwmL1, pwmL2, pwmR1, pwmR2
+ * @modifies pwmL1, pwmL2, pwmR1, pwmR2
+ *
+ * @param direction 0 - clockwise, 1 - counter-clockwise
+ * @param speed		0 - 100
+ *
+ */
 void rotate(int direction, int speed) {
 	if(direction == 1) {
 		//Clockwise
@@ -17,6 +27,12 @@ void rotate(int direction, int speed) {
 	}
 }
 
+/*
+ * Move the robot forwards/backwards
+ *
+ * @param direction 0 - forwards, 1 - backwards
+ * @param speed		0 - 100
+ */
 void move(int direction, int speed) {
 	if(direction == 0) {
 		//Fowards

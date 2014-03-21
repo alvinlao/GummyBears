@@ -53,9 +53,11 @@ unsigned char _c51_external_startup(void)
 void pwmcounter (void) interrupt 1
 {
 	if(++pwmcount>99) pwmcount=0;
+	
 	//Left wheel
 	P1_0=(pwmL1>pwmcount)?1:0;
 	P1_1=(pwmL2>pwmcount)?1:0;
+	
 	//Right wheel
 	P1_2=(pwmR1>pwmcount)?1:0;
 	P1_3=(pwmR2>pwmcount)?1:0;
@@ -63,7 +65,9 @@ void pwmcounter (void) interrupt 1
 
 void main (void)
 {	
-	//Hello
-	return;
+	while(1) {
+		//brain.c
+		think();
+	}
 }
 
