@@ -24,3 +24,7 @@ void move(int direction, int speed);
 
 //brain.c
 void think();
+
+//sense.c
+unsigned int getLeftField();
+unsigned int getRightField();
