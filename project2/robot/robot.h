@@ -18,13 +18,19 @@ extern volatile unsigned char pwmL2;
 extern volatile unsigned char pwmR1;
 extern volatile unsigned char pwmR2;
 
+extern volatile unsigned char command;
+
 //motor.c
 void rotate(int direction, int speed);
 void move(int direction, int speed);
 
 //brain.c
-void think();
+void thinkAndDo(unsigned char command);
+void maintainDistance(int distance);
+void rotate180();
+void parallelPark();
+unsigned int distanceToB(unsigned int distance);
 
 //sense.c
-unsigned int getLeftField();
-unsigned int getRightField();
+unsigned int getLeftBField();
+unsigned int getRightBField();

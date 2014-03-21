@@ -15,7 +15,7 @@
  * @requires 				The left inductor is channel 0 on the ADC
  * @return unsigned int 	The peak magnetic strength (0 - 1024)
  */
-unsigned int getLeftField() {
+unsigned int getLeftBField() {
 	// TODO: Correct timing with mag field freq to read peak
 	unsigned int field = getADC(0);
 	return 0;
@@ -27,7 +27,7 @@ unsigned int getLeftField() {
  * @requires 				The left inductor is channel 1 on the ADC
  * @return unsigned int 	The peak magnetic strength (0 - 1024)
  */
-unsigned int getRightField() {
+unsigned int getRightBField() {
 	unsigned int field = getADC(1);
 	return 0;
 }

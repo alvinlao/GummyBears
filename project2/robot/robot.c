@@ -12,6 +12,7 @@ volatile unsigned char pwmL2;
 volatile unsigned char pwmR1;
 volatile unsigned char pwmR2;
 
+volatile unsigned char command;
 
 unsigned char _c51_external_startup(void)
 {
@@ -67,7 +68,7 @@ void main (void)
 {	
 	while(1) {
 		//brain.c
-		think();
+		thinkAndDo(command);
 	}
 }
 
