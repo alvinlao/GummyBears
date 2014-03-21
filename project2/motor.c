@@ -18,10 +18,9 @@ void rotate(int direction, int speed) {
 }
 
 void move(int direction, int speed) {
-	printf("hello\n");
 	if(direction == 0) {
 		//Fowards
-		pwmL1 = speed;
+		pwmL1 = speed+5;
 		pwmL2 = 0;
 		pwmR1 = speed;
 		pwmR2 = 0;
@@ -30,6 +29,6 @@ void move(int direction, int speed) {
 		pwmL1 = 0;
 		pwmL2 = speed;
 		pwmR1 = 0;
-		pwmR2 = speed;
+		pwmR2 = speed+8;
 	}
 }
