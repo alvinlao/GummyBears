@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <at89lp51rd2.h>
 
-#include "robot.h"
-
-volatile unsigned char pwmcount;
-volatile unsigned char pwmL1;
-volatile unsigned char pwmL2;
-volatile unsigned char pwmR1;
-volatile unsigned char pwmR2;
+#include "remote.h"
 
 unsigned char _c51_external_startup(void)
 {
@@ -38,23 +32,15 @@ unsigned char _c51_external_startup(void)
 	TR0=1; // Start timer 0 (bit 4 in TCON)
 	ET0=1; // Enable timer 0 interrupt
 	EA=1;  // Enable global interrupts
-	
-	pwmcount=0;
     
     return 0;
 }
 
 // Interrupt 1 is for timer 0.  This function is executed every time
-// timer 0 overflows: 100 us.
-void pwmcounter (void) interrupt 1
+// timer 0 overflows: 15.9 kHz
+void square_wave_generator (void) interrupt 1
 {
-	if(++pwmcount>99) pwmcount=0;
-	//Left wheel
-	P1_0=(pwmL1>pwmcount)?1:0;
-	P1_1=(pwmL2>pwmcount)?1:0;
-	//Right wheel
-	P1_2=(pwmR1>pwmcount)?1:0;
-	P1_3=(pwmR2>pwmcount)?1:0;
+	P1_0 = ~P1_0;
 }
 
 void main (void)
