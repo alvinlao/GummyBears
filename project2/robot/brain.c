@@ -6,6 +6,8 @@
 #define DISTANCEERROR 5
 //How accurate is our magnetic field strength sensor?
 #define BERROR 5
+//The constant (determined by experiment) for |B| = c/r^3
+#define INDUCTORCONSTANT 1
 
 /*
  * Moves the robot based on command and current position in magnetic field
@@ -121,6 +123,8 @@ void parallelPark() {
 	unsigned int leftB, rightB;
 	leftB = getLeftBField();
 	rightB = getRightBField();
+
+	//TODO
 	return;
 }
 
@@ -130,7 +134,6 @@ void parallelPark() {
  * @param unsigned int d		distance in cm
  * @return unsigned int B		magnetic field strength in ?
  */
-unsigned int distanceToB(unsigned int d) {
-	
-	return 0;
+unsigned int distanceToB(unsigned int d) {	
+	return INDUCTORCONSTANT/(d*d*d);
 }
