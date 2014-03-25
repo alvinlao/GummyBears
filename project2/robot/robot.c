@@ -71,4 +71,3 @@ void main (void)
 		thinkAndDo(command);
 	}
 }
-
