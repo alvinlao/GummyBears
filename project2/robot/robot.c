@@ -12,8 +12,6 @@ volatile unsigned char pwmL2;
 volatile unsigned char pwmR1;
 volatile unsigned char pwmR2;
 
-volatile unsigned char command;
-
 unsigned char _c51_external_startup(void)
 {
 	// Configure ports as a bidirectional with internal pull-ups.
@@ -66,6 +64,7 @@ void pwmcounter (void) interrupt 1
 
 void main (void)
 {	
+	unsigned char command = 101;
 	while(1) {
 		//brain.c
 		thinkAndDo(command);

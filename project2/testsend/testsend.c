@@ -1,8 +1,19 @@
 #include <stdio.h>
 #include <at89lp51rd2.h>
 
+#include "../libs/util.h"
 #include "../libs/yap.h"
-#include "remote.h"
+
+#define CLK 22118400L
+#define BAUD 115200L
+#define BRG_VAL (0x100-(CLK/(32L*BAUD)))
+
+#define FREQ 30650L
+#define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
+
+//Ports
+#define INDUCTOR_0 P1_0
+#define INDUCTOR_1 P1_1
 
 unsigned char _c51_external_startup(void)
 {
@@ -41,26 +52,21 @@ unsigned char _c51_external_startup(void)
 // timer 0 overflows: 15.9 kHz
 void square_wave_generator (void) interrupt 1
 {
-	if(P1_0 == 1) {
-		P1_0 = 0;
-		P1_1 = 1;
+	if(INDUCTOR_0 == 1) {
+		INDUCTOR_0 = 0;
+		INDUCTOR_1 = 1;
 	} else { 
-		P1_0 = 1;
-		P1_1 = 0;
+		INDUCTOR_0 = 1;
+		INDUCTOR_1 = 0;
 	}
 	return;
 }
-
-void main (void) {
-	unsigned char prevcommand = 101, command = 101;
+void main (void)
+{
+	unsigned char command;
 	
 	while(1) {
-		prevcommand = command;
-		command = getNextCommand(prevcommand);
-		if(prevcommand != command) {
-			displaycommand(command); 	//Display command on 7 segs
-			yap_send(command);			//Send command!
-		}
+		scanf("\r\nSend: %hhu", &command);
+		yap_send(command);
 	}
 }
-

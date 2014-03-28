@@ -14,7 +14,6 @@
  *
  * @param unsigned char		ENUM
  */
- 
 void thinkAndDo(unsigned char command) {
 	/* ENUM - available commands
 	 *
@@ -52,6 +51,14 @@ void thinkAndDo(unsigned char command) {
 	return;
 }
 
+char isAligned(unsigned int leftB, unsigned int rightB) {
+	return 1;
+}
+
+char isCorrectDistanceAway(unsigned int realB, unsigned int targetB) {
+	return 1;
+}
+
 /*
  * Maintains the given distance from beacon
  *
@@ -60,39 +67,26 @@ void thinkAndDo(unsigned char command) {
  * @param distance		The desired distance in cm
  */
 void maintainDistance(int distance) {
-	unsigned int leftB, rightB, targetB, realB;
-
-	while(1) {
-		leftB = getLeftBField();
-		rightB = getRightBField();
+	unsigned int leftB, rightB, targetB;
 	
-		//CAUTION: overflow errors
-		if(leftB <= rightB + BERROR && leftB >= rightB - BERROR) {
-			// Move along y-axis until we are at desired distance from beacon
-			targetB = distanceToB(distance);
-			realB = leftB;
-			
-			//CAUTION: overflow errors
-			if(realB <= targetB + DISTANCEERROR && realB >= targetB - DISTANCEERROR) {
-				//Don't move
-				move(0, 0);
-				break;
-			} else if(realB > targetB) {
-				//Move backwards
-				move(1, 100);
-			} else {
-				//Move forwards
-				move(0, 100);
-			}
-		} else if(leftB > rightB) {
-			//Need to rotate counter-clockwise
-			rotate(1, 100);
+	leftB = getLeftBField();
+	rightB = getRightBField();
+
+	if(isAligned(leftB, rightB)) {
+		targetB = dtoB(distance);
+		
+		if(isCorrectDistanceAway(leftB, targetB)) {
+			move(STOP, 0);
+		} else if(leftB > targetB) {
+			move(BACKWARD, 100);
 		} else {
-			//Need to rotate clockwise
-			rotate(0, 100);
+			move(FORWARD, 100);
 		}
+	} else if(leftB > rightB) {
+		rotate(COUNTERCLOCKWISE, 100);
+	} else {
+		rotate(CLOCKWISE, 100);
 	}
-	return;
 }
 
 /*
@@ -104,7 +98,7 @@ void maintainDistance(int distance) {
 void rotate180() {
 	unsigned int leftB, rightB;
 
-	rotate(1, 100);	//Unalign cart
+	rotate(CLOCKWISE, 100);	//Unalign cart
 	//Keep rotating until aligned
 	while(1) {
 		leftB = getLeftBField();
@@ -113,7 +107,7 @@ void rotate180() {
 		if(leftB <= rightB + BERROR && leftB >= rightB - BERROR) {
 			break;
 		} else {
-			rotate(1, 100);
+			rotate(CLOCKWISE, 100);
 		}
 	}
 	return;
@@ -132,8 +126,8 @@ void parallelPark() {
  * Converts distance to magnetic field strength
  * 
  * @param unsigned int d		distance in cm
- * @return unsigned int B		magnetic field strength in ?
+ * @return unsigned int B		magnetic field strength (0 - 1023)
  */
-unsigned int distanceToB(unsigned int d) {	
+unsigned int dtoB(unsigned int d) {	
 	return INDUCTORCONSTANT/(d*d*d);
 }

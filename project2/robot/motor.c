@@ -12,39 +12,39 @@
  *
  */
 void rotate(int direction, int speed) {
-	if(direction == 1) {
-		//Clockwise
+	if(direction == CLOCKWISE) {
 		pwmL1 = speed;
 		pwmL2 = 0;
 		pwmR1 = 0;
 		pwmR2 = speed;
-	} else {
-		//Counter clockwise
+	} else if (direction == COUNTERCLOCKWISE) {
 		pwmL1 = 0;
 		pwmL2 = speed;
 		pwmR1 = speed;
 		pwmR2 = 0;
+	} else {
+		pwmL1 = pwmL2 = pwmR1 = pwmR2 = 0;
 	}
 }
 
 /*
  * Move the robot forwards/backwards
  *
- * @param direction 0 - forwards, 1 - backwards
+ * @param direction 0 - forward, 1 - backward, 2 - stop
  * @param speed		0 - 100
  */
 void move(int direction, int speed) {
-	if(direction == 0) {
-		//Fowards
+	if(direction == FORWARD) {
 		pwmL1 = speed+5;
 		pwmL2 = 0;
 		pwmR1 = speed;
 		pwmR2 = 0;
-	} else {
-		//Backwards
+	} else if(direction == BACKWARD){
 		pwmL1 = 0;
 		pwmL2 = speed;
 		pwmR1 = 0;
 		pwmR2 = speed+8;
+	} else {
+		pwmL1 = pwmL2 = pwmR1 = pwmR2 = 0;
 	}
 }

@@ -1,5 +1,8 @@
-// Time for each bit (in milliseconds)
-#define BITTIME 100
+#ifndef _UTIL_H_
+#define _UTIL_H_
+
+#define SEG_A P2
+#define SEG_B P3
 
 /*
  * Gets the ADC value at selected channel
@@ -19,3 +22,8 @@ unsigned int getADC(unsigned char channel);
  */
 void wait_bit_time();
 void wait_one_and_half_bit_time();
+
+//7 Seg
+void display7segs(char a, char b);
+
+#endif

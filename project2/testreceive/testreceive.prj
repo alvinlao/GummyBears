@@ -1,14 +1,14 @@
 <PRJ>
-     `remote.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\remote.prj`
-     `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\c51sm.bat` `ld  %pathne% %obj%`
-     `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\c51sm.bat` `cc "%pathne%"`
+     `testreceive.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.prj`
+     `c51sm.bat` `ld  %pathne% %obj%`
+     `c51sm.bat` `cc "%pathne%"`
      `` ``
      1
 </PRJ>
 
 Source Files
 <C>
-`remote.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\remote.c`
+`testreceive.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c`
    `c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
@@ -23,11 +23,6 @@ Source Files
    `` ``
    `` ``
    0
-`command.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\command.c`
-   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\c51sm.bat` `cc "%pathne%"`
-   `` ``
-   `` ``
-   0
 </C>
 
 Header Files
@@ -38,11 +33,6 @@ Header Files
    `` ``
    0
 `yap.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.h`
-   `` ``
-   `` ``
-   `` ``
-   0
-`remote.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\remote.h`
    `` ``
    `` ``
    `` ``

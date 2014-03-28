@@ -11,14 +11,19 @@
 #define FREQ 10000L
 #define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
 
+//Motor
+#define FORWARD 0
+#define BACKWARD 1
+#define STOP 2
+#define CLOCKWISE 1
+#define COUNTERCLOCKWISE 0
+
 //robot.c
 extern volatile unsigned char pwmcount;
 extern volatile unsigned char pwmL1;
 extern volatile unsigned char pwmL2;
 extern volatile unsigned char pwmR1;
 extern volatile unsigned char pwmR2;
-
-extern volatile unsigned char command;
 
 //motor.c
 void rotate(int direction, int speed);
@@ -29,7 +34,7 @@ void thinkAndDo(unsigned char command);
 void maintainDistance(int distance);
 void rotate180();
 void parallelPark();
-unsigned int distanceToB(unsigned int distance);
+unsigned int dtoB(unsigned int distance);
 
 //sense.c
 unsigned int getLeftBField();

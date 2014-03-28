@@ -4,6 +4,8 @@
 
 void yap_send(unsigned char val) {
 	unsigned char j;
+	EA = 0; //Disable interrupts
+	
 	//Send the start bit
 	P2_0=0;
 	wait_bit_time();
@@ -15,13 +17,16 @@ void yap_send(unsigned char val) {
 	//Send the stop bits
 	wait_bit_time();
 	wait_bit_time();
+	
+	EA = 1; //Enable interrupts
 }
 
 
-void yap_receive(int min) {
+unsigned char yap_receive(int min) {
 	unsigned char j, val;
 	int v;
-
+	EA = 0;	//Disable interrupts
+	
 	//Skip the start bit
 	val=0;
 	wait_one_and_half_bit_time();
@@ -32,4 +37,7 @@ void yap_receive(int min) {
 	}
 	//Wait for stop bits
 	wait_one_and_half_bit_time();
+	
+	EA = 1; //Enable interrupts
+	return val;
 }
