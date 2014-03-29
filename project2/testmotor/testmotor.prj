@@ -1,5 +1,5 @@
 <PRJ>
-     `testsend.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.prj`
+     `testmotor.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testmotor\testmotor.prj`
      `c51sm.bat` `ld  %pathne% %obj%`
      `c51sm.bat` `cc "%pathne%"`
      `` ``
@@ -8,7 +8,12 @@
 
 Source Files
 <C>
-`testsend.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c`
+`testmotor.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testmotor\testmotor.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+`util.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.c`
    `c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
@@ -18,7 +23,7 @@ Source Files
    `` ``
    `` ``
    0
-`util.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.c`
+`motor.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\motor.c`
    `c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
@@ -33,6 +38,16 @@ Header Files
    `` ``
    0
 `yap.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`testmotor.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testmotor\testmotor.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`motor.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\motor.h`
    `` ``
    `` ``
    `` ``

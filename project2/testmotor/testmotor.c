@@ -1,20 +1,16 @@
 #include <stdio.h>
 #include <at89lp51rd2.h>
 
-#include "../libs/util.h"
-#include "../libs/yap.h"
+#include "../libs/motor.h"
+
 #include "testmotor.h"
 
-#define CLK 22118400L
-#define BAUD 115200L
-#define BRG_VAL (0x100-(CLK/(32L*BAUD)))
-
-#define FREQ 30650L
-#define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
-
-//Ports
-#define INDUCTOR_0 P1_0
-#define INDUCTOR_1 P1_1
+//These variables are used in the ISR
+volatile unsigned char pwmcount;
+volatile unsigned char pwmL1;
+volatile unsigned char pwmL2;
+volatile unsigned char pwmR1;
+volatile unsigned char pwmR2;
 
 unsigned char _c51_external_startup(void)
 {
@@ -33,7 +29,7 @@ unsigned char _c51_external_startup(void)
     BRL=BRG_VAL;
     BDRCON=BRR|TBCK|RBCK|SPD;
 	
-	// Initialize timer 0 for ISR 'square_wave_generator()' below
+	// Initialize timer 0 for ISR 'pwm_count()' below
 	TR0=0; // Stop timer 0
 	TMOD=0x01; // 16-bit timer
 	// Use the autoreload feature available in the AT89LP51RB2
@@ -46,30 +42,34 @@ unsigned char _c51_external_startup(void)
 	ET0=1; // Enable timer 0 interrupt
 	EA=1;  // Enable global interrupts
     
+    pwmcount = 0;
     return 0;
 }
 
 // Interrupt 1 is for timer 0.  This function is executed every time
 // timer 0 overflows: 15.9 kHz
-void square_wave_generator (void) interrupt 1
+void pwm_count (void) interrupt 1
 {
-	if(INDUCTOR_0 == 1) {
-		INDUCTOR_0 = 0;
-		INDUCTOR_1 = 1;
-	} else { 
-		INDUCTOR_0 = 1;
-		INDUCTOR_1 = 0;
-	}
-	return;
+	if(++pwmcount>99) pwmcount=0;
+	
+	PORT_LEFT0=(pwmL1>pwmcount)?1:0;
+	PORT_LEFT1=(pwmL2>pwmcount)?1:0;
+	PORT_RIGHT0=(pwmR1>pwmcount)?1:0;
+	PORT_RIGHT1=(pwmR2>pwmcount)?1:0;
 }
 
 void main (void)
 {
-	unsigned char command;
-	
-	while(1) {
-		printf("\r\nSend: ");
-		scanf("%du", &command);
-		yap_send(command);
+	while(1){
+		printf("\r\nEnter PWM_L 1 value: ");
+		scanf("%du", &pwmL1);
+		printf("\r\nEnter PWM_L 2 value: ");
+		scanf("%du", &pwmL2);
+		printf("\r\nEnter PWM_R 1 value: ");
+		scanf("%du", &pwmR1);
+		printf("\r\nEnter PWM_R 2 value: ");
+		scanf("%du", &pwmR2);
+
+		printf( "\nRunning!\n" );
 	}
 }
