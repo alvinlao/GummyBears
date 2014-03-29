@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "robot.h"
+#include "../libs/motor.h"
 
 /*
  * Rotate the robot

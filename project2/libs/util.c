@@ -1,4 +1,5 @@
 #include <at89lp51rd2.h>
+
 #include "util.h"
 
 void SPIWrite(unsigned char value)
@@ -8,7 +9,18 @@ void SPIWrite(unsigned char value)
 	while((SPSTA & SPIF)!=SPIF); //Wait for transmission to end
 }
 
-// Read 10 bits from the MCP3004 ADC converter
+
+/*
+ * Gets the ADC value at selected channel
+ * 
+ * @requires MISO 	P1.5
+ *			 SCK	P1.6
+ *			 MOSI	P1.7
+ *			 CE*	P1.4
+ *
+ * @param channel 0 - 3
+ * @return unsigned int 10 bit reading
+ */
 unsigned int getADC(unsigned char channel)
 {
 	unsigned int adc;
@@ -31,37 +43,10 @@ unsigned int getADC(unsigned char channel)
 	return adc;
 }
 
-void wait_bit_time() {
-	_asm	
-		;For a 22.1184MHz crystal one machine cycle 
-		;takes 12/22.1184MHz=0.5425347us
-	    mov R2, #4
-	L3:	mov R1, #250
-	L2:	mov R0, #184
-	L1:	djnz R0, L1 ; 2 machine cycles-> 2*0.5425347us*184=200us
-	    djnz R1, L2 ; 200us*250=0.05s
-	    djnz R2, L3 ; 0.05s*2=0.1s
-	    ret
-    _endasm;
-	return;
-}
-
-void wait_one_and_half_bit_time() {
-	_asm	
-		;For a 22.1184MHz crystal one machine cycle 
-		;takes 12/22.1184MHz=0.5425347us
-	    mov R2, #6
-	L13:	mov R1, #250
-	L12:	mov R0, #184
-	L11:	djnz R0, L1 ; 2 machine cycles-> 2*0.5425347us*184=200us
-	    djnz R1, L2 ; 200us*250=0.05s
-	    djnz R2, L3 ; 0.05s*3=0.15s
-	    ret
-    _endasm;
-	return;
-}
-
-
+/*
+ * Private function
+ *
+ */
 char map7seg(char ascii) {
 	if(ascii == '0') {
 		return 0xc0;

@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <at89lp51rd2.h>
 
-#include "../libs/yap.h"
 #include "remote.h"
+
+#include "../libs/yap.h"
+#include "../libs/command.h"
 
 unsigned char _c51_external_startup(void)
 {
@@ -33,7 +35,7 @@ unsigned char _c51_external_startup(void)
 	TR0=1; // Start timer 0 (bit 4 in TCON)
 	ET0=1; // Enable timer 0 interrupt
 	EA=1;  // Enable global interrupts
-    
+
     return 0;
 }
 
@@ -41,19 +43,19 @@ unsigned char _c51_external_startup(void)
 // timer 0 overflows: 15.9 kHz
 void square_wave_generator (void) interrupt 1
 {
-	if(P1_0 == 1) {
-		P1_0 = 0;
-		P1_1 = 1;
+	if(PORT_TRANSMIT_0 == 1) {
+		PORT_TRANSMIT_0 = 0;
+		PORT_TRANSMIT_1 = 1;
 	} else { 
-		P1_0 = 1;
-		P1_1 = 0;
+		PORT_TRANSMIT_0 = 1;
+		PORT_TRANSMIT_1 = 0;
 	}
-	return;
 }
 
 void main (void) {
-	unsigned char prevcommand = 101, command = 101;
-	
+	unsigned char 	prevcommand = COMMAND_FOLLOW0, 
+					command = COMMAND_FOLLOW0;
+
 	while(1) {
 		prevcommand = command;
 		command = getNextCommand(prevcommand);

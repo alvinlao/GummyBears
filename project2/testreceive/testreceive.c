@@ -34,15 +34,17 @@ void main (void)
 	unsigned int adc;
 
 	while(1) {
-		wait_bit_time();
-		adc = getADC(1);
-		printf("ADC: %u\r\n", adc);
-		/*
+		//wait_bit_time();
+		//getADC(0);	//Garbage value (hack)
+		adc = getADC(0);
+		//printf("ADC: %u\r\n", adc);
+		
+		
 		if(adc <= BACKGROUND0_B) {
-			printf("ADC: %u\r\n", adc);
+			//printf("ADC: %u\r\n", adc);
+			printf("Start receive\r\n");
 			command = yap_receive(BACKGROUND0_B);
-			printf("\r\nReceive: %u", command);
+			printf("Command: %u\r\n", command);
 		}
-		*/
 	}
 }

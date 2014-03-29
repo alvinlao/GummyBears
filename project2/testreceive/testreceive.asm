@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Fri Mar 28 18:55:45 2014
+; This file was generated Sat Mar 29 12:01:00 2014
 ;--------------------------------------------------------
 $name testreceive
 $optc51 --model-small
@@ -376,7 +376,7 @@ __c51_external_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;command                   Allocated with name '_main_command_1_30'
+;command                   Allocated to registers r2 
 ;adc                       Allocated to registers r2 r3 
 ;------------------------------------------------------------
 ;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:31: void main (void)
@@ -385,17 +385,20 @@ __c51_external_startup:
 ;	-----------------------------------------
 _main:
 ;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:36: while(1) {
-L003002?:
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:37: wait_bit_time();
-	lcall	_wait_bit_time
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:38: adc = getADC(1);
-	mov	dpl,#0x01
+L003004?:
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:39: adc = getADC(0);
+	mov	dpl,#0x00
 	lcall	_getADC
 	mov	r2,dpl
 	mov	r3,dph
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:39: printf("ADC: %u\r\n", adc);
-	push	ar2
-	push	ar3
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:43: if(adc <= BACKGROUND0_B) {
+	clr	c
+	mov	a,#0x14
+	subb	a,r2
+	clr	a
+	subb	a,r3
+	jc	L003004?
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:45: printf("Start receive\r\n");
 	mov	a,#__str_0
 	push	acc
 	mov	a,#(__str_0 >> 8)
@@ -403,17 +406,40 @@ L003002?:
 	mov	a,#0x80
 	push	acc
 	lcall	_printf
+	dec	sp
+	dec	sp
+	dec	sp
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:46: command = yap_receive(BACKGROUND0_B);
+	mov	dptr,#0x0014
+	lcall	_yap_receive
+	mov	r2,dpl
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:47: printf("Command: %u\r\n", command);
+	mov	r3,#0x00
+	push	ar2
+	push	ar3
+	mov	a,#__str_1
+	push	acc
+	mov	a,#(__str_1 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
 	mov	a,sp
 	add	a,#0xfb
 	mov	sp,a
-	sjmp	L003002?
+	sjmp	L003004?
 	rseg R_CSEG
 
 	rseg R_XINIT
 
 	rseg R_CONST
 __str_0:
-	db 'ADC: %u'
+	db 'Start receive'
+	db 0x0D
+	db 0x0A
+	db 0x00
+__str_1:
+	db 'Command: %u'
 	db 0x0D
 	db 0x0A
 	db 0x00

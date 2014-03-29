@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <at89lp51rd2.h>
 
-#include "robot.h"
 #include "../libs/util.h"
 #include "../libs/yap.h"
+#include "../libs/inductor.h"
+#include "../libs/command.h"
+#include "../libs/motor.h"
+
+#include "robot.h"
 
 //These variables are used in the ISR
 volatile unsigned char pwmcount;
@@ -64,9 +68,15 @@ void pwmcounter (void) interrupt 1
 
 void main (void)
 {	
-	unsigned char command = 101;
+	unsigned char command = COMMAND_FOLLOW0;
+	
 	while(1) {
-		//brain.c
-		thinkAndDo(command);
+		if(getADC(0) <= INDUCTOR_BGB0) {
+			command = yap_receive(INDUCTOR_BGB0);
+			printf("Command: %u\r\n", command);
+		} else {
+			//brain.c
+			//thinkAndDo(command);
+		}
 	}
 }

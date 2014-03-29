@@ -1,6 +1,7 @@
 #include "robot.h"
 #include "../libs/util.h"
 #include "../libs/yap.h"
+#include "../libs/motor.h"
 
 //How accurate do we have to be for distance to beacon? (cm)
 #define DISTANCEERROR 5
@@ -12,37 +13,26 @@
 /*
  * Moves the robot based on command and current position in magnetic field
  *
- * @param unsigned char		ENUM
+ * @param unsigned char		see command.h
  */
 void thinkAndDo(unsigned char command) {
-	/* ENUM - available commands
-	 *
-	 * 101 - Maintain distance: 10cm
-	 * 102 - Maintain distance: 20cm
-	 * 103 - Maintain distance: 30cm
-	 * 104 - Maintain distance: 40cm
-	 * 
-	 * 180 - Rotate 180 degrees
-	 *
-	 * 204 - Parallel park
-	 */
 	switch(command) {
-		case 101:
+		case 2:
 			maintainDistance(10);
 			break;
-		case 102:
+		case 4:
 			maintainDistance(20);
 			break;
-		case 103:
+		case 8:
 			maintainDistance(30);
 			break;
-		case 104:
+		case 16:
 			maintainDistance(40);
 			break;
-		case 180:
+		case 32:
 			rotate180();
 			break;
-		case 204:
+		case 64:
 			parallelPark();
 			break;
 		default:

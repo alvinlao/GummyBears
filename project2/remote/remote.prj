@@ -19,7 +19,7 @@ Source Files
    `` ``
    0
 `util.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.c`
-   `c51sm.bat` `cc "%pathne%"`
+   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
@@ -43,6 +43,11 @@ Header Files
    `` ``
    0
 `remote.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\remote\remote.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`command.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\command.h`
    `` ``
    `` ``
    `` ``

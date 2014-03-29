@@ -1,7 +1,7 @@
 <PRJ>
      `robot.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\robot.prj`
-     `c51sm.bat` `ld  %pathne% %obj%`
-     `c51sm.bat` `cc "%pathne%"`
+     `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `ld  %pathne% %obj%`
+     `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `cc "%pathne%"`
      `` ``
      1
 </PRJ>
@@ -9,12 +9,12 @@
 Source Files
 <C>
 `robot.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\robot.c`
-   `c51sm.bat` `cc "%pathne%"`
+   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
 `motor.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\motor.c`
-   `c51sm.bat` `cc "%pathne%"`
+   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
@@ -24,17 +24,17 @@ Source Files
    `` ``
    0
 `yap.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.c`
-   `c51sm.bat` `cc "%pathne%"`
+   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
 `brain.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\brain.c`
-   `c51sm.bat` `cc "%pathne%"`
+   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
 `sense.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\sense.c`
-   `c51sm.bat` `cc "%pathne%"`
+   `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\robot\c51sm.bat` `cc "%pathne%"`
    `` ``
    `` ``
    0
@@ -53,6 +53,21 @@ Header Files
    `` ``
    0
 `yap.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`command.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\command.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`inductor.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\inductor.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`motor.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\motor.h`
    `` ``
    `` ``
    `` ``
