@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Fri Mar 28 16:54:48 2014
+; This file was generated Fri Mar 28 18:22:03 2014
 ;--------------------------------------------------------
 $name testsend
 $optc51 --model-small
@@ -429,23 +429,34 @@ L003003?:
 ;------------------------------------------------------------
 ;command                   Allocated with name '_main_command_1_34'
 ;------------------------------------------------------------
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:64: void main (void)
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:65: void main (void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:68: while(1) {
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:69: while(1) {
 L004002?:
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:69: scanf("\r\nSend: %hhu", &command);
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:70: printf("\r\nSend: ");
+	mov	a,#__str_0
+	push	acc
+	mov	a,#(__str_0 >> 8)
+	push	acc
+	mov	a,#0x80
+	push	acc
+	lcall	_printf
+	dec	sp
+	dec	sp
+	dec	sp
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:71: scanf("%du", &command);
 	mov	a,#_main_command_1_34
 	push	acc
 	mov	a,#(_main_command_1_34 >> 8)
 	push	acc
 	mov	a,#0x40
 	push	acc
-	mov	a,#__str_0
+	mov	a,#__str_1
 	push	acc
-	mov	a,#(__str_0 >> 8)
+	mov	a,#(__str_1 >> 8)
 	push	acc
 	mov	a,#0x80
 	push	acc
@@ -453,7 +464,7 @@ L004002?:
 	mov	a,sp
 	add	a,#0xfa
 	mov	sp,a
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:70: yap_send(command);
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c:72: yap_send(command);
 	mov	dpl,_main_command_1_34
 	lcall	_yap_send
 	sjmp	L004002?
@@ -465,7 +476,10 @@ L004002?:
 __str_0:
 	db 0x0D
 	db 0x0A
-	db 'Send: %hhu'
+	db 'Send: '
+	db 0x00
+__str_1:
+	db '%du'
 	db 0x00
 
 	CSEG

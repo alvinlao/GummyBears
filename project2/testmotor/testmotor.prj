@@ -1,0 +1,50 @@
+<PRJ>
+     `testsend.prj` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.prj`
+     `c51sm.bat` `ld  %pathne% %obj%`
+     `c51sm.bat` `cc "%pathne%"`
+     `` ``
+     1
+</PRJ>
+
+Source Files
+<C>
+`testsend.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testsend\testsend.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+`yap.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+`util.c` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.c`
+   `c51sm.bat` `cc "%pathne%"`
+   `` ``
+   `` ``
+   0
+</C>
+
+Header Files
+<H>
+`util.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\util.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`yap.h` `C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\libs\yap.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+</H>
+
+Resource Files
+<R>
+`c51sm.bat` `c51sm.bat`
+   `` ``
+   `` ``
+   `` ``
+   0
+</R>
+

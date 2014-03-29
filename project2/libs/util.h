@@ -4,6 +4,10 @@
 #define SEG_A P2
 #define SEG_B P3
 
+//Inductor output with no B field (ADC output)
+#define BACKGROUND0_B 20
+#define BACKGROUND1_B 40
+
 /*
  * Gets the ADC value at selected channel
  * 

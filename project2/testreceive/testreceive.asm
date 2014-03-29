@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Fri Mar 28 16:24:33 2014
+; This file was generated Fri Mar 28 18:55:45 2014
 ;--------------------------------------------------------
 $name testreceive
 $optc51 --model-small
@@ -376,7 +376,8 @@ __c51_external_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;command                   Allocated to registers r2 
+;command                   Allocated with name '_main_command_1_30'
+;adc                       Allocated to registers r2 r3 
 ;------------------------------------------------------------
 ;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:31: void main (void)
 ;	-----------------------------------------
@@ -384,24 +385,15 @@ __c51_external_startup:
 ;	-----------------------------------------
 _main:
 ;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:36: while(1) {
-L003004?:
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:37: if(getADC(0) <= YAPMIN) {
-	mov	dpl,#0x00
+L003002?:
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:37: wait_bit_time();
+	lcall	_wait_bit_time
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:38: adc = getADC(1);
+	mov	dpl,#0x01
 	lcall	_getADC
 	mov	r2,dpl
 	mov	r3,dph
-	clr	c
-	mov	a,#0x0A
-	subb	a,r2
-	clr	a
-	subb	a,r3
-	jc	L003004?
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:38: command = yap_receive(YAPMIN);
-	mov	dptr,#0x000A
-	lcall	_yap_receive
-	mov	r2,dpl
-;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:39: printf("\r\nReceive: %c", command);
-	mov	r3,#0x00
+;	C:\Users\Arjinder\Desktop\EECE-281\GummyBears\project2\testreceive\testreceive.c:39: printf("ADC: %u\r\n", adc);
 	push	ar2
 	push	ar3
 	mov	a,#__str_0
@@ -414,16 +406,16 @@ L003004?:
 	mov	a,sp
 	add	a,#0xfb
 	mov	sp,a
-	sjmp	L003004?
+	sjmp	L003002?
 	rseg R_CSEG
 
 	rseg R_XINIT
 
 	rseg R_CONST
 __str_0:
+	db 'ADC: %u'
 	db 0x0D
 	db 0x0A
-	db 'Receive: %c'
 	db 0x00
 
 	CSEG

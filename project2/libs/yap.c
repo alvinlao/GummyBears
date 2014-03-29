@@ -7,18 +7,15 @@ void yap_send(unsigned char val) {
 	EA = 0; //Disable interrupts
 	
 	//Send the start bit
-	P2_0=0;
 	wait_bit_time();
 	for(j=0;j<8;++j) {
-		P2_0=val&(0x01<<j)?1:0;
+		EA = val&(0x01<<j)?1:0;
 		wait_bit_time();
 	}
-	P2_0=1;
+	EA = 1;
 	//Send the stop bits
 	wait_bit_time();
 	wait_bit_time();
-	
-	EA = 1; //Enable interrupts
 }
 
 

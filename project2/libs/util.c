@@ -35,7 +35,7 @@ void wait_bit_time() {
 	_asm	
 		;For a 22.1184MHz crystal one machine cycle 
 		;takes 12/22.1184MHz=0.5425347us
-	    mov R2, #2
+	    mov R2, #4
 	L3:	mov R1, #250
 	L2:	mov R0, #184
 	L1:	djnz R0, L1 ; 2 machine cycles-> 2*0.5425347us*184=200us
@@ -50,7 +50,7 @@ void wait_one_and_half_bit_time() {
 	_asm	
 		;For a 22.1184MHz crystal one machine cycle 
 		;takes 12/22.1184MHz=0.5425347us
-	    mov R2, #3
+	    mov R2, #6
 	L13:	mov R1, #250
 	L12:	mov R0, #184
 	L11:	djnz R0, L1 ; 2 machine cycles-> 2*0.5425347us*184=200us

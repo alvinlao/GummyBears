@@ -3,6 +3,7 @@
 
 #include "../libs/util.h"
 #include "../libs/yap.h"
+#include "testmotor.h"
 
 #define CLK 22118400L
 #define BAUD 115200L

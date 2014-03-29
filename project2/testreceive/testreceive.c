@@ -31,12 +31,18 @@ unsigned char _c51_external_startup(void)
 void main (void)
 {
 	unsigned char command;
-	
-	//Checks ADC channel 0
+	unsigned int adc;
+
 	while(1) {
-		if(getADC(0) <= YAPMIN) {
-			command = yap_receive(YAPMIN);
-			printf("\r\nReceive: %c", command);
+		wait_bit_time();
+		adc = getADC(1);
+		printf("ADC: %u\r\n", adc);
+		/*
+		if(adc <= BACKGROUND0_B) {
+			printf("ADC: %u\r\n", adc);
+			command = yap_receive(BACKGROUND0_B);
+			printf("\r\nReceive: %u", command);
 		}
+		*/
 	}
 }

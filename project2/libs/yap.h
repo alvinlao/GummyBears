@@ -1,7 +1,8 @@
 #ifndef _YAP_H_
 #define _YAP_H_
 
-#define YAPMIN 10
+#define INDUCTOR_0 P1_0
+#define INDUCTOR_1 P1_1
 
 /*
  * Send one byte over magnetic field
