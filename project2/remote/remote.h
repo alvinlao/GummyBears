@@ -21,8 +21,8 @@
 #define PUSH_3 P4_3
 
 //7 seg ports
-#define PORT_SEG_A P1
-#define PORT_SEG_B P2
+#define PORT_SEG_A P2
+#define PORT_SEG_B P1
 
 //Inductor H-Bridge ports
 #define PORT_TRANSMIT_0 P0_0

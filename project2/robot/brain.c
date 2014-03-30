@@ -18,21 +18,24 @@
 void thinkAndDo(unsigned char command) {
 	switch(command) {
 		case 2:
-			maintainDistance(10);
+			maintainDistance(FOLLOW_DISTANCE0);
 			break;
 		case 4:
-			maintainDistance(20);
+			maintainDistance(FOLLOW_DISTANCE1);
 			break;
 		case 8:
-			maintainDistance(30);
+			maintainDistance(FOLLOW_DISTANCE2);
 			break;
 		case 16:
-			maintainDistance(40);
+			maintainDistance(FOLLOW_DISTANCE3);
 			break;
 		case 32:
-			rotate180();
+			rotate180(CLOCKWISE);
 			break;
 		case 64:
+			rotate180(COUNTERCLOCKWISE);
+			break;
+		case 128:
 			parallelPark();
 			break;
 		default:
@@ -87,19 +90,21 @@ void maintainDistance(int distance) {
  * @requires 	The cart must be aligned with the magnetic field prior to rotating
  * @modifies	The cart is facing the opposite direction (properly aligned)
  */
-void rotate180() {
+void rotate180(char direction) {
 	unsigned int leftB, rightB;
 
-	rotate(CLOCKWISE, 100);	//Unalign cart
+	rotate(direction, 100);	//Unalign cart
+	
 	//Keep rotating until aligned
 	while(1) {
 		leftB = getLeftBField();
 		rightB = getRightBField();
 		
+		//TODO!!		
 		if(leftB <= rightB + BERROR && leftB >= rightB - BERROR) {
 			break;
 		} else {
-			rotate(CLOCKWISE, 100);
+			rotate(direction, 100);
 		}
 	}
 	return;

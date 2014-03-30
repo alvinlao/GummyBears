@@ -8,5 +8,6 @@
 
 void yap_send(unsigned char val);
 unsigned char yap_receive(int min);
+void wait_bit_time();
 
 #endif

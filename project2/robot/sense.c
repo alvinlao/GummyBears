@@ -8,6 +8,7 @@
 
 #include "robot.h"
 #include "../libs/util.h"
+#include "../libs/inductor.h"
 
 /*
  * Gets the left magnetic field strength
@@ -16,9 +17,7 @@
  * @return unsigned int 	The peak magnetic strength (0 - 1024)
  */
 unsigned int getLeftBField() {
-	// TODO: Correct timing with mag field freq to read peak
-	unsigned int field = getADC(0);
-	return 0;
+	return getADC(0);
 }
 
 /*
@@ -28,8 +27,7 @@ unsigned int getLeftBField() {
  * @return unsigned int 	The peak magnetic strength (0 - 1024)
  */
 unsigned int getRightBField() {
-	unsigned int field = getADC(1);
-	return 0;
+	return getADC(1);
 }
 
 /*
@@ -41,5 +39,6 @@ unsigned int getRightBField() {
  *
  */
 void normalizeBFields(unsigned int *left, unsigned int *right) {
-	return;
+	*left -= INDUCTOR_BGB0;
+	*right -= INDUCTOR_BGB1;
 }

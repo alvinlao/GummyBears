@@ -100,21 +100,22 @@ void main (void) {
 					command = COMMAND_FOLLOW0;
 
 	//test7segs();
-	
+	/*
 	while(1) {
 		printf("\r\nSend: ");
 		scanf("%du", &command);
 		yap_send(command);
 	}
+	*/
 	
-	/*
+	printf("\r\nRemote Ready\r\n");
 	displaycommand(command);
 	while(1) {
 		prevcommand = command;
 		command = getNextCommand(prevcommand);
 		if(prevcommand != command) {
 			displaycommand(command); 	//Display command on 7 segs
-			//yap_send(command);			//Send command!
+			yap_send(command);			//Send command!
 		}
-	}*/
+	}
 }

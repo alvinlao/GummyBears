@@ -30,19 +30,23 @@ unsigned char getNextCommand(unsigned char currentCommand) {
 	if(!PUSH_0) {
 		while(!PUSH_0); //Wait for release
 		
+		//Cycle follow distance
 		if(isFollow(currentCommand))
 			return nextFollowCommand(currentCommand);
-	}
-	//Follow
-	else if(!PUSH_1) {
-		while(!PUSH_1); //Wait for release
-		return COMMAND_FOLLOW0;
+		else
+			return COMMAND_FOLLOW0;
 	}
 	
-	//180
+	//180 Counter-Clockwise
+	else if(!PUSH_1) {
+		while(!PUSH_1); //Wait for release
+		return COMMAND_180CC;
+	}
+	
+	//180 Clockwise
 	else if(!PUSH_2) {
 		while(!PUSH_2); //Wait for release
-		return COMMAND_180;
+		return COMMAND_180CL;
 	}
 	
 	//Parallel Park
@@ -66,6 +70,7 @@ void displaycommand(unsigned char c) {
 	else if(c == COMMAND_FOLLOW1) display7segs('2', '0');
 	else if(c == COMMAND_FOLLOW2) display7segs('3', '0');
 	else if(c == COMMAND_FOLLOW3) display7segs('4', '0');
-	else if(c == COMMAND_180) display7segs('1', '8');
-	else if(c == COMMAND_PARK) display7segs('p', 'a');
+	else if(c == COMMAND_180CC) display7segs('c', 'c');
+	else if(c == COMMAND_180CL) display7segs('c', 'l');
+	else if(c == COMMAND_PARK) display7segs('|', '|');
 }

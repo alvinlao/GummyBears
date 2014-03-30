@@ -58,25 +58,69 @@ void pwmcounter (void) interrupt 1
 	if(++pwmcount>99) pwmcount=0;
 	
 	//Left wheel
-	P1_0=(pwmL1>pwmcount)?1:0;
-	P1_1=(pwmL2>pwmcount)?1:0;
+	PORT_LEFT_WHEEL0=(pwmL1>pwmcount)?1:0;
+	PORT_LEFT_WHEEL1=(pwmL2>pwmcount)?1:0;
 	
 	//Right wheel
-	P1_2=(pwmR1>pwmcount)?1:0;
-	P1_3=(pwmR2>pwmcount)?1:0;
+	PORT_RIGHT_WHEEL0=(pwmR1>pwmcount)?1:0;
+	PORT_RIGHT_WHEEL1=(pwmR2>pwmcount)?1:0;
 }
 
 void main (void)
 {	
 	unsigned char command = COMMAND_FOLLOW0;
+	unsigned int leftB, rightB;
 	
+	printf("\r\nRobot Ready\r\n");
+	
+	
+	//Calibration	
+	while(1) {
+		leftB = getLeftBField();
+		rightB = getRightBField();
+		printf("\r\nLeft: %4d  Right: %4d", leftB, rightB);
+		wait_bit_time();
+	}
+	
+	/*
+	//Test receiver
 	while(1) {
 		if(getADC(0) <= INDUCTOR_BGB0) {
 			command = yap_receive(INDUCTOR_BGB0);
+			printf("Command: %u\r\n", command);
+		}
+	}
+	*/
+	//Test motor
+	/*
+	while(1) {
+		printf("\r\nCommand (0 move, 1 rotate): ");
+		scanf("%du", &command);
+		switch(command) {
+			case 0:
+				printf("\r\nDirection: ");
+				scanf("%du", &command);
+				move(command, 100);
+				break;
+			case 1:
+				printf("\r\nDirection: ");
+				scanf("%du", &command);
+				rotate(command, 100);
+				break;
+		}
+	}
+	*/
+	
+	//Main
+	/*
+	while(1) {
+		if(getADC(0) <= 5) {
+			command = yap_receive(5);
 			printf("Command: %u\r\n", command);
 		} else {
 			//brain.c
 			//thinkAndDo(command);
 		}
 	}
+	*/
 }

@@ -33,12 +33,12 @@ void rotate(int direction, int speed) {
  * @param speed		0 - 100
  */
 void move(int direction, int speed) {
-	if(direction == FORWARD) {
+	if(direction == BACKWARD) {
 		pwmL1 = speed+5;
 		pwmL2 = 0;
 		pwmR1 = speed;
 		pwmR2 = 0;
-	} else if(direction == BACKWARD){
+	} else if(direction == FORWARD){
 		pwmL1 = 0;
 		pwmL2 = speed;
 		pwmR1 = 0;

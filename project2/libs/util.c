@@ -45,29 +45,35 @@ unsigned int getADC(unsigned char channel)
 
 char map7seg(char ascii) {
 	if(ascii == '0') {
-		return 0xc0;
+		return 0x24;
 	} else if(ascii == '1') {
-		return 0xF9;
+		return 0xaf;
 	} else if(ascii == '2') {
-		return 0xA4;
+		return 0xe0;
 	} else if(ascii == '3') {
-		return 0xB0;
+		return 0xa2;
 	} else if(ascii == '4') {
-		return 0x99;
+		return 0x2b;
 	} else if(ascii == '5') {
-		return 0x92;
+		return 0x32;
 	} else if(ascii == '6') {
-		return 0x82;
+		return 0x30;
 	} else if(ascii == '7') {
-		return 0xF8;
+		return 0xa7;
 	} else if(ascii == '8') {
-		return 0x80;
+		return 0x20;
 	} else if(ascii == '9') {
-		return 0x90;
+		return 0x23;
 	} else if(ascii == 'p') {
-		return 0x31;
+		return 0x61;
 	} else if(ascii == 'a') {
-		return 0x22;
+		return 0x21;
+	} else if(ascii == '|') {
+		return 0x2d; 
+	} else if(ascii == 'c') {
+		return 0x74; 
+	} else if(ascii == 'l') {
+		return 0x7c; 
 	} else {
 		return 0xFF;
 	}	
