@@ -31,3 +31,15 @@ unsigned int getRightBField() {
 	unsigned int field = getADC(1);
 	return 0;
 }
+
+/*
+ * Returns normalized left and right B fields
+ *
+ * Note:  	Since the two inductors (left and right) are exactly the same,
+ *			their readings differ even if they are the same distance from
+ * 			the transmitter. This function normalizes the two B fields.
+ *
+ */
+void normalizeBFields(unsigned int *left, unsigned int *right) {
+	return;
+}

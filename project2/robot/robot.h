@@ -3,6 +3,9 @@
  *
  * 	Project2 header file
 */
+#ifndef _ROBOT_H_
+#define _ROBOT_H_
+
 
 #define CLK 22118400L
 #define BAUD 115200L
@@ -16,8 +19,11 @@ void thinkAndDo(unsigned char command);
 void maintainDistance(int distance);
 void rotate180();
 void parallelPark();
-unsigned int dtoB(unsigned int distance);
 
 //sense.c
 unsigned int getLeftBField();
 unsigned int getRightBField();
+void normalizeBFields(unsigned int *left, unsigned int *right);
+unsigned int dtoB(unsigned int d);
+
+#endif

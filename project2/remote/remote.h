@@ -20,8 +20,13 @@
 #define PUSH_2 P4_2
 #define PUSH_3 P4_3
 
-#define PORT_TRANSMIT_0 P0_1
-#define PORT_TRANSMIT_1 P0_3
+//7 seg ports
+#define PORT_SEG_A P1
+#define PORT_SEG_B P2
+
+//Inductor H-Bridge ports
+#define PORT_TRANSMIT_0 P0_0
+#define PORT_TRANSMIT_1 P0_1
 
 //command.c
 unsigned char getNextCommand(unsigned char currentcommand);

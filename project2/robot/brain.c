@@ -42,6 +42,7 @@ void thinkAndDo(unsigned char command) {
 }
 
 char isAligned(unsigned int leftB, unsigned int rightB) {
+	
 	return 1;
 }
 
@@ -61,7 +62,8 @@ void maintainDistance(int distance) {
 	
 	leftB = getLeftBField();
 	rightB = getRightBField();
-
+	normalizeBFields(&leftB, &rightB);
+	
 	if(isAligned(leftB, rightB)) {
 		targetB = dtoB(distance);
 		

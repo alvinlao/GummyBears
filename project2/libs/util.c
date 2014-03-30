@@ -43,10 +43,6 @@ unsigned int getADC(unsigned char channel)
 	return adc;
 }
 
-/*
- * Private function
- *
- */
 char map7seg(char ascii) {
 	if(ascii == '0') {
 		return 0xc0;
@@ -68,18 +64,26 @@ char map7seg(char ascii) {
 		return 0x80;
 	} else if(ascii == '9') {
 		return 0x90;
-	} else if(ascii == 'n') {
-		return 0xAB;
-	} else if(ascii == 'u') {
-		return 0xE3;
 	} else if(ascii == 'p') {
 		return 0x31;
+	} else if(ascii == 'a') {
+		return 0x22;
 	} else {
 		return 0xFF;
 	}	
 }
 
-void display7segs(char a, char b) {
-	SEG_A = map7seg(a);
-	SEG_B = map7seg(b);
+void wait1s() {
+	_asm	
+		;For a 22.1184MHz crystal one machine cycle 
+		;takes 12/22.1184MHz=0.5425347us
+	    mov R2, #20
+	wait1s_L3:		mov R1, #250
+	wait1s_L2:	mov R0, #184
+	wait1s_L1:		djnz R0, wait1s_L1 ; 2 machine cycles-> 2*0.5425347us*184=200us
+	    			djnz R1, wait1s_L2 ; 200us*250=0.05s
+	    			djnz R2, wait1s_L3 ; 0.05s*20=0.1s
+	    ret
+    _endasm;
+	return;
 }
