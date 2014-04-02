@@ -96,8 +96,7 @@ void test7segs(void) {
 }
 
 void main (void) {
-	unsigned char 	prevcommand = COMMAND_FOLLOW0, 
-					command = COMMAND_FOLLOW0;
+	unsigned char prevcommand = COMMAND_FOLLOW0, command = COMMAND_FOLLOW0;
 
 	//test7segs();
 	/*
@@ -112,10 +111,8 @@ void main (void) {
 	displaycommand(command);
 	while(1) {
 		prevcommand = command;
-		command = getNextCommand(prevcommand);
-		if(prevcommand != command) {
-			displaycommand(command); 	//Display command on 7 segs
-			yap_send(command);			//Send command!
-		}
+		command = getNextCommand(prevcommand);	//Blocks until a button is pushed
+		displaycommand(command); 	//Display command on 7 segs
+		yap_send(command);			//Send command!
 	}
 }

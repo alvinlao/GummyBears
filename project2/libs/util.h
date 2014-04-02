@@ -6,5 +6,6 @@ unsigned int getADC(unsigned char channel);
 char map7seg(char ascii);
 
 void wait1s();
+void waithalfs();
 
 #endif

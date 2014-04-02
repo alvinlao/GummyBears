@@ -4,8 +4,8 @@
 #define FORWARD 0
 #define BACKWARD 1
 #define STOP 2
-#define CLOCKWISE 1
-#define COUNTERCLOCKWISE 0
+#define CLOCKWISE 0
+#define COUNTERCLOCKWISE 1
 
 //ISR variables
 extern volatile unsigned char pwmcount;

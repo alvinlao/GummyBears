@@ -44,7 +44,16 @@ unsigned char _c51_external_startup(void)
 	TL0=RL0=TIMER0_RELOAD_VALUE%0x100;
 	TR0=1; // Start timer 0 (bit 4 in TCON)
 	ET0=1; // Enable timer 0 interrupt
+	
+	PX0=1; // External interrupt priorty
+	PX1=1;
+	EX0=0;
+	EX1=0;
+		//EX0=1; // Enable external interrupt 0 (P3.2)
+	//EX1=1; // Enable external interrupt 1 (P3.3)
+	
 	EA=1;  // Enable global interrupts
+	
 	
 	pwmcount=0;
     
@@ -66,27 +75,40 @@ void pwmcounter (void) interrupt 1
 	PORT_RIGHT_WHEEL1=(pwmR2>pwmcount)?1:0;
 }
 
+void frontdetector (void) interrupt 0 {
+	//PORT_LED1 = 1;
+	//while(!P3_2);	//Block
+	//move(STOP, 0);
+	//PORT_LED1 = 0;
+}
+
+void backdetector (void) interrupt 2 {
+	//PORT_LED2 = 1;
+	//while(P3_3);
+	//move(STOP, 0);
+	//PORT_LED2 = 0;
+}
+
 void main (void)
 {	
-	unsigned char command = COMMAND_FOLLOW0;
+	unsigned char newcommand, command = COMMAND_FOLLOW0;
 	unsigned int leftB, rightB;
 	
 	printf("\r\nRobot Ready\r\n");
-	
-	
+	/*
 	//Calibration	
 	while(1) {
 		leftB = getLeftBField();
 		rightB = getRightBField();
-		printf("\r\nLeft: %4d  Right: %4d", leftB, rightB);
+		printf("\r\nLeft: %4u  Right: %4u", leftB, rightB);
 		wait_bit_time();
 	}
-	
+*/
 	/*
 	//Test receiver
 	while(1) {
-		if(getADC(0) <= INDUCTOR_BGB0) {
-			command = yap_receive(INDUCTOR_BGB0);
+		if(getADC(INDUCTOR_LEFT) <= INDUCTOR_LEFT_BGB) {
+			command = yap_receive(INDUCTOR_LEFT_BGB);
 			printf("Command: %u\r\n", command);
 		}
 	}
@@ -105,22 +127,34 @@ void main (void)
 			case 1:
 				printf("\r\nDirection: ");
 				scanf("%du", &command);
-				rotate(command, 100);
+				rotate(command, 50);
 				break;
 		}
 	}
 	*/
 	
 	//Main
-	/*
+	PORT_LED0 = 0;
+	PORT_LED1 = 0;
+	move(STOP, 0);
 	while(1) {
-		if(getADC(0) <= 5) {
-			command = yap_receive(5);
-			printf("Command: %u\r\n", command);
+		leftB = getLeftBField();
+		if(leftB <= INDUCTOR_YAP_MIN) {
+			move(STOP, 0);
+			PORT_LED0 = 1;
+			newcommand = yap_receive(INDUCTOR_YAP_MIN);
+			if(validCommand(newcommand)) {
+				command = newcommand;
+				printf("Command: %u\r\n", command);
+			} else {
+				printf("Invalid Command: %u\r\n", newcommand);
+			}
+			PORT_LED0 = 0;
 		} else {
 			//brain.c
-			//thinkAndDo(command);
+			rightB = getRightBField();
+			thinkAndDo(&command, leftB, rightB);
 		}
 	}
-	*/
+	
 }

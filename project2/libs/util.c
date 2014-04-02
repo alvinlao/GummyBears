@@ -93,3 +93,18 @@ void wait1s() {
     _endasm;
 	return;
 }
+
+void waithalfs() {
+	_asm	
+		;For a 22.1184MHz crystal one machine cycle 
+		;takes 12/22.1184MHz=0.5425347us
+	    mov R2, #10
+	waithalfs_L3:		mov R1, #250
+	waithalfs_L2:	mov R0, #184
+	waithalfs_L1:		djnz R0, waithalfs_L1 ; 2 machine cycles-> 2*0.5425347us*184=200us
+	    			djnz R1, waithalfs_L2 ; 200us*250=0.05s
+	    			djnz R2, waithalfs_L3 ; 0.05s*20=0.1s
+	    ret
+    _endasm;
+	return;
+}

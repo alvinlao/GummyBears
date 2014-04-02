@@ -1,5 +1,6 @@
 #include <at89lp51rd2.h>
 
+#include "inductor.h"
 #include "yap.h"
 #include "util.h"
 
@@ -74,7 +75,7 @@ unsigned char yap_receive(int min) {
 	val=0;
 	wait_one_and_half_bit_time();
 	for(j=0;j<8;++j) {
-		v=getADC(0);
+		v=getADC(INDUCTOR_LEFT);
 		val|=(v>min)?(0x01<<j):0x00;
 		wait_bit_time();
 	}

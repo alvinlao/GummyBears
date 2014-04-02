@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "../libs/motor.h"
 
 /*
@@ -12,16 +14,19 @@
  */
 void rotate(int direction, int speed) {
 	if(direction == CLOCKWISE) {
+		//printf("\r\nRotate CLOCKWISE");
 		pwmL1 = speed;
 		pwmL2 = 0;
 		pwmR1 = 0;
 		pwmR2 = speed;
 	} else if (direction == COUNTERCLOCKWISE) {
+		//printf("\r\nRotate COUNTER-CLOCKWISE");
 		pwmL1 = 0;
 		pwmL2 = speed;
 		pwmR1 = speed;
 		pwmR2 = 0;
 	} else {
+		//printf("\r\nRotate STOP");
 		pwmL1 = pwmL2 = pwmR1 = pwmR2 = 0;
 	}
 }
@@ -34,16 +39,19 @@ void rotate(int direction, int speed) {
  */
 void move(int direction, int speed) {
 	if(direction == BACKWARD) {
+		//printf("\r\nMove BACKWARD");
 		pwmL1 = speed+5;
 		pwmL2 = 0;
 		pwmR1 = speed;
 		pwmR2 = 0;
 	} else if(direction == FORWARD){
+		//printf("\r\nMove FORWARD");
 		pwmL1 = 0;
 		pwmL2 = speed;
 		pwmR1 = 0;
 		pwmR2 = speed+8;
 	} else {
+		//printf("\r\nMove STOP");
 		pwmL1 = pwmL2 = pwmR1 = pwmR2 = 0;
 	}
 }
