@@ -9,6 +9,7 @@
 #define COMMAND_180CL 	32
 #define COMMAND_180CC	64
 #define COMMAND_PARK 	128
+#define COMMAND_REVERSEPARK	240
 #define COMMAND_STOP	255
 
 #endif

@@ -25,6 +25,8 @@ char validCommand(unsigned char c) {
 			return 1;
 		case COMMAND_PARK:
 			return 1;
+		case COMMAND_REVERSEPARK:
+			return 1;
 		default:
 			return 0;
 	}
@@ -61,6 +63,10 @@ void thinkAndDo(unsigned char *command, unsigned int leftB, unsigned int rightB)
 			parallelPark();
 			*command = COMMAND_STOP;
 			break;
+		case COMMAND_REVERSEPARK:
+			reverseParallelPark();
+			*command = COMMAND_STOP;
+			break;
 		default:
 			move(STOP, 0);
 			*command = COMMAND_STOP;
@@ -69,11 +75,35 @@ void thinkAndDo(unsigned char *command, unsigned int leftB, unsigned int rightB)
 	return;
 }
 
-char isAligned(int leftDistance, int rightDistance) {
-	int delta = leftDistance - rightDistance;
+void align(int leftD, int rightD) {
+	int speed;
+	if(leftD > rightD) {
+		//printf("\r\nLeft edge closer");
+		
+		//Rotate slower when almost aligned
+		if(leftD - rightD > 5) speed = 40;
+		else speed = 20;
+		
+		rotate(CLOCKWISE, speed);
+	} else if(leftD < rightD) {
+		//printf("\r\nRight edge closer");
+		
+		//Rotate slower when almost aligned
+		if(rightD - leftD > 5) speed = 40;
+		else speed = 20;
+		
+		rotate(COUNTERCLOCKWISE, speed);
+	} else {
+		//printf("\rDon't know what to do");
+		move(STOP, 0);
+	}
+}
+char isAligned(int leftDistance, int rightDistance, int alignError) {
+	int delta;
+	delta = leftDistance - rightDistance;
 	delta = delta < 0 ? (delta*-1) : delta;
 	
-	if(delta <= DERROR)
+	if(delta <= alignError)
 		return 1;
 	return 0;
 }
@@ -101,50 +131,48 @@ int calibrate(int dr) {
  * @param distance		The desired distance in cm
  */
 void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
-	int leftD, rightD;
+	int leftD, rightD, speed;
 	if(leftB <= INDUCTOR_LEFT_BGB || rightB <= INDUCTOR_RIGHT_BGB)
 	return;
 		
 	leftD = getLeftDistance(leftB);
 	rightD = getRightDistance(rightB);
 	rightD = calibrate(rightD);
-
+	if(leftD > 45) rightD += 5;
+	
 	//Display distance
 	printf("\rLeft: %4d  Right: %4d", leftD, rightD);
-		
-	if(isAligned(leftD, rightD)) {
+	
+	if(isAligned(leftD, rightD, ALIGNERROR)) {
 		if(isCorrectDistanceAway(leftD, targetD)) {
 			//printf("\r\nJust right left: %4d target: %4d", leftD, targetD);
 			move(STOP, 0);
 		} else if(leftD < targetD) {
 			//printf("\r\nToo close left: %4d target: %4d", leftD, targetD);
-			//Edge dection
-			if(PORT_PROX_BACK) {
-				PORT_LED1 = 1;
-				move(STOP,0);
-			} else {
-				PORT_LED1 = 0;
-				move(BACKWARD, 60);
-			}
+			
+			//Slow down when almost there
+			if(targetD - leftD > 5) speed = 100;
+			else speed = 80;
+
+			PORT_LED1 = 0;
+			move(BACKWARD, speed);
 		} else {
 			//printf("\r\nToo far left: %4d target: %4d", leftD, targetD);
+			
+			//Slow down when almost there
+			if(leftD - targetD > 5) speed = 100;
+			else speed = 80;
+			
 			if(PORT_PROX_FRONT) {
 				PORT_LED1 = 1;
 				move(STOP,0);
 			} else {
 				PORT_LED1 = 0;
-				move(FORWARD, 60);
+				move(FORWARD, speed);
 			}
 		}
-	} else if(leftD > rightD) {
-		//printf("\r\nLeft edge closer");
-		rotate(CLOCKWISE, 30);
-	} else if(leftD < rightD) {
-		//printf("\r\nRight edge closer");
-		rotate(COUNTERCLOCKWISE, 30);
 	} else {
-		//printf("\rDon't know what to do");
-		move(STOP, 0);
+		align(leftD, rightD);
 	}
 }
 
@@ -155,12 +183,9 @@ void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
  * @modifies	The cart is facing the opposite direction (properly aligned)
  */
 void rotate180(char direction, unsigned int leftB, unsigned int rightB) {
-	//Enable proximity interrupt
 	int speed;
-		
-	//EX0 = 1; EX1 = 1;
-	if(direction == CLOCKWISE) speed = 32;
-	else speed = 31;
+	if(direction == CLOCKWISE) speed = 34;
+	else speed = 32;
 	
 	rotate(direction, speed);
 	wait1s();
@@ -168,24 +193,30 @@ void rotate180(char direction, unsigned int leftB, unsigned int rightB) {
 	wait1s();
 	waithalfs();
 	move(STOP, 0);
-	
-	//EX0 = 0; EX1 = 0;
 	return;
 }
 
 void parallelPark() {
-	//Enable proximity interrupt
-	//EX0 = 1; EX1 = 1;
-	
-	rotate(COUNTERCLOCKWISE, 30);
+	rotate(COUNTERCLOCKWISE, 35);
 	wait1s();
-	move(BACKWARD, 50);
+	move(BACKWARD, 70);
 	wait1s();
 	wait1s();
-	rotate(CLOCKWISE, 27);
+	rotate(CLOCKWISE, 29);
+	wait1s();
+	move(STOP,0);
+	return;
+}
+
+void reverseParallelPark() {;
+	rotate(COUNTERCLOCKWISE, 35);
+	wait1s();
+	move(FORWARD, 70);
+	wait1s();
+	wait1s();
+	rotate(CLOCKWISE, 30);
 	wait1s();
 	move(STOP,0);
 	
-	//EX0 = 0; EX1 = 0;
 	return;
 }

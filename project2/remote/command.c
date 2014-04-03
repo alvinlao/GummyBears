@@ -50,10 +50,13 @@ unsigned char getNextCommand(unsigned char currentCommand) {
 			return COMMAND_180CL;
 		}
 		
-		//Parallel Park
+		//Parallel and Reverse Park
 		else if(!PUSH_3) {
 			while(!PUSH_3); //Wait for release
-			return COMMAND_PARK;
+			if(currentCommand == COMMAND_PARK)
+				return COMMAND_REVERSEPARK;
+			else
+				return COMMAND_PARK;
 		}
 	}
 }
@@ -65,11 +68,13 @@ void display7segs(char a, char b) {
 }
 
 void displaycommand(unsigned char c) {
+	P4_4 = 1;
 	if(c == COMMAND_FOLLOW0) display7segs('2', '0');
 	else if(c == COMMAND_FOLLOW1) display7segs('3', '0');
-	else if(c == COMMAND_FOLLOW2) display7segs('4', '0');
-	else if(c == COMMAND_FOLLOW3) display7segs('5', '0');
-	else if(c == COMMAND_180CC) display7segs('c', 'c');
-	else if(c == COMMAND_180CL) display7segs('c', 'l');
-	else if(c == COMMAND_PARK) display7segs('|', '|');
+	else if(c == COMMAND_FOLLOW2) {display7segs('4', '0'); P4_4 = 0;}
+	else if(c == COMMAND_FOLLOW3) {display7segs('5', '0'); P4_4 = 0;}
+	else if(c == COMMAND_180CC) {display7segs('c', 'c'); P4_4 = 0;}
+	else if(c == COMMAND_180CL) {display7segs('c', 'l'); P4_4 = 0;}
+	else if(c == COMMAND_PARK) {display7segs('|', '|'); P4_4 = 0;}
+	else if(c == COMMAND_REVERSEPARK) {display7segs('?', '?'); P2_2=0;}
 }

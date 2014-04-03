@@ -15,9 +15,9 @@
 
 //Follow distances
 #define FOLLOW_DISTANCE0 20
-#define FOLLOW_DISTANCE1 30
+#define FOLLOW_DISTANCE1 29
 #define FOLLOW_DISTANCE2 40
-#define FOLLOW_DISTANCE3 50
+#define FOLLOW_DISTANCE3 54
 
 //Ports
 #define PORT_LEFT_WHEEL0 P2_0
@@ -38,6 +38,7 @@ void thinkAndDo(unsigned char *command, unsigned int leftB, unsigned int rightB)
 void maintainDistance(int distance, unsigned int leftB, unsigned int rightB);
 void rotate180(char direction, unsigned int leftB, unsigned int rightB);
 void parallelPark();
+void reverseParallelPark();
 
 //sense.c
 unsigned int getLeftBField();

@@ -103,7 +103,7 @@ void main (void)
 		printf("\r\nLeft: %4u  Right: %4u", leftB, rightB);
 		wait_bit_time();
 	}
-*/
+	*/
 	/*
 	//Test receiver
 	while(1) {
@@ -140,8 +140,15 @@ void main (void)
 	while(1) {
 		leftB = getLeftBField();
 		if(leftB <= INDUCTOR_YAP_MIN) {
+			//STOP
 			move(STOP, 0);
 			PORT_LED0 = 1;
+			PORT_LEFT_WHEEL0=0;
+			PORT_LEFT_WHEEL1=0;
+			
+			//Right wheel
+			PORT_RIGHT_WHEEL0=0;
+			PORT_RIGHT_WHEEL1=0;
 			newcommand = yap_receive(INDUCTOR_YAP_MIN);
 			if(validCommand(newcommand)) {
 				command = newcommand;
