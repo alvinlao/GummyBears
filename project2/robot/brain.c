@@ -113,23 +113,18 @@ void manual(int direction) {
 void align(int leftD, int rightD) {
 	int speed;
 	if(leftD > rightD) {
-		//printf("\r\nLeft edge closer");
-		
 		//Rotate slower when almost aligned
 		if(leftD - rightD > 5) speed = 40;
 		else speed = 20;
 		
 		rotate(CLOCKWISE, speed);
 	} else if(leftD < rightD) {
-		//printf("\r\nRight edge closer");
-		
 		//Rotate slower when almost aligned
 		if(rightD - leftD > 5) speed = 40;
 		else speed = 20;
 		
 		rotate(COUNTERCLOCKWISE, speed);
 	} else {
-		//printf("\rDon't know what to do");
 		move(STOP, 0);
 	}
 }
@@ -174,17 +169,11 @@ void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
 	rightD = getRightDistance(rightB);
 	rightD = calibrate(rightD);
 	if(leftD > 45) rightD += 5;
-	
-	//Display distance
-	printf("\rLeft: %4d  Right: %4d", leftD, rightD);
-	
+
 	if(isAligned(leftD, rightD, ALIGNERROR)) {
 		if(isCorrectDistanceAway(leftD, targetD)) {
-			//printf("\r\nJust right left: %4d target: %4d", leftD, targetD);
 			move(STOP, 0);
 		} else if(leftD < targetD) {
-			//printf("\r\nToo close left: %4d target: %4d", leftD, targetD);
-			
 			//Slow down when almost there
 			if(targetD - leftD > 5) speed = 100;
 			else speed = 80;
@@ -192,8 +181,6 @@ void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
 			PORT_LED1 = 0;
 			move(BACKWARD, speed);
 		} else {
-			//printf("\r\nToo far left: %4d target: %4d", leftD, targetD);
-			
 			//Slow down when almost there
 			if(leftD - targetD > 5) speed = 100;
 			else speed = 80;

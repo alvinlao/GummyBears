@@ -55,59 +55,9 @@ void square_wave_generator (void) interrupt 1
 	}
 }
 
-void test7segs(void) {
-	PORT_SEG_A = map7seg('0');
-	PORT_SEG_B = map7seg('0');
-	wait1s();
-	PORT_SEG_A = map7seg('1');
-	PORT_SEG_B = map7seg('1');
-	wait1s();
-	PORT_SEG_A = map7seg('2');
-	PORT_SEG_B = map7seg('2');
-	wait1s();
-	PORT_SEG_A = map7seg('3');
-	PORT_SEG_B = map7seg('3');
-	wait1s();
-	PORT_SEG_A = map7seg('4');
-	PORT_SEG_B = map7seg('4');
-	wait1s();
-	PORT_SEG_A = map7seg('5');
-	PORT_SEG_B = map7seg('5');
-	wait1s();
-	PORT_SEG_A = map7seg('6');
-	PORT_SEG_B = map7seg('6');
-	wait1s();
-	PORT_SEG_A = map7seg('7');
-	PORT_SEG_B = map7seg('7');
-	wait1s();
-	PORT_SEG_A = map7seg('8');
-	PORT_SEG_B = map7seg('8');
-	wait1s();
-	PORT_SEG_A = map7seg('9');
-	PORT_SEG_B = map7seg('9');
-	wait1s();
-	PORT_SEG_A = map7seg('?');
-	PORT_SEG_B = map7seg('?');
-	wait1s();
-	PORT_SEG_A = map7seg('p');
-	PORT_SEG_B = map7seg('p');
-	wait1s();	
-	PORT_SEG_A = map7seg('a');
-	PORT_SEG_B = map7seg('a');
-	wait1s();	
-}
 
 void main (void) {
 	unsigned char prevcommand = COMMAND_FOLLOW0, command = COMMAND_FOLLOW0;
-
-	//test7segs();
-	/*
-	while(1) {
-		printf("\r\nSend: ");
-		scanf("%du", &command);
-		yap_send(command);
-	}
-	*/
 	
 	printf("\r\nRemote Ready\r\n");
 	displaycommand(command);

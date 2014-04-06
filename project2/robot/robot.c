@@ -47,15 +47,10 @@ unsigned char _c51_external_startup(void)
 	TR0=1; // Start timer 0 (bit 4 in TCON)
 	ET0=1; // Enable timer 0 interrupt
 	
-	PX0=1; // External interrupt priorty
-	PX1=1;
 	EX0=0;
 	EX1=0;
-		//EX0=1; // Enable external interrupt 0 (P3.2)
-	//EX1=1; // Enable external interrupt 1 (P3.3)
-	
+
 	EA=1;  // Enable global interrupts
-	
 	
 	pwmcount=0;
     
@@ -77,19 +72,6 @@ void pwmcounter (void) interrupt 1
 	PORT_RIGHT_WHEEL1=(pwmR2>pwmcount)?1:0;
 }
 
-void frontdetector (void) interrupt 0 {
-	//PORT_LED1 = 1;
-	//while(!P3_2);	//Block
-	//move(STOP, 0);
-	//PORT_LED1 = 0;
-}
-
-void backdetector (void) interrupt 2 {
-	//PORT_LED2 = 1;
-	//while(P3_3);
-	//move(STOP, 0);
-	//PORT_LED2 = 0;
-}
 
 void main (void)
 {	
@@ -98,44 +80,6 @@ void main (void)
 	unsigned int leftB, rightB;
 	
 	printf("\r\nRobot Ready\r\n");
-	/*
-	//Calibration	
-	while(1) {
-		leftB = getLeftBField();
-		rightB = getRightBField();
-		printf("\r\nLeft: %4u  Right: %4u", leftB, rightB);
-		wait_bit_time();
-	}
-	*/
-	/*
-	//Test receiver
-	while(1) {
-		if(getADC(INDUCTOR_LEFT) <= INDUCTOR_LEFT_BGB) {
-			command = yap_receive(INDUCTOR_LEFT_BGB);
-			printf("Command: %u\r\n", command);
-		}
-	}
-	*/
-	//Test motor
-	/*
-	while(1) {
-		printf("\r\nCommand (0 move, 1 rotate): ");
-		scanf("%du", &command);
-		switch(command) {
-			case 0:
-				printf("\r\nDirection: ");
-				scanf("%du", &command);
-				move(command, 100);
-				break;
-			case 1:
-				printf("\r\nDirection: ");
-				scanf("%du", &command);
-				rotate(command, 50);
-				break;
-		}
-	}
-	*/
-	
 	//Main
 	PORT_LED0 = 0;
 	PORT_LED1 = 0;
