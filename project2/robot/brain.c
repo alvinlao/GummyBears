@@ -164,12 +164,12 @@ int calibrate(int dr) {
 void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
 	int leftD, rightD, speed;
 	if(leftB <= INDUCTOR_LEFT_BGB || rightB <= INDUCTOR_RIGHT_BGB)
-	return;
+		return;	//If there is no B-field, stop
 		
 	leftD = getLeftDistance(leftB);
 	rightD = getRightDistance(rightB);
 	rightD = calibrate(rightD);
-	if(leftD > 45) rightD += 5;
+	if(leftD > 45) rightD += 5;	//Hack based on observations (Cart is mis-aligned at d > 45cm)
 
 	if(isAligned(leftD, rightD, ALIGNERROR)) {
 		if(isCorrectDistanceAway(leftD, targetD)) {
@@ -179,7 +179,7 @@ void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
 			if(targetD - leftD > 5) speed = 100;
 			else speed = 80;
 
-			PORT_LED1 = 0;
+			PORT_LED1 = 0;	//Turn off edge detection LED
 			move(BACKWARD, speed);
 		} else {
 			//Slow down when almost there
