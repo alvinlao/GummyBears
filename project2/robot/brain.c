@@ -157,8 +157,9 @@ int calibrate(int dr) {
  * Maintains the given distance from beacon
  *
  * @requires sense.c
- * @modifies			When the function exits, the robot is properly aligned with beacon at desired distance
  * @param distance		The desired distance in cm
+ * @param leftB				The left B field strength
+ * @param rightB			The right B field strength
  */
 void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
 	int leftD, rightD, speed;
@@ -201,7 +202,6 @@ void maintainDistance(int targetD, unsigned int leftB, unsigned int rightB) {
 /*
  * Rotates the cart 180 degrees
  *
- * @requires 	The cart must be aligned with the magnetic field prior to rotating
  * @modifies	The cart is facing the opposite direction (properly aligned)
  */
 void rotate180(char direction, unsigned int leftB, unsigned int rightB) {
