@@ -74,6 +74,8 @@ char map7seg(char ascii) {
 		return 0x74; 
 	} else if(ascii == 'l') {
 		return 0x7c; 
+	} else if(ascii == 'u') {
+		return 0xac;
 	} else {
 		return 0xFF;
 	}	

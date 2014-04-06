@@ -13,6 +13,9 @@
 #define FREQ 10000L
 #define TIMER0_RELOAD_VALUE (65536L-(CLK/(12L*FREQ)))
 
+#define AUTO 		0
+#define MANUAL		1
+
 //Follow distances
 #define FOLLOW_DISTANCE0 20
 #define FOLLOW_DISTANCE1 29
@@ -32,6 +35,8 @@
 #define PORT_PROX_FRONT P1_2
 #define PORT_PROX_BACK P1_3
 
+extern char mode;
+
 //brain.c
 char validCommand(unsigned char c);
 void thinkAndDo(unsigned char *command, unsigned int leftB, unsigned int rightB);
@@ -39,6 +44,7 @@ void maintainDistance(int distance, unsigned int leftB, unsigned int rightB);
 void rotate180(char direction, unsigned int leftB, unsigned int rightB);
 void parallelPark();
 void reverseParallelPark();
+void manual(int direction);
 
 //sense.c
 unsigned int getLeftBField();

@@ -16,6 +16,8 @@ volatile unsigned char pwmL2;
 volatile unsigned char pwmR1;
 volatile unsigned char pwmR2;
 
+char mode = AUTO;
+
 unsigned char _c51_external_startup(void)
 {
 	// Configure ports as a bidirectional with internal pull-ups.
@@ -92,6 +94,7 @@ void backdetector (void) interrupt 2 {
 void main (void)
 {	
 	unsigned char newcommand, command = COMMAND_FOLLOW0;
+	int newdirection, direction = COMMAND_STOP;
 	unsigned int leftB, rightB;
 	
 	printf("\r\nRobot Ready\r\n");
@@ -138,29 +141,71 @@ void main (void)
 	PORT_LED1 = 0;
 	move(STOP, 0);
 	while(1) {
-		leftB = getLeftBField();
-		if(leftB <= INDUCTOR_YAP_MIN) {
-			//STOP
-			move(STOP, 0);
-			PORT_LED0 = 1;
-			PORT_LEFT_WHEEL0=0;
-			PORT_LEFT_WHEEL1=0;
-			
-			//Right wheel
-			PORT_RIGHT_WHEEL0=0;
-			PORT_RIGHT_WHEEL1=0;
-			newcommand = yap_receive(INDUCTOR_YAP_MIN);
-			if(validCommand(newcommand)) {
-				command = newcommand;
-				printf("Command: %u\r\n", command);
+		if(mode == AUTO) {
+			printf("Enter AUTO mode\n");
+			leftB = getLeftBField();
+			if(leftB <= INDUCTOR_YAP_MIN) {
+				//STOP
+				move(STOP, 0);
+				PORT_LED0 = 1;
+				PORT_LEFT_WHEEL0=0;
+				PORT_LEFT_WHEEL1=0;
+				
+				//Right wheel
+				PORT_RIGHT_WHEEL0=0;
+				PORT_RIGHT_WHEEL1=0;
+				newcommand = yap_receive(INDUCTOR_YAP_MIN);
+				if(validCommand(newcommand)) {
+					command = newcommand;
+					printf("Command: %u\r\n", command);
+				} else {
+					printf("Invalid Command: %u\r\n", newcommand);
+				}
+				PORT_LED0 = 0;
 			} else {
-				printf("Invalid Command: %u\r\n", newcommand);
+				//brain.c
+				rightB = getRightBField();
+				thinkAndDo(&command, leftB, rightB);
 			}
-			PORT_LED0 = 0;
 		} else {
-			//brain.c
-			rightB = getRightBField();
-			thinkAndDo(&command, leftB, rightB);
+			leftB = getLeftBField();
+			if(leftB <= INDUCTOR_YAP_MIN) {
+				//Stop moving
+				move(STOP, 0);
+				PORT_LED0 = 1;
+				PORT_LEFT_WHEEL0=0;
+				PORT_LEFT_WHEEL1=0;
+				PORT_RIGHT_WHEEL0=0;
+				PORT_RIGHT_WHEEL1=0;
+				
+				//Get direction
+				newdirection = yap_receive(INDUCTOR_YAP_MIN);
+				if(validCommand(newdirection)) {
+					direction = newdirection;
+					printf("Direction: %u\r\n", direction);
+					
+					//Check switch back to auto
+					if(direction == COMMAND_MODE) {
+						printf("Exit MANUAL mode\n");
+						mode = AUTO;
+						command = newcommand = COMMAND_STOP;
+					} else {
+						//Set movement
+						manual(direction);
+						wait_bit_time();
+						while(1) {
+							leftB = getLeftBField();
+							if(leftB > INDUCTOR_YAP_MIN) {
+								move(STOP, 0);
+								PORT_LED0 = 0;
+								break;
+							}
+						}
+					}	
+				} else {
+					printf("Invalid Direction: %u\r\n", newdirection);
+				}
+			}
 		}
 	}
 	

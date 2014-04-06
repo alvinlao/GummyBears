@@ -27,6 +27,16 @@ char validCommand(unsigned char c) {
 			return 1;
 		case COMMAND_REVERSEPARK:
 			return 1;
+		case COMMAND_MODE:
+			return 1;
+		case COMMAND_FORWARD:
+			return 1;
+		case COMMAND_BACKWARD:
+			return 1;
+		case COMMAND_LEFT:
+			return 1;
+		case COMMAND_RIGHT:
+			return 1;
 		default:
 			return 0;
 	}
@@ -67,12 +77,37 @@ void thinkAndDo(unsigned char *command, unsigned int leftB, unsigned int rightB)
 			reverseParallelPark();
 			*command = COMMAND_STOP;
 			break;
+		case COMMAND_MODE:
+			//Switch modes
+			if(mode == AUTO) mode = MANUAL;
+			else mode = AUTO;
+			break;
 		default:
 			move(STOP, 0);
 			*command = COMMAND_STOP;
 			break;
 	}
 	return;
+}
+
+void manual(int direction) {
+	switch(direction) {
+		case COMMAND_FORWARD:
+			move(FORWARD, 100);
+			break;
+		case COMMAND_BACKWARD:
+			move(BACKWARD, 100);
+			break;
+		case COMMAND_LEFT:
+			rotate(COUNTERCLOCKWISE, 100);
+			break;
+		case COMMAND_RIGHT:
+			rotate(CLOCKWISE, 100);
+			break;
+		default:
+			move(STOP, 0);
+			break;
+	}
 }
 
 void align(int leftD, int rightD) {

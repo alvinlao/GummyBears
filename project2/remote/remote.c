@@ -7,6 +7,8 @@
 #include "../libs/util.h"
 #include "../libs/command.h"
 
+char mode = AUTO;
+
 unsigned char _c51_external_startup(void)
 {
 	// Configure ports as a bidirectional with internal pull-ups.
@@ -110,9 +112,16 @@ void main (void) {
 	printf("\r\nRemote Ready\r\n");
 	displaycommand(command);
 	while(1) {
-		prevcommand = command;
-		command = getNextCommand(prevcommand);	//Blocks until a button is pushed
-		displaycommand(command); 	//Display command on 7 segs
-		yap_send(command);			//Send command!
+		if(mode == AUTO) {
+			prevcommand = command;
+			command = getNextCommand(prevcommand);	//Blocks until a button is pushed
+			displaycommand(command); 	//Display command on 7 segs
+			yap_send(command);			//Send command!
+		} else {
+			manualCommand();			//Blocks; Allows user to manually control robot
+			mode = AUTO;
+			displaycommand(COMMAND_MODE);
+			yap_send(COMMAND_MODE);
+		}
 	}
 }

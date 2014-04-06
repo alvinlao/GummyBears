@@ -3,6 +3,8 @@
 
 #include "../libs/util.h"
 #include "../libs/command.h"
+#include "../libs/yap.h"
+
 #include "remote.h"
 
 //Private function
@@ -27,7 +29,7 @@ unsigned char nextFollowCommand(unsigned char c) {
 
 unsigned char getNextCommand(unsigned char currentCommand) {
 	while(1) {
-	//Cycle follow distance
+		//Cycle follow distance
 		if(!PUSH_0) {
 			while(!PUSH_0); //Wait for release
 			
@@ -58,6 +60,12 @@ unsigned char getNextCommand(unsigned char currentCommand) {
 			else
 				return COMMAND_PARK;
 		}
+		
+		else if(!PUSH_4) {
+			while(!PUSH_4);
+			mode = MANUAL;
+			return COMMAND_MODE;
+		}
 	}
 }
 
@@ -68,13 +76,49 @@ void display7segs(char a, char b) {
 }
 
 void displaycommand(unsigned char c) {
-	P4_4 = 1;
+	P0_7 = 1;
 	if(c == COMMAND_FOLLOW0) display7segs('2', '0');
 	else if(c == COMMAND_FOLLOW1) display7segs('3', '0');
-	else if(c == COMMAND_FOLLOW2) {display7segs('4', '0'); P4_4 = 0;}
-	else if(c == COMMAND_FOLLOW3) {display7segs('5', '0'); P4_4 = 0;}
-	else if(c == COMMAND_180CC) {display7segs('c', 'c'); P4_4 = 0;}
-	else if(c == COMMAND_180CL) {display7segs('c', 'l'); P4_4 = 0;}
-	else if(c == COMMAND_PARK) {display7segs('|', '|'); P4_4 = 0;}
-	else if(c == COMMAND_REVERSEPARK) {display7segs('?', '?'); P2_2=0;}
+	else if(c == COMMAND_FOLLOW2) {display7segs('4', '0'); P0_7 = 0;}
+	else if(c == COMMAND_FOLLOW3) {display7segs('5', '0'); P0_7 = 0;}
+	else if(c == COMMAND_180CC) {display7segs('c', 'c'); P0_7 = 0;}
+	else if(c == COMMAND_180CL) {display7segs('c', 'l'); P0_7 = 0;}
+	else if(c == COMMAND_PARK) {display7segs('|', '|'); P0_7 = 0;}
+	else if(c == COMMAND_REVERSEPARK) {display7segs('?', '?'); P2_2=0; P1_2=0;}
+	else if(c == COMMAND_MODE && mode == MANUAL) {display7segs('u','c'); P0_7 = 0;}
+	else if(c == COMMAND_MODE && mode == AUTO) {display7segs('?','?');}
+}
+
+void manualCommand() {
+	while(1) {
+		if(!PUSH_0) {
+			yap_send(COMMAND_FORWARD);
+			EA = 0;
+			while(!PUSH_0);
+			EA = 1;
+		}
+		else if(!PUSH_1) {
+			yap_send(COMMAND_LEFT);
+			EA = 0;
+			while(!PUSH_1);
+			EA = 1;
+		}
+		else if(!PUSH_2) {
+			yap_send(COMMAND_RIGHT);
+			EA = 0;
+			while(!PUSH_2);
+			EA = 1;
+		}
+		else if(!PUSH_3) {
+			yap_send(COMMAND_BACKWARD);
+			EA = 0;
+			while(!PUSH_3);
+			EA = 1;
+		}
+		
+		else if(!PUSH_4) {
+			while(!PUSH_4);
+			break;
+		}
+	}
 }

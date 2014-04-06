@@ -81,7 +81,7 @@ unsigned char yap_receive(int min) {
 	}
 	//Wait for stop bits
 	wait_bit_time();
-	
+	wait_bit_time();
 	EA = 1; //Enable interrupts
 	return val;
 }
